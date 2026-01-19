@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENUMS (PostgreSQL supports native enums)
+// ═══════════════════════════════════════════════════════════════
+
+enum Role {
+  USER
+  ADMIN
+  HOST
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MODELS
+// ═══════════════════════════════════════════════════════════════
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String?
+  phone         String?
+  role          Role      @default(USER)
+  image         String?
+  
+  bookings      Booking[]
+  reviews       Review[]
+  ownedChalets  Chalet[]  @relation("ChaletOwner")
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Chalet {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  location    String
+  address     String?
+  
+  images      String    // JSON array of image URLs
+  amenities   String    // JSON array of amenity keys
+  
+  capacity    Int       @default(2)
+  bedrooms    Int       @default(1)
+  bathrooms   Int       @default(1)
+  
+  rating      Float     @default(5.0)
+  
+  ownerId     String?
+  owner       User?     @relation("ChaletOwner", fields: [ownerId], references: [id])
+  
+  bookings    Booking[]
+  reviews     Review[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  
+  chaletId        String
+  chalet          Chalet        @relation(fields: [chaletId], references: [id])
+  
+  userId          String?
+  user            User?         @relation(fields: [userId], references: [id])
+  
+  startDate       DateTime
+  endDate         DateTime
+  
+  guestName       String
+  guestEmail      String
+  guestPhone      String
+  guestCount      Int           @default(1)
+  
+  totalPrice      Float
+  pricePerNight   Float         @default(0)
+  nights          Int           @default(1)
+  basePrice       Float         @default(0)
+  cleaningFee     Float         @default(0)
+  serviceFee      Float         @default(0)
+  
+  status          BookingStatus @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  
+  // Stripe payment fields
+  stripeSessionId       String?
+  stripePaymentIntentId String?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  chaletId  String
+  chalet    Chalet   @relation(fields: [chaletId], references: [id])
+  
+  createdAt DateTime @default(now())
+}
+
+model Partner {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  discount    String
+  description String
+  logo        String
+  qrValue     String   @unique
+  
+  isActive    Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

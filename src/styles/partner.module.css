@@ -1,0 +1,18 @@
+.partnerApp {
+    min-height: 100vh;
+    background: #0f172a;
+    color: white;
+}
+
+.partnerHeader {
+    padding: 1rem;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+}
+
+.logo {
+    font-weight: 700;
+    color: #fbbf24;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+}

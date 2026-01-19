@@ -1,0 +1,301 @@
+/* Referral / Rewards Page Styles - Premium Gift Edition */
+
+.pageContainer {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 80vh;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: hsl(var(--primary));
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* Gift Card Styles */
+/* Pro Card Styles (Matching RewardCard.tsx) */
+.proCard {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    /* Gold border */
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.proCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 215, 0, 0.6);
+}
+
+.proCardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.proCategory {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.proLogo {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.proCardBody {
+    text-align: left;
+}
+
+.proName {
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    font-family: var(--font-serif);
+}
+
+.proDiscount {
+    color: #fbbf24;
+    /* Gold */
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.proCardFooter {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tapLabel {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tapLabel::after {
+    content: '→';
+    font-size: 1rem;
+    color: #fbbf24;
+}
+
+/* Modal Styles */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modalContent {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 24px;
+    padding: 2rem;
+    position: relative;
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: background 0.2s;
+}
+
+.closeBtn:hover {
+    background: #e2e8f0;
+}
+
+.giftHeader {
+    margin-bottom: 1.5rem;
+}
+
+.giftHeader h2 {
+    font-family: var(--font-serif);
+    color: hsl(var(--primary));
+    margin-top: 1rem;
+}
+
+.voucherBody {
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border: 1px dashed #cbd5e1;
+}
+
+.voucherBody h3 {
+    color: #0f172a;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.giftMessage {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #64748b;
+    font-size: 0.9rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+
+.activateBtn {
+    width: 100%;
+    background: hsl(var(--primary));
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(15, 61, 58, 0.3);
+    transition: transform 0.2s;
+}
+
+.activateBtn:hover {
+    transform: translateY(-2px);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top-color: hsl(var(--primary));
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+.activeHeader {
+    margin-bottom: 1.5rem;
+}
+
+.securityBadge {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.qrContainer {
+    background: white;
+    padding: 1rem;
+    display: inline-block;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.scanInstruction {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+}
+
+.redeemBtn {
+    width: 100%;
+    background: transparent;
+    border: 2px solid hsl(var(--primary));
+    color: hsl(var(--primary));
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stepRedeemed .checkIcon {
+    width: 60px;
+    height: 60px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

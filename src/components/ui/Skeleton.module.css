@@ -1,0 +1,198 @@
+.skeleton {
+    background: linear-gradient(90deg,
+            hsl(var(--secondary) / 0.6) 0%,
+            hsl(var(--secondary) / 0.9) 50%,
+            hsl(var(--secondary) / 0.6) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Layout */
+.fullPage {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: hsl(var(--background));
+}
+
+.main {
+    flex: 1;
+}
+
+.page {
+    padding-bottom: 4rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header */
+.header {
+    padding: 1rem 0;
+    background: hsl(var(--background));
+    border-bottom: 1px solid hsl(var(--border));
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Hero */
+.hero {
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
+}
+
+.heroContent {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    padding: 2rem;
+}
+
+/* Chalets Grid */
+.chaletsSection {
+    padding: 4rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.chaletsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* Chalet Card */
+.chaletCard {
+    background: hsl(var(--card));
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Chalet Detail */
+.chaletDetail {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.detailContent {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.detailMain {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detailSidebar {
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+}
+
+.bookingCard {
+    background: hsl(var(--card));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background: hsl(var(--secondary));
+    padding: 3rem 0 2rem;
+    margin-top: auto;
+}
+
+.footerGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 3rem;
+}
+
+.footerGrid>div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav {
+        display: none;
+    }
+
+    .detailContent {
+        grid-template-columns: 1fr;
+    }
+
+    .footerGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .hero {
+        height: 50vh;
+        min-height: 400px;
+    }
+}

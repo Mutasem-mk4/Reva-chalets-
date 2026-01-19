@@ -1,0 +1,320 @@
+/* Listing Page */
+.pageContainer {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.pageTitle {
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-family: var(--font-serif);
+    color: hsl(var(--primary));
+}
+
+.chaletGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 3rem;
+}
+
+/* Detail Page - Gallery Section */
+.gallerySection {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background: hsl(var(--background));
+}
+
+.gallery {
+    height: 60vh;
+    width: 100%;
+    position: relative;
+    margin-bottom: -4rem;
+    /* Overlap content */
+    overflow: hidden;
+}
+
+
+.mainImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    /* Wider sidebar */
+    gap: 4rem;
+    position: relative;
+    z-index: 10;
+}
+
+.mainInfo {
+    background: hsl(var(--card));
+    padding: 3rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.1));
+}
+
+.mainInfo h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--primary));
+}
+
+.location {
+    font-size: 1.1rem;
+    color: hsl(var(--foreground));
+    opacity: 0.7;
+    margin-bottom: 1.5rem;
+}
+
+.rating {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: hsl(var(--secondary));
+    border-radius: 2rem;
+    font-weight: 600;
+    color: hsl(var(--primary));
+    margin-bottom: 2rem;
+}
+
+.divider {
+    height: 1px;
+    background: hsl(var(--border));
+    margin: 2rem 0;
+}
+
+.description {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: hsl(var(--foreground));
+    opacity: 0.85;
+}
+
+.amenitiesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.amenityItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+/* Reviews */
+.reviewsGrid {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.reviewCard {
+    background: hsl(var(--background));
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font-serif);
+}
+
+.reviewName {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.reviewDate {
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+.reviewRating {
+    margin-left: auto;
+    color: hsl(var(--accent));
+    font-weight: 700;
+}
+
+.reviewText {
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Policies */
+.policies {
+    background: hsl(var(--secondary) / 0.3);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.policyItem {
+    font-size: 0.95rem;
+}
+
+/* Sidebar */
+.bookingSidebar {
+    position: sticky;
+    top: 6rem;
+    /* Adjust for header height */
+    height: fit-content;
+    padding-top: 4rem;
+    /* Compensate for negative margin overlap if needed */
+}
+
+.bookingCard {
+    background: hsl(var(--card));
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-luxury, 0 25px 50px -12px rgb(0 0 0 / 0.25));
+    border: 1px solid hsl(var(--border));
+}
+
+.priceTag {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid hsl(var(--border));
+}
+
+.amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    font-family: var(--font-serif);
+    display: block;
+}
+
+.period {
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+    opacity: 0.6;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hint {
+    text-align: center;
+    font-size: 0.75rem;
+    margin-top: 1rem;
+    opacity: 0.6;
+}
+
+@media (max-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .gallery {
+        height: 40vh;
+        margin-bottom: 0;
+    }
+
+    .mainInfo {
+        padding: 2rem;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .bookingSidebar {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageContainer {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .pageTitle {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .chaletGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .gallery {
+        height: 35vh;
+    }
+
+    .mainInfo {
+        padding: 1.5rem;
+    }
+
+    .mainInfo h1 {
+        font-size: 1.75rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .pageTitle {
+        font-size: 1.75rem;
+    }
+
+    .mainInfo {
+        padding: 1rem;
+    }
+
+    .amenitiesGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .amenity {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .gallery {
+        height: 30vh;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE BOOKING - Hide desktop sidebar on mobile
+   The MobileBookingBar component handles mobile booking
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+    .bookingSidebar {
+        display: none;
+    }
+
+    /* Add padding at bottom for the mobile booking bar */
+    .contentGrid {
+        padding-bottom: 100px;
+    }
+}

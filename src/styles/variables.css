@@ -1,0 +1,109 @@
+:root {
+  /* ═══════════════════════════════════════════════════════════════
+     REVA CHALETS - "Dead Sea Dusk" Color Palette
+     Inspired by golden hour over the Dead Sea
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Primary - Vibrant Teal (Trust, Sophistication) */
+  --primary: 175 70% 25%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary - Soft Sand (Warmth, Elegance) */
+  --secondary: 38 30% 96%;
+  --secondary-foreground: 175 70% 25%;
+
+  /* Accent - BRIGHT GOLD (Luxury, Action) - Much more saturated! */
+  --accent: 45 100% 50%;
+  --accent-foreground: 0 0% 10%;
+
+  /* Muted - Subtle text and backgrounds */
+  --muted: 40 20% 94%;
+  --muted-foreground: 220 15% 35%;
+  /* Darkened for better readability on light bg */
+
+  /* Neutral/System Colors */
+  --background: 42 30% 99%;
+  --foreground: 220 15% 12%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 220 15% 12%;
+
+  --border: 40 25% 88%;
+  --input: 40 25% 88%;
+  --ring: 178 55% 18%;
+
+  /* Semantic Colors */
+  --success: 142 70% 42%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+
+  --error: 0 84% 60%;
+  --error-foreground: 0 0% 100%;
+
+  --info: 199 89% 48%;
+  --info-foreground: 0 0% 100%;
+
+  /* Design Tokens */
+  --radius: 1rem;
+
+  /* Shadows - Warm & Diffused */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+  --shadow-luxury: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, #f5a623 0%, #ffcf71 50%, #d4920a 100%);
+  --gradient-metallic: linear-gradient(110deg, #d4920a 0%, #ffcf71 25%, #f5a623 50%, #ffcf71 75%, #d4920a 100%);
+  --gradient-hero: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.85));
+  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 30% 98%));
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+
+  /* Letter Spacing (Tracking) */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  --tracking-luxury: 0.2em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DARK MODE - Midnight Elegance
+   ═══════════════════════════════════════════════════════════════ */
+[data-theme='dark'] {
+  --background: 220 25% 8%;
+  --foreground: 40 25% 96%;
+
+  --card: 220 22% 12%;
+  --card-foreground: 40 25% 98%;
+
+  --primary: 176 45% 38%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 220 22% 16%;
+  --secondary-foreground: 40 25% 96%;
+
+  --muted: 220 20% 18%;
+  --muted-foreground: 220 10% 60%;
+
+  /* Brighter gold for dark backgrounds */
+  --accent: 42 80% 62%;
+  --accent-foreground: 220 25% 8%;
+
+  --border: 220 20% 18%;
+  --input: 220 20% 18%;
+  --ring: 176 45% 38%;
+
+  /* Adjusted shadows for dark mode */
+  --shadow-luxury: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+
+  /* Dark mode gradients */
+  --gradient-card: linear-gradient(145deg, hsl(220 22% 14%), hsl(220 22% 10%));
+}

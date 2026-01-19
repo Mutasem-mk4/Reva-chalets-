@@ -1,0 +1,197 @@
+.homePage {
+    /* Base layout */
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 85vh;
+    /* Taller hero */
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    background-image: url('/images/chalet-1.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.3));
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    animation: fadeUp 1s ease-out;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 4.5rem;
+    /* Larger, more impactful */
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    opacity: 0.95;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    font-weight: 300;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ctaBtn {
+    display: inline-block;
+    background: linear-gradient(135deg, #f5a623, #d4920a);
+    color: #ffffff;
+    padding: 1.25rem 3rem;
+    border-radius: 3rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(245, 166, 35, 0.4);
+}
+
+.ctaBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(245, 166, 35, 0.5);
+}
+
+/* Featured Section */
+.featured {
+    padding: 8rem 0;
+}
+
+.bgFaded {
+    background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--secondary) / 0.3), hsl(var(--background)));
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 1rem;
+}
+
+.sectionTitle {
+    font-size: 2.5rem;
+    font-family: var(--font-serif);
+    color: hsl(var(--primary));
+}
+
+.viewAll {
+    color: hsl(var(--primary));
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s;
+}
+
+.viewAll:hover {
+    gap: 0.75rem;
+}
+
+.chaletGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    /* Slightly wider cards */
+    gap: 3rem;
+    /* More breathing room */
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .hero {
+        height: 65vh;
+        min-height: 450px;
+    }
+
+    .featured {
+        padding: 4rem 0;
+    }
+
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.75rem;
+    }
+
+    .chaletGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .hero {
+        height: 60vh;
+        min-height: 400px;
+    }
+
+    .ctaBtn {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+
+    .featured {
+        padding: 3rem 0;
+    }
+
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+}

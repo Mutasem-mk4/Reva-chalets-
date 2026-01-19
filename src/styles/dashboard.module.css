@@ -1,0 +1,238 @@
+.dashboardContainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    /* Slate 50 */
+}
+
+/* Mobile Header */
+.mobileHeader {
+    display: none;
+    background: white;
+    padding: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid hsl(var(--border));
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+}
+
+.mobileBrand {
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.menuToggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background-color: hsl(var(--card));
+    border-right: 1px solid hsl(var(--border));
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    z-index: 50;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebarHeader {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.roleBadge {
+    font-size: 0.625rem;
+    background: hsl(var(--primary) / 0.1);
+    color: hsl(var(--primary));
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.navLink {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    color: hsl(var(--foreground));
+    font-weight: 500;
+    transition: background-color 0.2s;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.navLink:hover {
+    background-color: hsl(var(--secondary));
+}
+
+.userData {
+    border-top: 1px solid hsl(var(--border));
+    padding-top: 1rem;
+}
+
+.logoutBtn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.5rem;
+    text-decoration: underline;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    /* Add padding ONLY if header is present, managed by media query below */
+}
+
+.loading {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* Stats Cards & Tables */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.statCard {
+    background: hsl(var(--card));
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.statValue {
+    font-size: 2rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    margin: 0.5rem 0;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: 0.7;
+}
+
+.tableCard {
+    background: hsl(var(--card));
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--border));
+    overflow-x: auto;
+    /* Allow horizontal scroll for table */
+}
+
+.tableTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Force scroll on small screens */
+}
+
+.table th {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+    font-size: 0.875rem;
+    color: 0.7;
+}
+
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+}
+
+.statusConfirmed {
+    color: #16a34a;
+    background: #dcfce7;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+.statusPending {
+    color: #d97706;
+    background: #fef3c7;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+}
+
+.overlay {
+    display: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .dashboardContainer {
+        flex-direction: column;
+    }
+
+    .mobileHeader {
+        display: flex;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        width: 250px;
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+    }
+
+    .overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 45;
+    }
+
+    .mainContent {
+        padding-top: 5rem;
+        /* Space for mobile header */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
