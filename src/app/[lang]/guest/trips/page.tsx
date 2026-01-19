@@ -1,8 +1,11 @@
+'use client';
+
+import { use } from 'react';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 
-export default async function TripsPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
-    const { lang } = await params;
+export default function TripsPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+    const { lang } = use(params);
     const dict = getDictionary(lang);
 
     // Mock Trips Data

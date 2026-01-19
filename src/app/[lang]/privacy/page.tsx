@@ -1,7 +1,10 @@
+'use client';
+
+import { use } from 'react';
 import { getDictionary } from '@/lib/dictionaries';
 
-export default async function PrivacyPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
-    const { lang } = await params;
+export default function PrivacyPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+    const { lang } = use(params);
     const dict = getDictionary(lang);
 
     return (
