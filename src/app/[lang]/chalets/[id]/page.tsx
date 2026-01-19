@@ -18,7 +18,7 @@ import { GuaranteeBadge, RecentlyBookedBadge } from '@/components/features/Trust
 import { MapPin, StarFilled, Check } from '@/components/ui/Icons';
 import styles from '@/styles/chalets.module.css';
 
-export default async function ChaletDetailPage({ params }: { params: Promise<{ lang: 'en' | 'ar', id: string }> }) {
+export default async function ChaletDetailPage({ params }: { params: Promise<{ lang: string, id: string }> }) {
   const { lang, id } = await params;
   const dict = getDictionary(lang);
   const chalet = await getChaletById(id);

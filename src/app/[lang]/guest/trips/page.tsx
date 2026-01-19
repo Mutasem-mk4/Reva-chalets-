@@ -4,7 +4,7 @@ import { use } from 'react';
 import { getDictionary } from '@/lib/dictionaries';
 import Link from 'next/link';
 
-export default function TripsPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+export default function TripsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = use(params);
     const dict = getDictionary(lang);
 

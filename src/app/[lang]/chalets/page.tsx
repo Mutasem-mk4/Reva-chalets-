@@ -3,7 +3,7 @@ import { getChalets } from '@/lib/data';
 import styles from '@/styles/chalets.module.css';
 import ChaletListClient from '@/components/features/ChaletListClient';
 
-export default async function ChaletsPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+export default async function ChaletsPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dict = getDictionary(lang);
   const chalets = await getChalets();

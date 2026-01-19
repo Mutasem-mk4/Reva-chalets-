@@ -12,7 +12,7 @@ interface StoredReward {
     generatedAt: number;
 }
 
-export default function WalletPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+export default function WalletPage({ params }: { params: Promise<{ lang: string }> }) {
     const [rewards, setRewards] = useState<StoredReward[]>([]);
     const [loading, setLoading] = useState(true);
     const [lang, setLang] = useState<'en' | 'ar'>('en');

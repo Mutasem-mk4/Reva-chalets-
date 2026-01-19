@@ -11,7 +11,7 @@ export default function DashboardLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: Promise<{ lang: 'en' | 'ar' }>;
+    params: Promise<{ lang: string }>;
 }) {
     const { user, isLoading, logout } = useAuth();
     const router = useRouter();

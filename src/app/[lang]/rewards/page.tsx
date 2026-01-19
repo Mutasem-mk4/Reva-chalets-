@@ -4,7 +4,7 @@ import { getPartners } from '@/lib/data';
 import RewardCard from '@/components/features/RewardCard';
 import styles from '@/styles/referral.module.css';
 
-export default async function RewardsPage({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+export default async function RewardsPage({ params }: { params: Promise<{ lang: string }> }) {
     const { lang } = await params;
     const dict = getDictionary(lang);
     const partners = await getPartners();

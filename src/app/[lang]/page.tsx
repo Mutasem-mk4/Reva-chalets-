@@ -12,7 +12,7 @@ import RecentlyViewed from '@/components/features/RecentlyViewed';
 import { ArrowRight } from '@/components/ui/Icons';
 import { DotPattern } from '@/components/ui/Patterns';
 
-export default async function Home({ params }: { params: Promise<{ lang: 'en' | 'ar' }> }) {
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const dict = getDictionary(lang);
   const chalets = await getChalets();

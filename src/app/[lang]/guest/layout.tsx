@@ -7,7 +7,7 @@ export default async function GuestLayout({
     params,
 }: {
     children: React.ReactNode;
-    params: Promise<{ lang: 'en' | 'ar' }>;
+    params: Promise<{ lang: string }>;
 }) {
     const { lang } = await params;
     const dict = getDictionary(lang);
