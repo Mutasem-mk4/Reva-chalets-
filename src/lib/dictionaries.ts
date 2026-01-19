@@ -133,16 +133,15 @@ const dictionaries = {
             allRights: 'جميع الحقوق محفوظة.',
         },
     }
-} as const;
+};
 
 export type Locale = keyof typeof dictionaries;
 export type Dictionary = typeof dictionaries.en;
 
 export const getDictionary = (lang: Locale | string | undefined): Dictionary => {
-    // Fallback to 'en' if lang is invalid or undefined
-    if (!lang || !(lang in dictionaries)) {
-        return dictionaries.en;
+    if (lang === 'ar') {
+        return dictionaries.ar;
     }
-    return dictionaries[lang as Locale];
+    return dictionaries.en;
 };
 

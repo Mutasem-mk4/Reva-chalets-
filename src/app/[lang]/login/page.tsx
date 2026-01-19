@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import styles from '@/styles/login.module.css';
 
@@ -8,27 +9,24 @@ export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { login } = useAuth();
+    const { signIn } = useAuth();
+    const router = useRouter(); // Import useRouter
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
-        // Secure Login Logic
-        if (email === 'admin@reva.com') {
-            if (password === 'admin123') {
-                login(email, 'admin');
+        try {
+            const { error } = await signIn(email, password);
+            if (error) {
+                setError(error.message);
             } else {
-                setError('Invalid credentials for Admin access.');
+                // Redirect handled by AuthContext or Dashboard Layout
+                // But generally good to push
+                router.push('/dashboard');
             }
-        } else {
-            // Any other email acts as an Owner for this demo
-            // In a real app, we would verify owner password database
-            if (password.length > 0) {
-                login(email, 'owner');
-            } else {
-                setError('Please enter a password.');
-            }
+        } catch (err: any) {
+            setError(err.message || 'Failed to login');
         }
     };
 

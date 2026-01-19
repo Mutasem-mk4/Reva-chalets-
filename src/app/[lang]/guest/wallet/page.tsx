@@ -15,7 +15,7 @@ interface StoredReward {
 export default function WalletPage({ params }: { params: Promise<{ lang: string }> }) {
     const [rewards, setRewards] = useState<StoredReward[]>([]);
     const [loading, setLoading] = useState(true);
-    const [lang, setLang] = useState<'en' | 'ar'>('en');
+    const [lang, setLang] = useState<string>('en');
     const [dict, setDict] = useState<any>(null);
 
     useEffect(() => {
@@ -72,12 +72,22 @@ export default function WalletPage({ params }: { params: Promise<{ lang: string 
             ) : (
                 <div className="rewards-grid">
                     {rewards.length > 0 ? (
-                        rewards.map(reward => (
-                            <div key={reward.id} className="reward-wrapper">
-                                {/* We can reuse the simpler RewardCard or just the QR Logic */}
-                                <RewardCard lang={lang} dict={dict} />
-                            </div>
-                        ))
+                        rewards.map(reward => {
+                            const mockPartner = {
+                                id: reward.id,
+                                name: 'Reward Gift',
+                                discount: 'Special Offer',
+                                category: 'Shopping' as 'Shopping',
+                                description: 'Your special reward',
+                                logo: '🎁',
+                                qrValue: reward.code
+                            };
+                            return (
+                                <div key={reward.id} className="reward-wrapper">
+                                    <RewardCard partner={mockPartner} dict={dict} />
+                                </div>
+                            );
+                        })
                     ) : (
                         <p className="empty-state">{dict.rewards.noRewards}</p>
                     )}
