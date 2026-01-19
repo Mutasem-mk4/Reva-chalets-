@@ -7,16 +7,17 @@ import { TrendingUp, Calendar, Home, StarFilled } from '@/components/ui/Icons';
 import styles from '@/styles/dashboard.module.css';
 
 export default function DashboardOverview() {
-    const { user, isLoading } = useAuth();
+    const { user, loading } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!isLoading && user && user.role !== 'admin') {
+        const role = user?.user_metadata?.role;
+        if (!loading && user && role !== 'admin') {
             router.push('/dashboard/chalets');
         }
-    }, [user, isLoading, router]);
+    }, [user, loading, router]);
 
-    if (isLoading || !user || user.role !== 'admin') return null;
+    if (loading || !user || user.user_metadata?.role !== 'admin') return null;
 
     // Mock Data for Dashboard
     const stats = [
