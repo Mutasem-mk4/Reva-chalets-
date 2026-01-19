@@ -13,15 +13,16 @@ export default function DashboardLayout({
     children: React.ReactNode;
     params: Promise<{ lang: string }>;
 }) {
-    const { user, isLoading, logout } = useAuth();
+    const { user, loading, signOut } = useAuth();
     const router = useRouter();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        if (!isLoading && (!user || (user.role !== 'admin' && user.role !== 'owner'))) {
+        const role = user?.user_metadata?.role;
+        if (!loading && (!user || (role !== 'admin' && role !== 'owner'))) {
             router.push('/login');
         }
-    }, [user, isLoading, router]);
+    }, [user, loading, router]);
 
     // Close mobile menu on route change
     useEffect(() => {
@@ -36,7 +37,7 @@ export default function DashboardLayout({
     // BUT we can use window.location or similar in client effect if needed.
     // For now, let's just hide the UI elements.
 
-    if (isLoading || !user) {
+    if (loading || !user) {
         return <div className={styles.loading}>Loading Dashboard...</div>;
     }
 
@@ -57,16 +58,16 @@ export default function DashboardLayout({
             <aside className={`${styles.sidebar} ${isMobileMenuOpen ? styles.sidebarOpen : ''}`}>
                 <div className={styles.sidebarHeader}>
                     <h2>Reva Admin</h2>
-                    <span className={styles.roleBadge}>{user.role.toUpperCase()}</span>
+                    <span className={styles.roleBadge}>{(user.user_metadata?.role || 'USER').toUpperCase()}</span>
                 </div>
 
                 <nav className={styles.nav}>
-                    {user.role === 'admin' && (
+                    {user.user_metadata?.role === 'admin' && (
                         <Link href="/dashboard" className={styles.navLink}>
                             📊 Overview
                         </Link>
                     )}
-                    {user.role === 'admin' && (
+                    {user.user_metadata?.role === 'admin' && (
                         <Link href="/dashboard/bookings" className={styles.navLink}>
                             📅 Bookings
                         </Link>
@@ -74,7 +75,7 @@ export default function DashboardLayout({
                     <Link href="/dashboard/chalets" className={styles.navLink}>
                         🏠 My Chalets
                     </Link>
-                    {user.role === 'admin' && (
+                    {user.user_metadata?.role === 'admin' && (
                         <Link href="/dashboard/finances" className={styles.navLink}>
                             💰 Finances
                         </Link>
@@ -82,8 +83,8 @@ export default function DashboardLayout({
                 </nav>
 
                 <div className={styles.userData}>
-                    <p>{user.name}</p>
-                    <button onClick={logout} className={styles.logoutBtn}>Sign Out</button>
+                    <p>{user.user_metadata?.name || user.email}</p>
+                    <button onClick={signOut} className={styles.logoutBtn}>Sign Out</button>
                 </div>
             </aside>
 
