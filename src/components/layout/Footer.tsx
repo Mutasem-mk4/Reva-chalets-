@@ -12,7 +12,7 @@ const defaultDict = {
   footer: { quickLinks: 'Quick Links', legal: 'Legal', terms: 'Terms of Service', privacy: 'Privacy Policy', payments: 'Secure Payments', allRights: 'All rights reserved.' },
 };
 
-export default function Footer({ lang, dict: propDict }: { lang: 'en' | 'ar', dict: any }) {
+export default function Footer({ lang, dict: propDict }: { lang: string, dict: any }) {
   // Use prop dict or fallback to defaults
   const dict = propDict || defaultDict;
   return (

@@ -8,7 +8,7 @@ import type { Chalet } from '@/lib/data';
 
 interface ChaletCardProps {
   chalet: Chalet;
-  lang: 'en' | 'ar';
+  lang: string;
   dict: any;
 }
 

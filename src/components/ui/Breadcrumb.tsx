@@ -10,7 +10,7 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
     items: BreadcrumbItem[];
-    lang: 'en' | 'ar';
+    lang: string;
 }
 
 export default function Breadcrumb({ items, lang }: BreadcrumbProps) {

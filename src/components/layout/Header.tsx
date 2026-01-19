@@ -12,7 +12,7 @@ const defaultDict = {
   rewards: { wallet: 'My Wallet' },
 };
 
-export default function Header({ lang, dict: propDict }: { lang: 'en' | 'ar', dict: any }) {
+export default function Header({ lang, dict: propDict }: { lang: string, dict: any }) {
   // Use prop dict or fallback to defaults
   const dict = propDict || defaultDict;
   const [theme, setTheme] = useState('light');

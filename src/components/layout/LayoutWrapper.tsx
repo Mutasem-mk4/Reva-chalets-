@@ -11,7 +11,7 @@ import ExitIntentPopup from '@/components/features/ExitIntentPopup';
 
 interface LayoutWrapperProps {
     children: ReactNode;
-    lang: 'en' | 'ar';
+    lang: string;
     dict: any;
 }
 

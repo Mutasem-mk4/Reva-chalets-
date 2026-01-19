@@ -9,7 +9,7 @@ import type { Chalet } from '@/lib/data';
 
 interface ChaletListClientProps {
   chalets: Chalet[];
-  lang: 'en' | 'ar';
+  lang: string;
   dict: any;
 }
 

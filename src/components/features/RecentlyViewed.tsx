@@ -47,7 +47,7 @@ export function useRecentlyViewed() {
 }
 
 // Component to display recently viewed chalets
-export default function RecentlyViewed({ lang }: { lang: 'en' | 'ar' }) {
+export default function RecentlyViewed({ lang }: { lang: string }) {
     const [items, setItems] = useState<ViewedChalet[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
 

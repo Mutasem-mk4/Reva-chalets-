@@ -10,7 +10,7 @@ interface RecommendationsProps {
     currentChaletId: string;
     currentLocation: string;
     allChalets: Chalet[];
-    lang: 'en' | 'ar';
+    lang: string;
 }
 
 export default function Recommendations({
