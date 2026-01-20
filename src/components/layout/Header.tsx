@@ -80,9 +80,24 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
           {/* Desktop Nav - Simplified */}
           <nav className="desktop-nav">
-            <Link href={`/${lang}`}>{dict.nav.home}</Link>
-            <Link href={`/${lang}/about`}>{dict.nav.about}</Link>
-            <Link href={`/${lang}/contact`}>{dict.nav.contact}</Link>
+            <Link
+              href={`/${lang}`}
+              className={pathname === `/${lang}` || pathname === `/${lang}/` ? 'active' : ''}
+            >
+              {dict.nav.home}
+            </Link>
+            <Link
+              href={`/${lang}/about`}
+              className={pathname?.includes('/about') ? 'active' : ''}
+            >
+              {dict.nav.about}
+            </Link>
+            <Link
+              href={`/${lang}/contact`}
+              className={pathname?.includes('/contact') ? 'active' : ''}
+            >
+              {dict.nav.contact}
+            </Link>
           </nav>
 
           <div className="actions">
@@ -94,7 +109,11 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
               {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
-            <Link href={`/${lang}/dashboard/profile`} className="icon-btn guest-icon" aria-label="My Profile">
+            <Link
+              href={`/${lang}/dashboard/profile`}
+              className={`icon-btn guest-icon ${pathname?.includes('/dashboard') ? 'active' : ''}`}
+              aria-label="My Profile"
+            >
               <User size={18} />
             </Link>
 
@@ -119,10 +138,30 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
       {/* Mobile Menu Drawer */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav">
-          <Link href={`/${lang}`}>{dict.nav.home}</Link>
-          <Link href={`/${lang}/chalets`}>{dict.nav.chalets}</Link>
-          <Link href={`/${lang}/about`}>{dict.nav.about}</Link>
-          <Link href={`/${lang}/contact`}>{dict.nav.contact}</Link>
+          <Link
+            href={`/${lang}`}
+            className={pathname === `/${lang}` || pathname === `/${lang}/` ? 'active' : ''}
+          >
+            {dict.nav.home}
+          </Link>
+          <Link
+            href={`/${lang}/chalets`}
+            className={pathname?.includes('/chalets') ? 'active' : ''}
+          >
+            {dict.nav.chalets}
+          </Link>
+          <Link
+            href={`/${lang}/about`}
+            className={pathname?.includes('/about') ? 'active' : ''}
+          >
+            {dict.nav.about}
+          </Link>
+          <Link
+            href={`/${lang}/contact`}
+            className={pathname?.includes('/contact') ? 'active' : ''}
+          >
+            {dict.nav.contact}
+          </Link>
           <Link href={`/${lang}/guest/wallet`}>My Wallet</Link>
           <Link href={`/${lang}/chalets`} className="mobile-cta">
             {dict.nav.bookNow}
@@ -211,12 +250,13 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           position: relative;
         }
 
-        .desktop-nav a:hover {
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
           color: hsl(var(--primary));
           opacity: 1;
         }
 
-        /* Hover underline effect */
+        /* Hover & Active underline effect */
         .desktop-nav a::after {
             content: '';
             position: absolute;
@@ -228,7 +268,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             transition: width 0.3s ease;
         }
 
-        .desktop-nav a:hover::after {
+        .desktop-nav a:hover::after,
+        .desktop-nav a.active::after {
             width: 100%;
         }
 
@@ -258,7 +299,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           border-radius: 50%;
         }
 
-        .icon-btn:hover {
+        .icon-btn:hover,
+        .icon-btn.active {
           color: hsl(var(--primary));
           background: rgba(255,255,255,0.1);
           transform: translateY(-1px);
@@ -267,6 +309,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.scrolled .icon-btn:hover {
              background: hsl(var(--muted));
         }
+
 
         .btn-primary {
           background: var(--gradient-gold);
