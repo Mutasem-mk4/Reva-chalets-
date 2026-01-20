@@ -7,7 +7,7 @@ import Footer from '@/components/layout/Footer';
 import FloatingSupport from '@/components/features/FloatingSupport';
 import BackToTop from '@/components/ui/BackToTop';
 import PromoBanner from '@/components/features/PromoBanner';
-import ExitIntentPopup from '@/components/features/ExitIntentPopup';
+import ExitIntentPopup from '@/components/marketing/ExitIntentPopup';
 
 interface LayoutWrapperProps {
     children: ReactNode;

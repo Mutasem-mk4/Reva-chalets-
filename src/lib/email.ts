@@ -34,9 +34,35 @@ export interface PasswordResetData {
     resetLink: string;
 }
 
+export interface DiscountEmailData {
+    to: string;
+    code: string;
+}
+
+// ... existing interfaces ...
+
 // ═══════════════════════════════════════════════════════════════
 // EMAIL FUNCTIONS
 // ═══════════════════════════════════════════════════════════════
+
+export async function sendDiscountEmail(data: DiscountEmailData) {
+    const { to, code } = data;
+
+    try {
+        const result = await resend.emails.send({
+            from: FROM_EMAIL,
+            to,
+            subject: `Your Exclusive Gift: 10% Off Reva Chalets 🎁`,
+            html: getDiscountTemplate({ code }),
+        });
+
+        console.log('Discount email sent:', result);
+        return { success: true, data: result };
+    } catch (error) {
+        console.error('Failed to send discount email:', error);
+        return { success: false, error };
+    }
+}
 
 export async function sendBookingConfirmation(data: BookingConfirmationData) {
     const { to, guestName, chaletName, checkIn, checkOut, nights, guestCount, totalPrice, bookingId } = data;
@@ -285,6 +311,30 @@ function getPasswordResetTemplate(data: { name: string; resetLink: string }): st
         <p style="margin: 0; font-size: 14px; color: #8b9bb3;">
             If you didn't request a password reset, you can safely ignore this email.
         </p>
+    `);
+}
+
+function getDiscountTemplate(data: { code: string }): string {
+    return getBaseTemplate(`
+        <h2 style="margin: 0 0 20px; font-size: 24px; color: #c9a55c;">Here is your 10% Discount! 🎉</h2>
+        
+        <p style="margin: 0 0 20px; font-size: 16px; color: #e2e8f0; line-height: 1.6;">
+            Thank you for subscribing to Reva Chalets! We're thrilled to offer you an exclusive discount on your first booking.
+        </p>
+
+        <div style="background-color: #1a3a5c; border: 1px dashed #c9a55c; border-radius: 12px; padding: 30px; text-align: center; margin: 30px 0;">
+            <p style="margin: 0 0 10px; font-size: 14px; color: #8b9bb3; text-transform: uppercase; letter-spacing: 1px;">Use Code at Checkout</p>
+            <p style="margin: 0; font-size: 32px; font-weight: 700; color: #c9a55c; letter-spacing: 2px;">${data.code}</p>
+        </div>
+        
+        <p style="margin: 0 0 30px; font-size: 16px; color: #e2e8f0; line-height: 1.6;">
+            This code is valid for any chalet booking made within the next 30 days. Don't miss out on your perfect luxury getaway!
+        </p>
+        
+        <a href="https://revachalets.com/chalets" 
+           style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #c9a55c 0%, #e8c87f 100%); color: #0a1628; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 14px;">
+            Find Your Chalet
+        </a>
     `);
 }
 
