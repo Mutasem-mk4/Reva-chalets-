@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Default sender
-const FROM_EMAIL = process.env.FROM_EMAIL || 'Reva Chalets <noreply@revachalets.com>';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Reva Chalets <onboarding@resend.dev>';
 
 // ═══════════════════════════════════════════════════════════════
 // EMAIL TYPES
