@@ -78,10 +78,9 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             <Logo animated={true} />
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav - Simplified */}
           <nav className="desktop-nav">
             <Link href={`/${lang}`}>{dict.nav.home}</Link>
-            <Link href={`/${lang}/chalets`}>{dict.nav.chalets}</Link>
             <Link href={`/${lang}/about`}>{dict.nav.about}</Link>
             <Link href={`/${lang}/contact`}>{dict.nav.contact}</Link>
           </nav>
@@ -138,7 +137,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
       <style jsx>{`
         .header {
-          padding: 1.25rem 0;
+          height: 80px; /* Fixed Height */
           background: transparent;
           position: fixed;
           top: 0;
@@ -147,6 +146,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           z-index: 1000;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           border-bottom: 1px solid transparent;
+          display: flex;
+          align-items: center;
         }
 
         :global(body.promo-visible) .header {
@@ -158,9 +159,9 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         }
 
         .header.scrolled {
-          background: hsl(var(--background) / 0.8);
-          backdrop-filter: blur(12px);
-          padding: 0.75rem 0;
+          background: hsl(var(--background) / 0.85);
+          backdrop-filter: blur(16px);
+          height: 70px; /* Slightly smaller on scroll */
           border-bottom: 1px solid hsl(var(--border) / 0.3);
           box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
@@ -179,12 +180,15 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           display: flex;
           align-items: center;
           justify-content: space-between;
+          height: 100%;
         }
 
         .logo-link {
           text-decoration: none;
           color: white; /* Initial state over dark hero */
           transition: color 0.3s ease;
+          display: flex;
+          align-items: center;
         }
 
         .header.scrolled .logo-link,
@@ -194,22 +198,38 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
         .desktop-nav {
           display: none;
-          gap: 2rem;
+          gap: 2.5rem; /* Increased spacing for cleaner look */
         }
         
         .desktop-nav a {
           font-weight: 500;
-          letter-spacing: var(--tracking-wider);
-          text-transform: uppercase;
-          font-size: 0.85rem;
+          text-transform: capitalize; /* Cleaner than uppercase */
+          font-size: 0.95rem;
           color: inherit;
           transition: all 0.3s ease;
           opacity: 0.9;
+          position: relative;
         }
 
         .desktop-nav a:hover {
           color: hsl(var(--primary));
           opacity: 1;
+        }
+
+        /* Hover underline effect */
+        .desktop-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: hsl(var(--primary));
+            transition: width 0.3s ease;
+        }
+
+        .desktop-nav a:hover::after {
+            width: 100%;
         }
 
         .header {
@@ -220,12 +240,10 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.open {
           color: hsl(var(--foreground));
         }
-        
-        /* Specific overrides removed - now inheriting from .header */
 
         .actions {
           display: flex;
-          gap: 0.75rem;
+          gap: 0.5rem; /* Reduced gap */
           align-items: center;
         }
 
@@ -236,49 +254,35 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           font-size: 1rem;
           color: inherit;
           cursor: pointer;
-          transition: color 0.3s ease;
+          transition: transform 0.2s ease, color 0.2s;
+          border-radius: 50%;
         }
 
         .icon-btn:hover {
           color: hsl(var(--primary));
+          background: rgba(255,255,255,0.1);
+          transform: translateY(-1px);
+        }
+        
+        .header.scrolled .icon-btn:hover {
+             background: hsl(var(--muted));
         }
 
         .btn-primary {
           background: var(--gradient-gold);
           color: #ffffff;
-          padding: 0.7rem 1.75rem;
+          padding: 0.6rem 1.5rem; /* Smaller, leaner button */
           border-radius: 3rem;
           font-weight: 600;
-          letter-spacing: var(--tracking-widest);
-          text-transform: uppercase;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           transition: all 0.3s ease;
           box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .btn-primary::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -60%;
-          width: 20%;
-          height: 200%;
-          background: rgba(255, 255, 255, 0.4);
-          transform: rotate(30deg);
-          transition: all 0.6s ease;
-          pointer-events: none;
-        }
-        
-        .btn-primary:hover::after {
-          left: 120%;
+          margin-left: 0.5rem;
         }
         
         .btn-primary:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 25px rgba(245, 166, 35, 0.5);
-          background: var(--gradient-gold);
+          box-shadow: 0 8px 20px rgba(245, 166, 35, 0.4);
         }
 
         .desktop-only {
@@ -295,6 +299,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           padding: 0.5rem;
           cursor: pointer;
           z-index: 110;
+          color: inherit;
         }
 
         .bar {
@@ -316,7 +321,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* Mobile Menu Drawer */
+        /* Mobile Menu */
         .mobile-menu {
           position: fixed;
           top: 0;
@@ -326,9 +331,9 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           height: 100vh;
           background: hsl(var(--background));
           z-index: 105;
-          transition: right 0.3s ease;
-          padding: 5rem 2rem 2rem;
-          box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+          transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          padding: 6rem 2rem 2rem;
+          box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
 
         .mobile-menu.open {
@@ -366,8 +371,10 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .mobile-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.5);
+          background: rgba(0,0,0,0.4);
+          backdrop-filter: blur(4px);
           z-index: 102;
+          animation: fadeIn 0.3s ease;
         }
 
         @media (min-width: 768px) {
