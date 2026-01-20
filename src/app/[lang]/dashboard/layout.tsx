@@ -17,12 +17,25 @@ export default function DashboardLayout({
     const router = useRouter();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    // We can use the lang from params prop which is a Promise in Next.js 15+
+    // But since this is a client component, we can also use useAuth logic or just wait for params.
+    // However, simpler to just assume 'en' if missing, or use window/pathname if needed.
+    // Ideally we should use the `params` prop correctly.
+    const [lang, setLang] = useState('en');
+
+    useEffect(() => {
+        params.then(p => setLang(p.lang));
+    }, [params]);
+
     useEffect(() => {
         const role = user?.user_metadata?.role;
+        // Only redirect if we have a valid user and they are NOT authorised
         if (!loading && (!user || (role !== 'admin' && role !== 'owner'))) {
-            router.push('/login');
+            // Check if we are already on the login page to avoid loops (though dashboard layout shouldn't run on login)
+            // Use the resolved lang
+            router.push(`/${lang}/login`);
         }
-    }, [user, loading, router]);
+    }, [user, loading, router, lang]);
 
     // Close mobile menu on route change
     useEffect(() => {
