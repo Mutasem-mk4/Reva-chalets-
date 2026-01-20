@@ -43,9 +43,9 @@ export const metadata: Metadata = {
     },
 };
 
-export async function generateStaticParams() {
-    return [{ lang: 'en' }, { lang: 'ar' }];
-}
+// export async function generateStaticParams() {
+//    return [{ lang: 'en' }, { lang: 'ar' }];
+// }
 
 export default async function RootLayout({
     children,
@@ -55,13 +55,6 @@ export default async function RootLayout({
     params: Promise<{ lang: string }>;
 }) {
     const { lang } = await params;
-
-    // Strict locale validation
-    const validLocales = ['en', 'ar'];
-    if (!validLocales.includes(lang)) {
-        redirect('/en');
-    }
-
     const dict = getDictionary(lang);
     const dir = lang === 'ar' ? 'rtl' : 'ltr';
 
