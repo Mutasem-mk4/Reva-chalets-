@@ -110,8 +110,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             </button>
 
             <Link
-              href={`/${lang}/dashboard/profile`}
-              className={`icon-btn guest-icon ${pathname?.includes('/dashboard') ? 'active' : ''}`}
+              href={`/${lang}/guest/profile`}
+              className={`icon-btn guest-icon ${pathname?.includes('/guest') ? 'active' : ''}`}
               aria-label="My Profile"
             >
               <User size={18} />
