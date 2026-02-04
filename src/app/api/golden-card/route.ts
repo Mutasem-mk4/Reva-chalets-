@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { BookingPhase } from '@prisma/client';
+// import { BookingPhase } from '@prisma/client'; // Commented out to fix build
 
 export async function GET(request: Request) {
     try {
