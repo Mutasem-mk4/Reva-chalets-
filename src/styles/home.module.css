@@ -1,6 +1,4 @@
-.homePage {
-    /* Base layout */
-}
+/* Home Page Styles */
 
 /* Hero Section */
 .hero {
@@ -46,7 +44,7 @@
 }
 
 .title {
-    font-size: 4.5rem;
+    font-size: var(--text-7xl);
     /* Larger, more impactful */
     margin-bottom: 1.5rem;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
@@ -105,7 +103,7 @@
 }
 
 .sectionTitle {
-    font-size: 2.5rem;
+    font-size: var(--text-4xl);
     font-family: var(--font-serif);
     color: hsl(var(--primary));
 }
@@ -126,72 +124,90 @@
 
 .chaletGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    /* Slightly wider cards */
-    gap: 3rem;
-    /* More breathing room */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 2rem;
 }
 
 @media (max-width: 768px) {
-    .title {
-        font-size: 2.5rem;
-    }
-
-    .subtitle {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
     .hero {
-        height: 65vh;
-        min-height: 450px;
+        height: 100vh;
+        height: 100svh;
+        /* Safe viewport height for mobile browsers */
+        min-height: unset;
+        padding-top: 56px;
+        /* Account for mobile header */
     }
 
-    .featured {
-        padding: 4rem 0;
+    .heroContent {
+        padding: 0 1.5rem;
     }
 
-    .sectionHeader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-        margin-bottom: 2rem;
-    }
-
-    .sectionTitle {
-        font-size: 1.75rem;
-    }
-
-    .chaletGrid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 480px) {
     .title {
-        font-size: 2rem;
+        font-size: clamp(2rem, 10vw, 3rem);
+        line-height: 1.1;
+        margin-bottom: 1rem;
     }
 
     .subtitle {
         font-size: 1rem;
-    }
-
-    .hero {
-        height: 60vh;
-        min-height: 400px;
+        margin-bottom: 2rem;
+        line-height: 1.5;
+        opacity: 0.9;
     }
 
     .ctaBtn {
         padding: 1rem 2rem;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        width: auto;
+        display: inline-block;
     }
 
     .featured {
         padding: 3rem 0;
     }
 
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
     .sectionTitle {
         font-size: 1.5rem;
+    }
+
+    .viewAll {
+        font-size: 0.95rem;
+    }
+
+    .chaletGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: clamp(1.75rem, 9vw, 2.5rem);
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .ctaBtn {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.9rem;
+    }
+
+    .featured {
+        padding: 2rem 0;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
     }
 }

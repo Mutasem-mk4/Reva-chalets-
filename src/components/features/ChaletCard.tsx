@@ -7,84 +7,84 @@ import Icons from '@/components/ui/Icons';
 import type { Chalet } from '@/lib/data';
 
 interface ChaletCardProps {
-  chalet: Chalet;
-  lang: string;
-  dict: any;
+    chalet: Chalet;
+    lang: string;
+    dict: any;
 }
 
 // Generate urgency badge based on chalet properties
 function getUrgencyBadge(chaletId: string): { text: string; icon: React.ReactNode; type: 'hot' | 'limited' | 'popular' } | null {
-  const badges = [
-    { text: 'Only 2 left!', icon: <Icons.Fire size={14} />, type: 'hot' as const },
-    { text: 'Booked 5x today', icon: <Icons.Lightning size={14} />, type: 'popular' as const },
-    { text: 'Popular this week', icon: <Icons.Sparkles size={14} />, type: 'popular' as const },
-    { text: 'Limited availability', icon: <Icons.Clock size={14} />, type: 'limited' as const },
-    null, // Some chalets won't have badges
-  ];
-  // Use chalet ID to deterministically assign a badge
-  const index = parseInt(chaletId) % badges.length;
-  return badges[index];
+    const badges = [
+        { text: 'Only 2 left!', icon: <Icons.Fire size={14} />, type: 'hot' as const },
+        { text: 'Booked 5x today', icon: <Icons.Lightning size={14} />, type: 'popular' as const },
+        { text: 'Popular this week', icon: <Icons.Sparkles size={14} />, type: 'popular' as const },
+        { text: 'Limited availability', icon: <Icons.Clock size={14} />, type: 'limited' as const },
+        null, // Some chalets won't have badges
+    ];
+    // Use chalet ID to deterministically assign a badge
+    const index = parseInt(chaletId) % badges.length;
+    return badges[index];
 }
 
 export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
-  const urgencyBadge = getUrgencyBadge(chalet.id);
+    const urgencyBadge = getUrgencyBadge(chalet.id);
 
-  return (
-    <TiltCard className="h-full">
-      <Link href={`/${lang}/chalets/${chalet.id}`} className="block h-full">
-        <article className="chalet-card h-full">
-          <div className="image-wrapper">
-            <div className="badge">{chalet.location}</div>
-            {urgencyBadge && (
-              <div className={`urgency-badge ${urgencyBadge.type}`}>
-                {urgencyBadge.icon}
-                {urgencyBadge.text}
-              </div>
-            )}
-            <Image
-              src={chalet.images[0]}
-              alt={chalet.name}
-              className="card-image"
-              width={400}
-              height={250}
-              priority={false}
-            />
-          </div>
+    return (
+        <TiltCard className="h-full">
+            <Link href={`/${lang}/chalets/${chalet.id}`} className="block h-full">
+                <article className="chalet-card h-full">
+                    <div className="image-wrapper">
+                        <div className="badge">{chalet.location}</div>
+                        {urgencyBadge && (
+                            <div className={`urgency-badge ${urgencyBadge.type}`}>
+                                {urgencyBadge.icon}
+                                {urgencyBadge.text}
+                            </div>
+                        )}
+                        <Image
+                            src={chalet.images[0]}
+                            alt={chalet.name}
+                            className="card-image"
+                            width={400}
+                            height={250}
+                            priority={false}
+                        />
+                    </div>
 
-          <div className="content">
-            <div className="header">
-              <h3>{chalet.name}</h3>
-              <span className="rating"><Icons.StarFilled size={14} color="#f5a623" /> {chalet.rating}</span>
-            </div>
+                    <div className="content">
+                        <div className="header">
+                            <h3>{chalet.name}</h3>
+                            <span className="rating"><Icons.StarFilled size={14} color="#f5a623" /> {chalet.rating}</span>
+                        </div>
 
-            <p className="description">{chalet.description}</p>
+                        <p className="description">{chalet.description}</p>
 
-            <div className="amenities">
-              {chalet.amenities.slice(0, 3).map((am, idx) => (
-                <span key={idx} className="amenity-tag">{am}</span>
-              ))}
-              {chalet.amenities.length > 3 && <span className="amenity-tag">+{chalet.amenities.length - 3}</span>}
-            </div>
+                        <div className="amenities">
+                            {chalet.amenities.slice(0, 3).map((am, idx) => (
+                                <span key={idx} className="amenity-tag">{am}</span>
+                            ))}
+                            {chalet.amenities.length > 3 && <span className="amenity-tag">+{chalet.amenities.length - 3}</span>}
+                        </div>
 
-            <div className="footer">
-              <div className="price">
-                <div className="price-anchor">
-                  <span className="original-price">{Math.round(chalet.price * 1.25)} JOD</span>
-                  <span className="savings-badge">-20%</span>
-                </div>
-                <div className="current-price">
-                  <span className="amount">{chalet.price} JOD</span>
-                  <span className="period">/ {dict.chalet.pricePerNight}</span>
-                </div>
-              </div>
+                        <div className="footer">
+                            <div className="price">
+                                <div className="price-anchor">
+                                    <span className="original-price">{Math.round(chalet.price * 1.25)} JOD</span>
+                                    <span className="savings-badge">-20%</span>
+                                </div>
+                                <div className="current-price">
+                                    <span className="amount">{chalet.price} JOD</span>
+                                    <span className="period">/ {dict.chalet.pricePerNight}</span>
+                                </div>
+                            </div>
 
-              <span className="book-btn">
-                {dict.chalet.book}
-              </span>
-            </div>
-          </div>
+                            <span className="book-btn">
+                                {dict.chalet.book}
+                            </span>
+                        </div>
+                    </div>
 
-          <style jsx>{`
+                    <style jsx>{`
                     .chalet-card {
                         background: rgba(255, 255, 255, 0.05);
                         backdrop-filter: blur(10px);
@@ -94,8 +94,9 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                         height: 100%;
                         display: flex;
                         flex-direction: column;
-                        /* Transition and transform are handled by TiltCard mostly, but we keep some internal transitions */
                         transition: border-color 0.3s ease;
+                        max-width: 100%;
+                        width: 100%;
                     }
 
                     /* Hover Glow Effect */
@@ -301,10 +302,88 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                         transform: scale(1.05);
                         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
                     }
+
+                    @media (max-width: 767px) {
+                        .chalet-card {
+                            border-radius: 16px;
+                        }
+
+                        .image-wrapper {
+                            aspect-ratio: 16/10;
+                        }
+
+                        .badge {
+                            top: 0.75rem;
+                            right: 0.75rem;
+                            padding: 0.25rem 0.65rem;
+                            font-size: 0.7rem;
+                        }
+
+                        .urgency-badge {
+                            bottom: 0.75rem;
+                            left: 0.75rem;
+                            padding: 0.3rem 0.6rem;
+                            font-size: 0.65rem;
+                        }
+
+                        .content {
+                            padding: 1rem;
+                        }
+
+                        h3 {
+                            font-size: 1.1rem;
+                        }
+
+                        .rating {
+                            font-size: 0.85rem;
+                        }
+
+                        .description {
+                            font-size: 0.85rem;
+                            margin-bottom: 0.75rem;
+                            -webkit-line-clamp: 2;
+                        }
+
+                        .amenities {
+                            gap: 0.35rem;
+                            margin-bottom: 1rem;
+                        }
+
+                        .amenity-tag {
+                            font-size: 0.7rem;
+                            padding: 0.2rem 0.5rem;
+                        }
+
+                        .footer {
+                            padding-top: 0.75rem;
+                        }
+
+                        .original-price {
+                            font-size: 0.8rem;
+                        }
+
+                        .savings-badge {
+                            font-size: 0.65rem;
+                            padding: 0.1rem 0.35rem;
+                        }
+
+                        .amount {
+                            font-size: 1.1rem;
+                        }
+
+                        .period {
+                            font-size: 0.65rem;
+                        }
+
+                        .book-btn {
+                            padding: 0.5rem 1rem;
+                            font-size: 0.85rem;
+                        }
+                    }
                 `}</style>
-        </article>
-      </Link>
-    </TiltCard>
-  );
+                </article>
+            </Link>
+        </TiltCard>
+    );
 }
 

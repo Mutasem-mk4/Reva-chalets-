@@ -1,0 +1,141 @@
+.container {
+    min-height: 100vh;
+    background-color: var(--color-cream);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px;
+    /* Space for bottom nav */
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: var(--color-forest);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.menuButton,
+.notificationButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    border-radius: var(--radius-full);
+    transition: background-color 0.2s ease;
+}
+
+.menuButton:hover,
+.notificationButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoText {
+    font-family: 'EB Garamond', 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--color-white);
+    letter-spacing: 0.02em;
+}
+
+/* Main Content */
+.main {
+    flex: 1;
+    padding: 0 16px;
+    overflow-y: auto;
+}
+
+/* Greeting Section */
+.greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+    background-color: var(--color-forest);
+    margin: 0 -16px;
+    padding: 16px;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--color-cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.greetingText {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-white);
+}
+
+.hello {
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.userName {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Golden Card - wrapper section */
+.goldenCardSection {
+    margin-top: -8px;
+    background-color: var(--color-forest);
+    padding: 0 16px 20px;
+    margin-left: -16px;
+    margin-right: -16px;
+    border-radius: 0 0 24px 24px;
+}
+
+/* Section Title */
+.sectionTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-black);
+    margin-bottom: 12px;
+}
+
+/* Recommended Section */
+.recommended {
+    margin-top: 24px;
+    padding-bottom: 24px;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+    .header {
+        padding: 10px 12px;
+    }
+
+    .logoText {
+        font-size: 24px;
+    }
+
+    .userName {
+        font-size: 18px;
+    }
+}

@@ -162,6 +162,33 @@ export default function ChaletMap({ chalets }: { chalets: Chalet[] }) {
                     z-index: 0;
                     position: relative;
                 }
+
+                @media (max-width: 767px) {
+                    .map-container {
+                        height: 280px;
+                        border-radius: 12px;
+                    }
+
+                    .map-loading {
+                        height: 280px;
+                    }
+
+                    .custom-zoom-controls {
+                        top: 0.5rem;
+                        right: 0.5rem;
+                    }
+
+                    .zoom-btn {
+                        width: 36px;
+                        height: 36px;
+                    }
+
+                    .zoom-level {
+                        width: 36px;
+                        height: 24px;
+                        font-size: 11px;
+                    }
+                }
                 
                 .map-loading {
                     height: 500px;

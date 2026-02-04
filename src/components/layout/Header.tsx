@@ -8,7 +8,7 @@ import Logo from '@/components/ui/Logo';
 
 // Default dictionary values as fallback
 const defaultDict = {
-  nav: { home: 'Home', chalets: 'Chalets', about: 'About', contact: 'Contact', bookNow: 'Book Now' },
+  nav: { home: 'Home', chalets: 'Chalets', about: 'About', contact: 'Contact', bookNow: 'Book Now', signIn: 'Sign In' },
   rewards: { wallet: 'My Wallet' },
 };
 
@@ -72,19 +72,24 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
   return (
     <>
-      <header className={`header ${scrolled || !isHomePage ? 'scrolled' : ''} ${mobileMenuOpen ? 'open' : ''}`}>
+      <header className={`header ${isHomePage ? 'home' : 'inner'} ${scrolled ? 'scrolled' : ''} ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="container header-content">
           <Link href={`/${lang}`} className="logo-link">
             <Logo animated={true} />
           </Link>
 
-          {/* Desktop Nav - Simplified */}
           <nav className="desktop-nav">
             <Link
               href={`/${lang}`}
               className={pathname === `/${lang}` || pathname === `/${lang}/` ? 'active' : ''}
             >
               {dict.nav.home}
+            </Link>
+            <Link
+              href={`/${lang}/chalets`}
+              className={pathname?.includes('/chalets') ? 'active' : ''}
+            >
+              {dict.nav.chalets}
             </Link>
             <Link
               href={`/${lang}/about`}
@@ -101,17 +106,22 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           </nav>
 
           <div className="actions">
-            <button onClick={switchLanguage} className="icon-btn" aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}>
+            {/* Desktop Actions */}
+            <button onClick={switchLanguage} className="icon-btn desktop-only" aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}>
               {lang === 'en' ? 'عربي' : 'English'}
             </button>
 
-            <button onClick={toggleTheme} className="icon-btn" aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}>
+            <button onClick={toggleTheme} className="icon-btn desktop-only" aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}>
               {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
 
+            <Link href={`/${lang}/login`} className="btn-secondary desktop-only">
+              {dict.nav.signIn}
+            </Link>
+
             <Link
               href={`/${lang}/guest/profile`}
-              className={`icon-btn guest-icon ${pathname?.includes('/guest') ? 'active' : ''}`}
+              className="icon-btn guest-icon desktop-only"
               aria-label="My Profile"
             >
               <User size={18} />
@@ -121,7 +131,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
               {dict.nav.bookNow}
             </Link>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Hamburger - Only visible on mobile */}
             <button
               className="hamburger"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -137,6 +147,16 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
       {/* Mobile Menu Drawer */}
       <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+        {/* Mobile Menu Header */}
+        <div className="mobile-menu-header">
+          <button onClick={switchLanguage} className="mobile-action-btn">
+            {lang === 'en' ? 'عربي' : 'EN'}
+          </button>
+          <button onClick={toggleTheme} className="mobile-action-btn">
+            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+          </button>
+        </div>
+
         <nav className="mobile-nav">
           <Link
             href={`/${lang}`}
@@ -162,7 +182,19 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           >
             {dict.nav.contact}
           </Link>
-          <Link href={`/${lang}/guest/wallet`}>My Wallet</Link>
+
+          <div className="mobile-divider" />
+
+          <Link href={`/${lang}/login`} className="mobile-secondary">
+            {dict.nav.signIn}
+          </Link>
+          <Link href={`/${lang}/guest/profile`}>
+            My Profile
+          </Link>
+          <Link href={`/${lang}/guest/wallet`}>
+            My Wallet
+          </Link>
+
           <Link href={`/${lang}/chalets`} className="mobile-cta">
             {dict.nav.bookNow}
           </Link>
@@ -176,75 +208,114 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
       <style jsx>{`
         .header {
-          height: 80px; /* Fixed Height */
-          background: transparent;
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           z-index: 1000;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          border-bottom: 1px solid transparent;
           display: flex;
           align-items: center;
         }
 
+        /* 1. HOME PAGE STATE (Initial) - Transparent & White */
+        .header.home {
+            height: 80px;
+            background: transparent;
+            color: white;
+            border-bottom: 1px solid transparent;
+        }
+
+        .header.home .logo-link,
+        .header.home .desktop-nav a,
+        .header.home .icon-btn,
+        .header.home .btn-secondary {
+            color: white;
+        }
+
+        .header.home .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header.home .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 2. INNER PAGES & SCROLLED STATE - Adaptive Theme */
+        .header.inner,
+        .header.home.scrolled,
+        .header.open {
+            height: 70px;
+            background: hsl(var(--background) / 0.85);
+            backdrop-filter: blur(16px);
+            color: hsl(var(--foreground));
+            border-bottom: 1px solid hsl(var(--border) / 0.5);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .header.inner .logo-link,
+        .header.home.scrolled .logo-link,
+        .header.open .logo-link,
+        .header.inner .desktop-nav a,
+        .header.home.scrolled .desktop-nav a,
+        .header.open .desktop-nav a,
+        .header.inner .icon-btn,
+        .header.home.scrolled .icon-btn,
+        .header.open .icon-btn {
+            color: hsl(var(--foreground));
+        }
+
+        /* Secondary Button in Theme Mode */
+        .header.inner .btn-secondary,
+        .header.home.scrolled .btn-secondary,
+        .header.open .btn-secondary {
+            background: transparent;
+            color: hsl(var(--foreground));
+            border: 1px solid hsl(var(--border));
+        }
+
+        .header.inner .btn-secondary:hover,
+        .header.home.scrolled .btn-secondary:hover,
+        .header.open .btn-secondary:hover {
+            background: hsl(var(--muted));
+        }
+
+        /* Adjustments for Promo Banner */
         :global(body.promo-visible) .header {
           top: 48px;
         }
 
+        :global(body.promo-visible) .header.inner,
         :global(body.promo-visible) .header.scrolled {
           top: 0;
         }
 
-        .header.scrolled {
-          background: hsl(var(--background) / 0.85);
-          backdrop-filter: blur(16px);
-          height: 70px; /* Slightly smaller on scroll */
-          border-bottom: 1px solid hsl(var(--border) / 0.3);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
-        }
-        
-        .header.open {
-           background: hsl(var(--background));
-           color: hsl(var(--foreground));
-        }
-
-        .header.open .desktop-nav a,
-        .header.open .icon-btn {
-          color: hsl(var(--foreground));
-        }
-
         .header-content {
-          display: flex;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
           align-items: center;
-          justify-content: space-between;
           height: 100%;
+          gap: 1rem;
         }
 
         .logo-link {
           text-decoration: none;
-          color: white; /* Initial state over dark hero */
           transition: color 0.3s ease;
           display: flex;
           align-items: center;
         }
 
-        .header.scrolled .logo-link,
-        .header.open .logo-link {
-          color: hsl(var(--foreground));
-        }
-
         .desktop-nav {
           display: none;
-          gap: 2.5rem; /* Increased spacing for cleaner look */
+          gap: 2.5rem;
+          justify-self: center;
         }
         
         .desktop-nav a {
           font-weight: 500;
-          text-transform: capitalize; /* Cleaner than uppercase */
+          text-transform: capitalize;
           font-size: 0.95rem;
-          color: inherit;
           transition: all 0.3s ease;
           opacity: 0.9;
           position: relative;
@@ -256,7 +327,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           opacity: 1;
         }
 
-        /* Hover & Active underline effect */
         .desktop-nav a::after {
             content: '';
             position: absolute;
@@ -273,48 +343,37 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             width: 100%;
         }
 
-        .header {
-          color: white; /* Default for transparent over hero */
-        }
-
-        .header.scrolled,
-        .header.open {
-          color: hsl(var(--foreground));
-        }
-
         .actions {
           display: flex;
-          gap: 0.5rem; /* Reduced gap */
+          gap: 0.75rem;
           align-items: center;
+          justify-self: end;
         }
 
         .icon-btn {
           background: none;
           border: none;
-          padding: 0.5rem;
-          font-size: 1rem;
-          color: inherit;
+          padding: 0.6rem;
+          font-size: 1.1rem;
           cursor: pointer;
-          transition: transform 0.2s ease, color 0.2s;
+          transition: all 0.2s ease;
           border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .icon-btn:hover,
         .icon-btn.active {
-          color: hsl(var(--primary));
-          background: rgba(255,255,255,0.1);
+          color: hsl(var(--primary)) !important; /* Force primary on hover */
+          background: rgba(150, 150, 150, 0.1);
           transform: translateY(-1px);
         }
-        
-        .header.scrolled .icon-btn:hover {
-             background: hsl(var(--muted));
-        }
-
 
         .btn-primary {
           background: var(--gradient-gold);
-          color: #ffffff;
-          padding: 0.6rem 1.5rem; /* Smaller, leaner button */
+          color: #ffffff !important; /* Always white text */
+          padding: 0.6rem 1.5rem;
           border-radius: 3rem;
           font-weight: 600;
           font-size: 0.9rem;
@@ -328,8 +387,29 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           box-shadow: 0 8px 20px rgba(245, 166, 35, 0.4);
         }
 
+        .btn-secondary {
+            padding: 0.5rem 1.2rem;
+            border-radius: 3rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-1px);
+        }
+
         .desktop-only {
-          display: none;
+          display: none !important;
+        }
+
+        @media (min-width: 768px) {
+          .desktop-only {
+            display: inline-flex !important;
+          }
         }
 
         /* Hamburger Button */
@@ -369,42 +449,86 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           position: fixed;
           top: 0;
           right: -100%;
-          width: 80%;
+          width: 85%;
           max-width: 320px;
           height: 100vh;
           background: hsl(var(--background));
-          z-index: 105;
+          z-index: 1100;
           transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          padding: 6rem 2rem 2rem;
-          box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+          padding: 1.5rem;
+          box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+          overflow-y: auto;
         }
 
         .mobile-menu.open {
           right: 0;
         }
 
+        .mobile-menu-header {
+          display: flex;
+          justify-content: flex-end;
+          gap: 0.5rem;
+          padding-bottom: 1.5rem;
+          margin-bottom: 1rem;
+          border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .mobile-action-btn {
+          background: hsl(var(--muted));
+          border: none;
+          padding: 0.75rem 1rem;
+          border-radius: 0.5rem;
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: hsl(var(--foreground));
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+
+        .mobile-action-btn:hover {
+          background: hsl(var(--border));
+        }
+
         .mobile-nav {
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 0.25rem;
         }
 
         .mobile-nav :global(a) {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
           font-weight: 500;
           color: hsl(var(--foreground));
-          transition: color 0.2s;
+          padding: 0.875rem 0.5rem;
+          border-radius: 0.5rem;
+          transition: all 0.2s;
         }
 
-        .mobile-nav :global(a:hover) {
-          color: #f5a623;
+        .mobile-nav :global(a:hover),
+        .mobile-nav :global(a.active) {
+          color: hsl(var(--primary));
+          background: hsl(var(--muted) / 0.5);
+        }
+
+        .mobile-divider {
+          height: 1px;
+          background: hsl(var(--border));
+          margin: 0.75rem 0;
+        }
+
+        .mobile-nav :global(.mobile-secondary) {
+          color: hsl(var(--muted-foreground));
+          font-size: 1rem;
         }
 
         .mobile-nav :global(.mobile-cta) {
           background: linear-gradient(135deg, #f5a623, #d4920a);
-          color: #ffffff;
+          color: #ffffff !important;
           padding: 1rem;
-          border-radius: 3rem;
+          border-radius: 0.75rem;
           text-align: center;
           margin-top: 1rem;
           font-weight: 600;
@@ -414,10 +538,15 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .mobile-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.4);
+          background: rgba(0,0,0,0.5);
           backdrop-filter: blur(4px);
-          z-index: 102;
+          z-index: 1050;
           animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
 
         @media (min-width: 768px) {
@@ -436,6 +565,42 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           .mobile-menu,
           .mobile-overlay {
             display: none;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .header.home,
+          .header.inner {
+            height: 56px;
+          }
+
+          .header-content {
+            grid-template-columns: 1fr auto;
+            padding: 0 1rem;
+          }
+
+          .desktop-nav {
+            display: none !important;
+          }
+
+          .actions {
+            gap: 0;
+          }
+
+          .hamburger {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .bar {
+            width: 22px;
+          }
+
+          :global(body.promo-visible) .header {
+            top: 0;
           }
         }
       `}</style>

@@ -195,7 +195,7 @@ export default function TestimonialsCarousel() {
                     left: 50%;
                     transform: translateX(-50%);
                     font-size: 4rem;
-                    font-family: Georgia, serif;
+                    font-family: var(--font-serif);
                     background: linear-gradient(135deg, #f5a623, #d4920a);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;

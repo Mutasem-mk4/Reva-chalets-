@@ -6,6 +6,7 @@ const dictionaries = {
             about: 'About',
             contact: 'Contact',
             bookNow: 'Book Now',
+            signIn: 'Sign In',
         },
         home: {
             heroTitle: 'Experience Luxury in Jordan',
@@ -73,6 +74,7 @@ const dictionaries = {
             about: 'من نحن',
             contact: 'تواصل معنا',
             bookNow: 'احجز الآن',
+            signIn: 'تسجيل دخول',
         },
         home: {
             heroTitle: 'عيش الرفاهية في الأردن',

@@ -9,7 +9,7 @@ export default function ScrollReveal({ children, delay = 0 }: { children: React.
             whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay, ease: "easeOut" }}
-            style={{ perspective: "1000px" }}
+            style={{ perspective: "1000px", maxWidth: "100%", overflow: "hidden" }}
         >
             {children}
         </motion.div>

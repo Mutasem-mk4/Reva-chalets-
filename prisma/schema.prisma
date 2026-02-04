@@ -12,6 +12,7 @@ datasource db {
 // ENUMS (PostgreSQL supports native enums)
 // ═══════════════════════════════════════════════════════════════
 
+
 enum Role {
   USER
   ADMIN
@@ -25,6 +26,13 @@ enum BookingStatus {
   COMPLETED
 }
 
+enum BookingPhase {
+  NOT_BOOKED
+  BOOKED_PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
 enum PaymentStatus {
   PENDING
   PAID
@@ -32,9 +40,22 @@ enum PaymentStatus {
   REFUNDED
 }
 
+enum DiscountType {
+  ZAD
+  KAIF
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  SYSTEM
+}
+
+
 // ═══════════════════════════════════════════════════════════════
 // MODELS
 // ═══════════════════════════════════════════════════════════════
+
 
 model User {
   id            String    @id @default(cuid())
@@ -48,10 +69,17 @@ model User {
   bookings      Booking[]
   reviews       Review[]
   ownedChalets  Chalet[]  @relation("ChaletOwner")
+  
+  // New Relations
+  discountUsage DiscountUsage[]
+  groupMemberships GroupMember[]
+  hostedGroups  BookingGroup[] @relation("GroupHost")
+  messages      Message[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
+
 
 model Chalet {
   id          String    @id @default(cuid())
@@ -109,12 +137,18 @@ model Booking {
   paymentMethod   String?
   
   // Stripe payment fields
+
   stripeSessionId       String?
   stripePaymentIntentId String?
   
+  // Relations
+  discountUsage   DiscountUsage[]
+  bookingGroup    BookingGroup?
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
+
 
 model Review {
   id        String   @id @default(cuid())
@@ -130,6 +164,7 @@ model Review {
   createdAt DateTime @default(now())
 }
 
+
 model Partner {
   id          String   @id @default(cuid())
   name        String
@@ -141,6 +176,74 @@ model Partner {
   
   isActive    Boolean  @default(true)
   
+  discounts   Discount[]
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// ═══════════════════════════════════════════════════════════════
+// NEW MODELS
+// ═══════════════════════════════════════════════════════════════
+
+model Discount {
+  id          String       @id @default(cuid())
+  name        String
+  nameAr      String
+  description String
+  type        DiscountType // ZAD or KAIF
+  category    String       // gas, meat, transport, bowling, karting
+  value       Float        // percentage or fixed amount
+  validUntil  DateTime?
+  partnerId   String?
+  partner     Partner?     @relation(fields: [partnerId], references: [id])
+  usedBy      DiscountUsage[]
+  createdAt   DateTime     @default(now())
+}
+
+model DiscountUsage {
+  id         String   @id @default(cuid())
+  discountId String
+  discount   Discount @relation(fields: [discountId], references: [id])
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  bookingId  String?
+  booking    Booking? @relation(fields: [bookingId], references: [id])
+  usedAt     DateTime @default(now())
+}
+
+model BookingGroup {
+  id          String   @id @default(cuid())
+  bookingId   String   @unique
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  hostId      String
+  host        User     @relation("GroupHost", fields: [hostId], references: [id])
+  members     GroupMember[]
+  messages    Message[]
+  createdAt   DateTime @default(now())
+}
+
+model GroupMember {
+  id           String       @id @default(cuid())
+  groupId      String
+  group        BookingGroup @relation(fields: [groupId], references: [id])
+  userId       String
+  user         User         @relation(fields: [userId], references: [id])
+  hasRated     Boolean      @default(false)
+  canUseKaif   Boolean      @default(false)
+  joinedAt     DateTime     @default(now())
+  
+  @@unique([groupId, userId])
+}
+
+model Message {
+  id        String       @id @default(cuid())
+  groupId   String
+  group     BookingGroup @relation(fields: [groupId], references: [id])
+  senderId  String
+  sender    User         @relation(fields: [senderId], references: [id])
+  content   String
+  type      MessageType  @default(TEXT)
+  createdAt DateTime     @default(now())
+}
+

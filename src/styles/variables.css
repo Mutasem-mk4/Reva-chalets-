@@ -1,82 +1,119 @@
 :root {
   /* ═══════════════════════════════════════════════════════════════
-     REVA CHALETS - "Dead Sea Dusk" Color Palette
-     Inspired by golden hour over the Dead Sea
+     RIVA - Exact Colors from Reference Design
      ═══════════════════════════════════════════════════════════════ */
 
-  /* Primary - Vibrant Teal (Trust, Sophistication) */
-  --primary: 175 70% 25%;
-  --primary-foreground: 0 0% 100%;
+  /* Primary - Forest Green (Header & Accents) */
+  --color-forest: #3D5A47;
+  --color-forest-dark: #2C4435;
+  --color-forest-light: #4A6B55;
 
-  /* Secondary - Soft Sand (Warmth, Elegance) */
-  --secondary: 38 30% 96%;
-  --secondary-foreground: 175 70% 25%;
+  /* Accent - Golden Yellow (Cards & CTAs) */
+  --color-gold: #E5A61D;
+  --color-gold-dark: #D4920A;
+  --color-gold-light: #F5C24D;
+  --color-gold-pale: #FFF9E6;
 
-  /* Accent - BRIGHT GOLD (Luxury, Action) - Much more saturated! */
-  --accent: 45 100% 50%;
-  --accent-foreground: 0 0% 10%;
+  /* Background - Cream/Off-White */
+  --color-cream: #F5F0E6;
+  --color-cream-light: #FAF8F3;
+  --color-cream-dark: #E8E0D0;
 
-  /* Muted - Subtle text and backgrounds */
-  --muted: 40 20% 94%;
-  --muted-foreground: 220 15% 35%;
-  /* Darkened for better readability on light bg */
-
-  /* Neutral/System Colors */
-  --background: 42 30% 99%;
-  --foreground: 220 15% 12%;
-
-  --card: 0 0% 100%;
-  --card-foreground: 220 15% 12%;
-
-  --border: 40 25% 88%;
-  --input: 40 25% 88%;
-  --ring: 178 55% 18%;
+  /* Neutral Colors */
+  --color-white: #FFFFFF;
+  --color-black: #1A1A1A;
+  --color-gray-100: #F7F7F7;
+  --color-gray-200: #EEEEEE;
+  --color-gray-300: #D1D5DB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1F2937;
 
   /* Semantic Colors */
-  --success: 142 70% 42%;
-  --success-foreground: 0 0% 100%;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
 
-  --warning: 38 92% 50%;
-  --warning-foreground: 0 0% 100%;
-
-  --error: 0 84% 60%;
-  --error-foreground: 0 0% 100%;
-
-  --info: 199 89% 48%;
-  --info-foreground: 0 0% 100%;
+  /* HSL versions for opacity support */
+  --primary: 144 20% 30%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 38 30% 94%;
+  --secondary-foreground: 144 20% 30%;
+  
+  --accent: 42 82% 50%;
+  --accent-foreground: 0 0% 10%;
+  
+  --muted: 40 20% 94%;
+  --muted-foreground: 220 15% 35%;
+  
+  --background: 40 30% 95%;
+  --foreground: 0 0% 10%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  
+  --border: 40 25% 88%;
+  --input: 40 25% 88%;
+  --ring: 144 20% 30%;
 
   /* Design Tokens */
   --radius: 1rem;
+  --radius-sm: 0.5rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-full: 9999px;
 
-  /* Shadows - Warm & Diffused */
+  /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
-  --shadow-luxury: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
 
   /* Gradients */
-  --gradient-gold: linear-gradient(135deg, #f5a623 0%, #ffcf71 50%, #d4920a 100%);
-  --gradient-metallic: linear-gradient(110deg, #d4920a 0%, #ffcf71 25%, #f5a623 50%, #ffcf71 75%, #d4920a 100%);
-  --gradient-hero: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.85));
-  --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 30% 98%));
+  --gradient-gold: linear-gradient(135deg, #E5A61D 0%, #F5C24D 50%, #D4920A 100%);
+  --gradient-forest: linear-gradient(135deg, #3D5A47 0%, #4A6B55 100%);
+  --gradient-card: linear-gradient(145deg, #FFFFFF, #FAF8F3);
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-arabic: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  --font-logo: 'EB Garamond', 'Playfair Display', serif;
 
-  /* Letter Spacing (Tracking) */
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* Type Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Letter Spacing */
   --tracking-tighter: -0.05em;
   --tracking-tight: -0.025em;
   --tracking-normal: 0em;
   --tracking-wide: 0.025em;
   --tracking-wider: 0.05em;
   --tracking-widest: 0.1em;
-  --tracking-luxury: 0.2em;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   DARK MODE - Midnight Elegance
-   ═══════════════════════════════════════════════════════════════ */
+/* Dark Mode */
 [data-theme='dark'] {
   --background: 220 25% 8%;
   --foreground: 40 25% 96%;
@@ -84,7 +121,7 @@
   --card: 220 22% 12%;
   --card-foreground: 40 25% 98%;
 
-  --primary: 176 45% 38%;
+  --primary: 144 30% 40%;
   --primary-foreground: 0 0% 100%;
 
   --secondary: 220 22% 16%;
@@ -93,17 +130,13 @@
   --muted: 220 20% 18%;
   --muted-foreground: 220 10% 60%;
 
-  /* Brighter gold for dark backgrounds */
-  --accent: 42 80% 62%;
+  --accent: 42 80% 55%;
   --accent-foreground: 220 25% 8%;
 
   --border: 220 20% 18%;
   --input: 220 20% 18%;
-  --ring: 176 45% 38%;
+  --ring: 144 30% 40%;
 
-  /* Adjusted shadows for dark mode */
-  --shadow-luxury: 0 25px 50px -12px rgb(0 0 0 / 0.5);
-
-  /* Dark mode gradients */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
   --gradient-card: linear-gradient(145deg, hsl(220 22% 14%), hsl(220 22% 10%));
 }

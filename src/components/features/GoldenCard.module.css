@@ -1,0 +1,289 @@
+.card {
+    display: grid;
+    grid-template-columns: 100px 1fr 120px;
+    gap: 12px;
+    background: linear-gradient(135deg, #E5A61D 0%, #F5C24D 50%, #D4920A 100%);
+    border-radius: 16px;
+    padding: 12px;
+    margin: 16px 0;
+    box-shadow: 0 4px 20px rgba(229, 166, 29, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Phase Variants */
+.notBooked {
+    background: linear-gradient(135deg, #9CA3AF 0%, #D1D5DB 50%, #6B7280 100%);
+    box-shadow: 0 4px 20px rgba(107, 114, 128, 0.3);
+}
+
+.bookedPending {
+    background: linear-gradient(135deg, #E5A61D 0%, #F5C24D 50%, #D4920A 100%);
+    box-shadow: 0 4px 20px rgba(229, 166, 29, 0.3);
+}
+
+.inProgress {
+    background: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #16A34A 100%);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+}
+
+.completed {
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #2563EB 100%);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Preview Section - Left */
+.previewSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.viewButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.imageGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+}
+
+.mainImage {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><rect fill="%23ccc" width="100" height="50"/></svg>');
+    background-size: cover;
+}
+
+.smallImages {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+}
+
+.smallImage {
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+/* Info Section - Center */
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: white;
+}
+
+.statusText {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.farmName {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: #8B0000;
+    /* Dark red matching reference */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.detailRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #1A1A1A;
+}
+
+.detailRow svg {
+    flex-shrink: 0;
+}
+
+.remainingTimeBtn {
+    margin-top: auto;
+    background: white;
+    color: #1A1A1A;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Pass Section - Right */
+.passSection {
+    display: flex;
+    align-items: stretch;
+}
+
+.passCard {
+    background: #FAF8F3;
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    position: relative;
+}
+
+.activeLabel {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 9px;
+    color: #22C55E;
+    font-weight: 500;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+.activeDot {
+    width: 6px;
+    height: 6px;
+    background: #22C55E;
+    border-radius: 50%;
+}
+
+.openButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #3D5A47;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.characterIcon {
+    font-size: 32px;
+    margin: 4px 0;
+}
+
+.groupMembers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+}
+
+.memberAvatars {
+    display: flex;
+    align-items: center;
+}
+
+.currencyIcon {
+    width: 16px;
+    height: 16px;
+    background: #E5A61D;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: white;
+    font-weight: bold;
+    margin-left: -4px;
+    border: 1px solid white;
+}
+
+.currencyIcon:first-child {
+    margin-left: 0;
+}
+
+.memberCount {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    color: #374151;
+    font-weight: 600;
+}
+
+.chatIcon {
+    font-size: 12px;
+}
+
+.viewPassBtn {
+    background: #3D5A47;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+    .card {
+        grid-template-columns: 80px 1fr 100px;
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .farmName {
+        font-size: 14px;
+    }
+
+    .detailRow {
+        font-size: 10px;
+    }
+
+    .characterIcon {
+        font-size: 24px;
+    }
+}
+
+/* Add button reset for chat icon wrapper */
+.chatIconWrapper {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.chatIconWrapper:hover {
+    transform: scale(1.1);
+}

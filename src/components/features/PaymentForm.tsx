@@ -136,7 +136,7 @@ export default function PaymentForm({
           padding: 1.5rem;
           margin-top: 1rem;
           color: #334155;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          font-family: var(--font-sans);
         }
 
         .header {

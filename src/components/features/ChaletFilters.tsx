@@ -75,8 +75,13 @@ export default function ChaletFilters({ chalets, onFilter }: ChaletFiltersProps)
                         padding: 0.75rem 1rem;
                     }
 
+                    .location-filter {
+                        width: 100%;
+                    }
+
                     .location-filter select {
                         width: 100%;
+                        min-width: unset;
                     }
                 }
             `}</style>

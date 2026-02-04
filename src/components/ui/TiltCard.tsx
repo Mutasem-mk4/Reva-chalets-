@@ -37,6 +37,8 @@ export default function TiltCard({ children, className = '' }: { children: React
                     will-change: transform;
                     transition: transform 0.15s ease-out;
                     transform-style: preserve-3d;
+                    max-width: 100%;
+                    width: 100%;
                 }
             `}</style>
         </div>

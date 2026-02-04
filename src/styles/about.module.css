@@ -85,9 +85,10 @@
 
 .valueCard {
     padding: 2rem;
-    background: white;
+    background: hsl(var(--card));
     border-radius: var(--radius);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-md);
+    border: 1px solid hsl(var(--border) / 0.5);
     transition: transform 0.2s;
 }
 
@@ -114,9 +115,48 @@
 @media (max-width: 768px) {
     .story {
         grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 0 1rem;
+        margin: 2rem auto;
     }
 
     .heroContent h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        padding: 0 1rem;
+    }
+
+    .heroContent p {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .hero {
+        height: 50vh;
+    }
+
+    .storyText h2 {
+        font-size: 1.75rem;
+    }
+
+    .storyImage {
+        height: 250px;
+    }
+
+    .values {
+        padding: 2rem 1rem;
+    }
+
+    .values h2 {
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .valueGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .valueCard {
+        padding: 1.5rem;
     }
 }

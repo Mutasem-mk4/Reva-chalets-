@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { Inter, Playfair_Display, Cairo } from 'next/font/google';
+import { Inter, Playfair_Display, Cairo, EB_Garamond } from 'next/font/google';
 import '@/styles/globals.css';
 import { getDictionary } from '@/lib/dictionaries';
 import type { Metadata } from 'next';
@@ -12,6 +12,7 @@ import { ToastProvider } from '@/components/ui/Toast';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
 const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
+const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-logo', style: ['normal', 'italic'] });
 
 export const metadata: Metadata = {
     title: {
@@ -60,7 +61,7 @@ export default async function RootLayout({
 
     return (
         <html lang={lang} dir={dir} data-theme="light">
-            <body className={`${inter.variable} ${playfair.variable} ${cairo.className}`}>
+            <body className={`${inter.variable} ${playfair.variable} ${cairo.className} ${ebGaramond.variable}`}>
                 {/* Skip to content link for accessibility */}
                 <a href="#main-content" className="skip-to-content">
                     Skip to content

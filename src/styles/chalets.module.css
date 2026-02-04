@@ -14,8 +14,8 @@
 
 .chaletGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 3rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 2rem;
 }
 
 /* Detail Page - Gallery Section */
@@ -248,58 +248,92 @@
 
 @media (max-width: 768px) {
     .pageContainer {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
 
     .pageTitle {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 1.25rem;
     }
 
     .chaletGrid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
+    }
+
+    .amenitiesList {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
     }
 
     .gallery {
-        height: 35vh;
+        height: 40vh;
+        margin-bottom: 0;
     }
 
     .mainInfo {
-        padding: 1.5rem;
+        padding: 1.25rem;
+        border-radius: 0;
+        box-shadow: none;
     }
 
     .mainInfo h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+    }
+
+    .location {
+        font-size: 0.95rem;
     }
 
     .sectionTitle {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
+    }
+
+    .description {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .reviewCard {
+        padding: 1rem;
+    }
+
+    .policies {
+        padding: 1rem;
     }
 }
 
 @media (max-width: 480px) {
     .pageTitle {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .mainInfo {
         padding: 1rem;
     }
 
-    .amenitiesGrid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
+    .mainInfo h1 {
+        font-size: 1.35rem;
     }
 
-    .amenity {
-        padding: 0.5rem;
+    .amenitiesList {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .amenityItem {
         font-size: 0.85rem;
+        gap: 0.35rem;
     }
 
     .gallery {
-        height: 30vh;
+        height: 35vh;
+    }
+
+    .rating {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.85rem;
     }
 }
 

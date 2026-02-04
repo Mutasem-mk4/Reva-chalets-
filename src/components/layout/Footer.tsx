@@ -164,6 +164,48 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
             text-align: left;
           }
         }
+
+        @media (max-width: 767px) {
+          .footer {
+            padding: 2.5rem 0 1.5rem;
+          }
+
+          .footer-content {
+            gap: 2rem;
+            margin-bottom: 2rem;
+          }
+
+          .brand p {
+            font-size: 0.85rem;
+          }
+
+          .footer-section h4 {
+            font-size: 0.75rem;
+            margin-bottom: 0.75rem;
+          }
+
+          .footer-nav :global(a) {
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+          }
+
+          .payment-badges {
+            gap: 0.35rem;
+          }
+
+          .badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+          }
+
+          .footer-bottom {
+            padding-top: 1rem;
+          }
+
+          .footer-bottom p {
+            font-size: 0.8rem;
+          }
+        }
       `}</style>
     </footer>
   );

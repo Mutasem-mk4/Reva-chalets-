@@ -37,9 +37,9 @@ export default function TrustBanner() {
       <style jsx>{`
         .trust-banner {
           display: flex;
-          gap: 2rem;
+          gap: 1rem;
           background: hsl(var(--secondary) / 0.5);
-          padding: 1.5rem;
+          padding: 1rem;
           border-radius: var(--radius);
           margin-top: 2rem;
           flex-wrap: wrap;
@@ -48,9 +48,9 @@ export default function TrustBanner() {
         .trust-item {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.5rem;
           flex: 1;
-          min-width: 200px;
+          min-width: 140px;
         }
 
         .icon {
@@ -68,22 +68,47 @@ export default function TrustBanner() {
         strong {
           color: hsl(var(--primary));
           font-weight: 600;
+          font-size: 0.9rem;
         }
 
         small {
           opacity: 0.7;
-          font-size: 0.8rem;
+          font-size: 0.75rem;
         }
 
         .reva-promise {
-            background: rgba(217, 119, 6, 0.1); /* Gold tint */
-            padding: 0.5rem 1rem;
+            background: rgba(217, 119, 6, 0.1);
+            padding: 0.5rem 0.75rem;
             border-radius: 8px;
             border: 1px solid rgba(217, 119, 6, 0.3);
         }
 
         .reva-promise strong {
             color: #b45309;
+        }
+
+        @media (max-width: 480px) {
+          .trust-banner {
+            gap: 0.75rem;
+            padding: 0.75rem;
+          }
+
+          .trust-item {
+            min-width: 45%;
+            flex: 0 0 45%;
+          }
+
+          .icon {
+            font-size: 0.9rem;
+          }
+
+          strong {
+            font-size: 0.8rem;
+          }
+
+          small {
+            font-size: 0.7rem;
+          }
         }
       `}</style>
     </div>

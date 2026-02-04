@@ -56,8 +56,9 @@ export default function ChaletListClient({ chalets, lang, dict }: ChaletListClie
 
         .chalet-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
           gap: 2rem;
+          width: 100%;
         }
 
         .no-results {
@@ -88,6 +89,7 @@ export default function ChaletListClient({ chalets, lang, dict }: ChaletListClie
         @media (max-width: 768px) {
           .chalet-grid {
             grid-template-columns: 1fr;
+            gap: 1rem;
           }
         }
       `}</style>

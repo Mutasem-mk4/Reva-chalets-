@@ -291,6 +291,10 @@ export default function PromoBanner() {
                     .time-value {
                         font-size: 1rem;
                     }
+
+                    .promo-banner {
+                        display: none;
+                    }
                 }
             `}</style>
         </div>

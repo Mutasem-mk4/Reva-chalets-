@@ -1,0 +1,116 @@
+.searchSection {
+    margin-top: 24px;
+}
+
+.searchContainer {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.searchInputWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: var(--color-white);
+    border-radius: 12px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.searchIcon {
+    color: var(--color-gold);
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: var(--color-black);
+    background: transparent;
+}
+
+.searchInput::placeholder {
+    color: var(--color-gray-400);
+}
+
+.filterButton {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    border: none;
+    border-radius: 12px;
+    color: var(--color-gray-600);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+}
+
+.filterButton:hover {
+    background: var(--color-cream);
+}
+
+/* Filter Tags */
+.filterTags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.filterTags::-webkit-scrollbar {
+    display: none;
+}
+
+.filterTag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-gray-700);
+    color: var(--color-white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.filterTag:hover {
+    background: var(--color-gray-600);
+}
+
+.filterTag svg {
+    flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 380px) {
+    .searchInputWrapper {
+        padding: 10px 14px;
+    }
+
+    .searchInput {
+        font-size: 14px;
+    }
+
+    .filterButton {
+        width: 44px;
+        height: 44px;
+    }
+
+    .filterTag {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
