@@ -189,14 +189,13 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           color: var(--color-forest);
         }
 
-        /* Logo image — invert for white on dark backgrounds */
-        .header.home :global(.logo-img) {
-          filter: brightness(0) invert(1);
-        }
-
+        /* Logo image — natural colors, no filters */
+        .header.home :global(.logo-img),
         .header.inner :global(.logo-img),
         .header.home.scrolled :global(.logo-img) {
-          filter: brightness(0) saturate(100%) invert(20%) sepia(15%) saturate(1500%) hue-rotate(120deg);
+          height: 48px;
+          width: auto;
+          object-fit: contain;
         }
 
         .header-content {
