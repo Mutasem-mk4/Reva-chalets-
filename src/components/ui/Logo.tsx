@@ -45,7 +45,7 @@ export default function Logo({ className = '', animated = false, showText = true
 
       {showText && (
         <span className="logo-text font-serif text-xl font-bold tracking-tight">
-          Reva<span className="text-accent">.</span>
+          Riva<span className="text-accent">.</span>
         </span>
       )}
 

@@ -10,7 +10,7 @@ const dictionaries = {
         },
         home: {
             heroTitle: 'Experience Luxury in Jordan',
-            heroSubtitle: 'Find your perfect getaway with Reva Chalets.',
+            heroSubtitle: 'Find your perfect getaway with Riva Chalets.',
             featured: 'Featured Chalets',
             viewAll: 'View All',
         },

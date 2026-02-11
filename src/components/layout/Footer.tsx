@@ -7,7 +7,7 @@ import Logo from '@/components/ui/Logo';
 // Default dictionary values as fallback
 const defaultDict = {
   nav: { chalets: 'Chalets', about: 'About', contact: 'Contact' },
-  home: { heroSubtitle: 'Find your perfect getaway with Reva Chalets.' },
+  home: { heroSubtitle: 'Find your perfect getaway with Riva Chalets.' },
   footer: { quickLinks: 'Quick Links', legal: 'Legal', terms: 'Terms of Service', privacy: 'Privacy Policy', payments: 'Secure Payments', allRights: 'All rights reserved.' },
 };
 
@@ -58,7 +58,7 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
       </div>
 
       <div className="container footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Reva Chalets. {dict.footer?.allRights || 'All rights reserved.'}</p>
+        <p>&copy; {new Date().getFullYear()} Riva Chalets. {dict.footer?.allRights || 'All rights reserved.'}</p>
       </div>
 
       <style jsx>{`

@@ -12,7 +12,7 @@ export default function AboutPage() {
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
                     <h1>Redefining Luxury in Jordan</h1>
-                    <p>Reva Chalets connects discerning travelers with the most exclusive and comfortable properties across the Kingdom.</p>
+                    <p>Riva Chalets connects discerning travelers with the most exclusive and comfortable properties across the Kingdom.</p>
                 </div>
             </section>
 
@@ -20,15 +20,15 @@ export default function AboutPage() {
                 <div className={styles.storyText}>
                     <h2>Our Story</h2>
                     <p>
-                        Founded in 2024, Reva Chalets was born from a simple belief: everyone deserves a perfect getaway.
+                        Founded in 2024, Riva Chalets was born from a simple belief: everyone deserves a perfect getaway.
                         We noticed that finding high-quality, trusted vacation rentals in Jordan was a challenge. Photos often didn't match reality, and booking processes were cumbersome.
                     </p>
                     <p>
-                        We set out to change that. By hand-picking every property and verifying established quality standards, we ensure that your "Reva Moment" is nothing short of exceptional.
+                        We set out to change that. By hand-picking every property and verifying established quality standards, we ensure that your &quot;Riva Moment&quot; is nothing short of exceptional.
                     </p>
                 </div>
                 <div className={styles.storyImage}>
-                    <div className={styles.placeholderImage}>Reva Team</div>
+                    <div className={styles.placeholderImage}>Riva Team</div>
                 </div>
             </section>
 
