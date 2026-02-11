@@ -68,40 +68,34 @@
     gap: 2rem;
 }
 
+/* ═══════════════════════════════════════════════════════
+   SECTION SPACING UTILITIES
+   ═══════════════════════════════════════════════════════ */
+
+.goldenCardSection {
+    max-width: 600px;
+    margin: -120px auto 0;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 20;
+}
+
+.searchSection {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+.sectionWrapper {
+    padding: 0 1rem;
+    max-width: 1140px;
+    margin: 2rem auto;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — TABLET
+   ═══════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-    .hero {
-        height: 100vh;
-        height: 100svh;
-        /* Safe viewport height for mobile browsers */
-        min-height: unset;
-        padding-top: 56px;
-        /* Account for mobile header */
-    }
-
-    .heroContent {
-        padding: 0 1.5rem;
-    }
-
-    .title {
-        font-size: clamp(2rem, 10vw, 3rem);
-        line-height: 1.1;
-        margin-bottom: 1rem;
-    }
-
-    .subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-        line-height: 1.5;
-        opacity: 0.9;
-    }
-
-    .ctaBtn {
-        padding: 1rem 2rem;
-        font-size: 0.95rem;
-        width: auto;
-        display: inline-block;
-    }
-
     .featured {
         padding: 3rem 0;
     }
@@ -124,30 +118,52 @@
     }
 
     .chaletGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
+    }
+
+    .goldenCardSection {
+        max-width: 100%;
+        margin-top: -100px;
+    }
+
+    .searchSection {
+        margin: 2rem auto;
     }
 }
 
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE
+   ═══════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-    .title {
-        font-size: clamp(1.75rem, 9vw, 2.5rem);
-    }
-
-    .subtitle {
-        font-size: 0.9rem;
-    }
-
-    .ctaBtn {
-        padding: 0.875rem 1.75rem;
-        font-size: 0.9rem;
-    }
-
     .featured {
         padding: 2rem 0;
     }
 
     .sectionTitle {
         font-size: 1.25rem;
+    }
+
+    .chaletGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .goldenCardSection {
+        margin-top: -80px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE — DESKTOP
+   ═══════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+    .chaletGrid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    .featured {
+        padding: 6rem 0;
     }
 }

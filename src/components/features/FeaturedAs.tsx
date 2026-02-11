@@ -1,47 +1,44 @@
 'use client';
 
-import { Trophy, Globe, Map, FileText, Camera, Plane } from '@/components/ui/Icons';
-
 export default function FeaturedAs() {
-    // Using text-based logos for demo - in production, use actual logo images
     const partners = [
-        { name: 'TripAdvisor', icon: <Trophy size={20} /> },
-        { name: 'Booking.com', icon: <Globe size={20} /> },
-        { name: 'Lonely Planet', icon: <Map size={20} /> },
-        { name: 'Forbes Travel', icon: <FileText size={20} /> },
-        { name: 'National Geographic', icon: <Camera size={20} /> },
-        { name: 'Travel + Leisure', icon: <Plane size={20} /> }
+        'TripAdvisor',
+        'Booking.com',
+        'Lonely Planet',
+        'Forbes Travel',
+        'National Geographic',
+        'Travel + Leisure'
     ];
 
     return (
         <section className="featured-as">
             <div className="container">
-                <p className="label">Trusted by the World's Best</p>
+                <p className="label">Trusted by the World&apos;s Best</p>
                 <div className="logos">
-                    {partners.map((partner, idx) => (
-                        <div key={idx} className="logo-item">
-                            {partner.icon}
-                            <span className="name">{partner.name}</span>
-                        </div>
+                    {partners.map((name, idx) => (
+                        <span key={idx} className="logo-text">
+                            {name}
+                        </span>
                     ))}
                 </div>
             </div>
 
             <style jsx>{`
                 .featured-as {
-                    padding: 3rem 0;
-                    background: hsl(var(--secondary) / 0.3);
-                    border-top: 1px solid hsl(var(--border));
-                    border-bottom: 1px solid hsl(var(--border));
+                    padding: 2.5rem 0;
+                    border-top: 1px solid var(--color-gray-200);
+                    border-bottom: 1px solid var(--color-gray-200);
+                    background: var(--color-cream);
                 }
 
                 .label {
                     text-align: center;
-                    font-size: 0.875rem;
+                    font-size: 0.75rem;
                     text-transform: uppercase;
-                    letter-spacing: 0.1em;
-                    color: hsl(var(--muted-foreground));
-                    margin-bottom: 2rem;
+                    letter-spacing: 0.15em;
+                    color: var(--color-gray-400);
+                    margin-bottom: 1.5rem;
+                    font-weight: 500;
                 }
 
                 .logos {
@@ -49,53 +46,44 @@ export default function FeaturedAs() {
                     justify-content: center;
                     align-items: center;
                     flex-wrap: wrap;
-                    gap: 2rem 3rem;
+                    gap: 1.5rem 3rem;
                 }
 
-                .logo-item {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    opacity: 0.6;
-                    transition: opacity 0.2s, transform 0.2s;
-                    cursor: default;
-                }
-
-                .logo-item:hover {
-                    opacity: 1;
-                    transform: scale(1.05);
-                }
-
-                .icon {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: hsl(var(--primary));
-                }
-
-                .name {
+                .logo-text {
                     font-size: 1rem;
-                    font-weight: 600;
-                    color: hsl(var(--foreground));
-                    letter-spacing: -0.01em;
+                    font-weight: 700;
+                    color: var(--color-gray-400);
+                    letter-spacing: -0.02em;
+                    transition: color 0.2s ease;
+                    cursor: default;
+                    user-select: none;
+                }
+
+                .logo-text:hover {
+                    color: var(--color-forest);
                 }
 
                 @media (max-width: 768px) {
                     .logos {
-                        gap: 1.5rem 2rem;
+                        gap: 1rem 2rem;
                     }
 
-                    .logo-item {
-                        flex-direction: column;
-                        gap: 0.25rem;
+                    .logo-text {
+                        font-size: 0.85rem;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .featured-as {
+                        padding: 2rem 0;
                     }
 
-                    .name {
-                        font-size: 0.75rem;
+                    .logos {
+                        gap: 0.75rem 1.5rem;
                     }
 
-                    .icon {
-                        font-size: 1.25rem;
+                    .logo-text {
+                        font-size: 0.8rem;
                     }
                 }
             `}</style>

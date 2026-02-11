@@ -1,71 +1,171 @@
-/* MobileStyleHero.module.css */
+/* MobileStyleHero.module.css — Phase 15 Redesign */
 
 .heroWrapper {
     position: relative;
-    background-color: var(--color-forest);
-    /* #1B3B36 */
-    background: linear-gradient(180deg, var(--color-forest) 0%, var(--color-forest-dark) 100%);
-    color: var(--color-white);
-    padding-top: 120px;
-    /* Space for Header */
-    padding-bottom: 180px;
-    /* Space for Overlap */
-    border-bottom-left-radius: 40px;
-    /* Matches Mobile */
-    border-bottom-right-radius: 40px;
-    overflow: hidden;
+    min-height: 85vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    overflow: hidden;
+    /* Background image — Dead Sea landscape */
+    background-image: url('/images/hero.png');
+    background-size: cover;
+    background-position: center 40%;
+    background-repeat: no-repeat;
+}
+
+/* Dark gradient overlay for text readability */
+.bgOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(21, 44, 37, 0.75) 0%,
+            rgba(27, 59, 54, 0.60) 50%,
+            rgba(21, 44, 37, 0.85) 100%);
+    z-index: 1;
 }
 
 .heroContent {
     position: relative;
     z-index: 10;
-    max-width: 800px;
-    padding: 0 20px;
+    max-width: 700px;
+    padding: 0 2rem;
+    padding-top: 80px;
+    /* Account for fixed header */
+}
+
+.textContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title {
     font-family: var(--font-serif);
-    /* EB Garamond */
-    font-size: 3.5rem;
+    font-size: 4rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-    color: var(--color-cream-light);
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
     font-family: var(--font-sans);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #E5A61D 0%, #FBBF24 50%, #D4920A 100%);
+    color: #FFFFFF;
+    padding: 1rem 2.5rem;
+    border-radius: 99px;
     font-size: 1.1rem;
-    color: var(--color-cream);
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    box-shadow: 0 6px 24px rgba(229, 166, 29, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.decorationCircle {
+.ctaButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 32px rgba(229, 166, 29, 0.5);
+}
+
+/* SVG wave at the bottom for smooth transition */
+.bottomCurve {
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
-    pointer-events: none;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    line-height: 0;
 }
 
+.bottomCurve svg {
+    width: 100%;
+    height: 80px;
+    display: block;
+}
+
+/* ─── TABLET ─── */
 @media (max-width: 768px) {
     .heroWrapper {
-        padding-top: 100px;
-        padding-bottom: 160px;
-        border-bottom-left-radius: 32px;
-        border-bottom-right-radius: 32px;
+        min-height: 75vh;
+    }
+
+    .heroContent {
+        padding-top: 60px;
     }
 
     .title {
-        font-size: 2.5rem;
+        font-size: 2.75rem;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+    }
+
+    .ctaButton {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+
+    .bottomCurve svg {
+        height: 50px;
+    }
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 480px) {
+    .heroWrapper {
+        min-height: 70vh;
+    }
+
+    .heroContent {
+        padding: 60px 1.25rem 0;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    .ctaButton {
+        padding: 0.75rem 1.75rem;
+        font-size: 0.95rem;
+    }
+
+    .bottomCurve svg {
+        height: 40px;
+    }
+}
+
+/* ─── LARGE DESKTOP ─── */
+@media (min-width: 1200px) {
+    .title {
+        font-size: 4.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.3rem;
+    }
+
+    .bottomCurve svg {
+        height: 100px;
     }
 }

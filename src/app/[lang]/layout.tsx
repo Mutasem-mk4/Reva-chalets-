@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { Inter, Playfair_Display, Cairo, EB_Garamond } from 'next/font/google';
+import { Inter, Cairo, EB_Garamond } from 'next/font/google';
 import '@/styles/globals.css';
 import { getDictionary } from '@/lib/dictionaries';
 import type { Metadata } from 'next';
@@ -10,7 +10,7 @@ import { ToastProvider } from '@/components/ui/Toast';
 
 // Font setup
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif' });
+// Playfair_Display removed — EB_Garamond is the sole serif font
 const cairo = Cairo({ subsets: ['arabic'], variable: '--font-cairo' });
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-serif', style: ['normal', 'italic'] });
 
@@ -61,7 +61,7 @@ export default async function RootLayout({
 
     return (
         <html lang={lang} dir={dir} data-theme="light">
-            <body className={`${inter.variable} ${cairo.className} ${ebGaramond.variable}`}>
+            <body className={`${inter.variable} ${ebGaramond.variable} ${cairo.className}`}>
                 {/* Skip to content link for accessibility */}
                 <a href="#main-content" className="skip-to-content">
                     Skip to content

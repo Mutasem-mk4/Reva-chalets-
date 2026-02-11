@@ -12,10 +12,10 @@ interface Stat {
 }
 
 const STATS: Stat[] = [
-    { value: 500, suffix: '+', labelEn: 'Happy Guests', labelAr: 'ضيف سعيد', icon: <Users size={32} /> },
-    { value: 50, suffix: '+', labelEn: 'Luxury Chalets', labelAr: 'شاليه فاخر', icon: <Home size={32} /> },
-    { value: 4.9, suffix: '', labelEn: 'Star Rating', labelAr: 'تقييم عام', icon: <StarFilled size={32} /> },
-    { value: 24, suffix: '/7', labelEn: 'Support', labelAr: 'دعم فني', icon: <Headphones size={32} /> }
+    { value: 500, suffix: '+', labelEn: 'Happy Guests', labelAr: 'ضيف سعيد', icon: <Users size={28} /> },
+    { value: 50, suffix: '+', labelEn: 'Luxury Chalets', labelAr: 'شاليه فاخر', icon: <Home size={28} /> },
+    { value: 4.9, suffix: '', labelEn: 'Star Rating', labelAr: 'تقييم عام', icon: <StarFilled size={28} /> },
+    { value: 24, suffix: '/7', labelEn: 'Support', labelAr: 'دعم فني', icon: <Headphones size={28} /> }
 ];
 
 function useCountUp(target: number, isVisible: boolean, duration: number = 2000) {
@@ -35,7 +35,7 @@ function useCountUp(target: number, isVisible: boolean, duration: number = 2000)
                 setCount(target);
                 clearInterval(timer);
             } else {
-                setCount(Math.floor(current * 10) / 10); // Keep one decimal for rating
+                setCount(Math.floor(current * 10) / 10);
             }
         }, stepDuration);
 
@@ -69,7 +69,7 @@ export default function StatsCounter({ locale = 'ar' }: { locale?: string }) {
 
     return (
         <section ref={ref} className="stats-section">
-            <div className="container">
+            <div className="stats-inner">
                 <div className="stats-grid">
                     {STATS.map((stat, idx) => (
                         <StatItem key={idx} stat={stat} isVisible={isVisible} delay={idx * 100} locale={locale} />
@@ -79,10 +79,15 @@ export default function StatsCounter({ locale = 'ar' }: { locale?: string }) {
 
             <style jsx>{`
                 .stats-section {
-                    padding: 4rem 0;
-                    margin: 4rem 0;
-                    background: linear-gradient(135deg, #1F423A 0%, #2A5A4E 100%);
-                    border-radius: 32px;
+                    padding: 0 1rem;
+                    margin: 3rem auto;
+                    max-width: 1140px;
+                }
+
+                .stats-inner {
+                    background: var(--gradient-forest);
+                    border-radius: 24px;
+                    padding: 3.5rem 2rem;
                 }
 
                 .stats-grid {
@@ -94,15 +99,24 @@ export default function StatsCounter({ locale = 'ar' }: { locale?: string }) {
                 @media (max-width: 768px) {
                     .stats-grid {
                         grid-template-columns: repeat(2, 1fr);
+                        gap: 2rem 1rem;
                     }
-                    .stats-section {
-                        border-radius: 0;
+
+                    .stats-inner {
+                        padding: 2.5rem 1.5rem;
+                        border-radius: 20px;
                     }
                 }
 
                 @media (max-width: 480px) {
                     .stats-section {
-                        padding: 3rem 0;
+                        padding: 0 0.75rem;
+                        margin: 2rem auto;
+                    }
+
+                    .stats-inner {
+                        padding: 2rem 1rem;
+                        border-radius: 16px;
                     }
                 }
             `}</style>
@@ -121,7 +135,6 @@ function StatItem({ stat, isVisible, delay, locale }: { stat: Stat; isVisible: b
         }
     }, [isVisible, delay]);
 
-    // Format the display value
     const displayValue = stat.value === 4.9 ? count.toFixed(1) : Math.floor(count);
 
     return (
@@ -137,7 +150,7 @@ function StatItem({ stat, isVisible, delay, locale }: { stat: Stat; isVisible: b
                     text-align: center;
                     color: white;
                     opacity: 0;
-                    transform: translateY(20px);
+                    transform: translateY(16px);
                     transition: all 0.5s ease;
                 }
 
@@ -150,32 +163,39 @@ function StatItem({ stat, isVisible, delay, locale }: { stat: Stat; isVisible: b
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin-bottom: 0.75rem;
+                    margin-bottom: 0.5rem;
+                    color: rgba(251, 191, 36, 0.9);
                 }
 
                 .value {
                     display: block;
-                    font-size: 3rem;
+                    font-size: 2.75rem;
                     font-weight: 700;
                     line-height: 1;
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.4rem;
                     font-family: var(--font-serif);
                 }
 
                 .label {
-                    font-size: 0.9rem;
-                    opacity: 0.9;
+                    font-size: 0.8rem;
+                    opacity: 0.75;
                     text-transform: uppercase;
-                    letter-spacing: 0.05em;
+                    letter-spacing: 0.08em;
+                    font-weight: 500;
                 }
 
                 @media (max-width: 768px) {
                     .value {
-                        font-size: 2.25rem;
+                        font-size: 2rem;
                     }
+                }
 
-                    .icon {
-                        font-size: 1.5rem;
+                @media (max-width: 480px) {
+                    .value {
+                        font-size: 1.75rem;
+                    }
+                    .label {
+                        font-size: 0.7rem;
                     }
                 }
             `}</style>

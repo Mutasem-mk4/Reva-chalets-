@@ -21,46 +21,50 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const chalets = await getChalets();
 
   return (
-    <div className={styles.homePage} data-cache-bust="v2-mobile-overhaul">
-      {/* Mobile-Style Hero Section - Updated */}
+    <div className={styles.homePage}>
+      {/* ═══ HERO ═══ */}
       <MobileStyleHero
         title={dict.home.heroTitle}
         subtitle={dict.home.heroSubtitle}
+        ctaText={dict.nav?.bookNow || 'Book Now'}
+        ctaLink={`/${lang}/chalets`}
       />
 
-      {/* Golden Card Integration - Overlapping the Hero */}
-      <div className="container mt-[-140px] mb-12 relative z-20">
+      {/* ═══ GOLDEN CARD ═══ */}
+      <div className={styles.goldenCardSection}>
         <ScrollReveal>
           <GoldenCard phase="WAITING" />
         </ScrollReveal>
       </div>
 
-      <div className="container mb-12">
+      {/* ═══ SEARCH BAR ═══ */}
+      <div className={styles.searchSection}>
         <ScrollReveal delay={0.1}>
           <SearchBar locale={lang} />
         </ScrollReveal>
       </div>
 
-      <div className="container mb-12">
+      {/* ═══ CATEGORIES ═══ */}
+      <div className={styles.sectionWrapper}>
         <ScrollReveal delay={0.2}>
           <CategoryGrid locale={lang} />
         </ScrollReveal>
       </div>
 
-      {/* Recently Viewed (only shows if there are viewed items) */}
+      {/* ═══ RECENTLY VIEWED ═══ */}
       <RecentlyViewed lang={lang} />
 
-      {/* Featured As Section */}
+      {/* ═══ SOCIAL PROOF ═══ */}
       <ScrollReveal delay={0.1}>
         <FeaturedAs />
       </ScrollReveal>
 
-      {/* Stats Counter */}
+      {/* ═══ STATS ═══ */}
       <ScrollReveal>
         <StatsCounter locale={lang} />
       </ScrollReveal>
 
-      {/* Featured Section */}
+      {/* ═══ FEATURED CHALETS ═══ */}
       <section className={`${styles.featured} ${styles.bgFaded} relative overflow-hidden`}>
         <DotPattern opacity={0.05} color="hsl(var(--primary))" />
         <div className="container relative z-10">
@@ -81,13 +85,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* ═══ TESTIMONIALS ═══ */}
       <ScrollReveal delay={0.2}>
         <TestimonialsCarousel />
       </ScrollReveal>
     </div>
   );
 }
-
-
-
