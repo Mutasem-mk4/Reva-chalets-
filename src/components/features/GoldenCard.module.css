@@ -315,7 +315,8 @@
 @media (max-width: 640px) {
     .card {
         flex-direction: column;
-        gap: 20px;
+        gap: 16px;
+        padding: 16px;
     }
 
     .passSection {
