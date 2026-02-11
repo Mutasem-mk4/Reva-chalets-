@@ -58,7 +58,7 @@ export default function DashboardLayout({
         <div className={styles.dashboardContainer}>
             {/* Mobile Header */}
             <header className={styles.mobileHeader}>
-                <div className={styles.mobileBrand}>Reva Admin</div>
+                <div className={styles.mobileBrand}>Riva Admin</div>
                 <button
                     className={styles.menuToggle}
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

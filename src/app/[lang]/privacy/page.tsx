@@ -50,7 +50,7 @@ export default function PrivacyPage({ params }: { params: Promise<{ lang: string
                 <p>
                     You have the right to access, correct, or delete your personal data. You can also opt out of
                     marketing communications at any time. To exercise these rights, contact us at{' '}
-                    <a href="mailto:privacy@revachalets.com">privacy@revachalets.com</a>.
+                    <a href="mailto:privacy@rivachalets.com">privacy@rivachalets.com</a>.
                 </p>
             </section>
 

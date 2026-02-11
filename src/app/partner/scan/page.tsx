@@ -27,17 +27,17 @@ export default function ScannerPage() {
     };
 
     const validateCode = (code: string) => {
-        // Logic: REVA-[PARTNER_VAL]-[RANDOM]
+        // Logic: RIVA-[PARTNER_VAL]-[RANDOM]
 
         // 1. Signature Check
-        if (!code.startsWith('REVA-')) {
+        if (!code.startsWith('RIVA-')) {
             setStatus('invalid');
             return;
         }
 
         // 2. Parse Code
         const parts = code.split('-');
-        // Expected parts: ["REVA", "PARTNER_VAL", "RANDOM"]
+        // Expected parts: ["RIVA", "PARTNER_VAL", "RANDOM"]
 
         if (parts.length < 3) {
             setStatus('invalid');
@@ -116,7 +116,7 @@ export default function ScannerPage() {
                             <>
                                 <div className="icon">❌</div>
                                 <h2>Invalid QR</h2>
-                                <p>This code is not recognized by Reva.</p>
+                                <p>This code is not recognized by Riva.</p>
                                 <button onClick={resetScan} className="btn-retry">Try Again</button>
                             </>
                         )}

@@ -16,7 +16,7 @@ export default function PartnerLayout({
                 <div className={styles.partnerApp}>
                     <header className={styles.partnerHeader}>
                         <div className="container">
-                            <span className={styles.logo}>Reva Partner</span>
+                            <span className={styles.logo}>Riva Partner</span>
                         </div>
                     </header>
                     <main>{children}</main>

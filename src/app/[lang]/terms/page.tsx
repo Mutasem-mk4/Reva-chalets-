@@ -15,7 +15,7 @@ export default function TermsPage({ params }: { params: Promise<{ lang: string }
             <section>
                 <h2>1. Acceptance of Terms</h2>
                 <p>
-                    By accessing and using Reva Chalets ("the Service"), you agree to be bound by these Terms of Service.
+                    By accessing and using Riva Chalets ("the Service"), you agree to be bound by these Terms of Service.
                     If you do not agree to these terms, please do not use our services.
                 </p>
             </section>
@@ -24,7 +24,7 @@ export default function TermsPage({ params }: { params: Promise<{ lang: string }
                 <h2>2. Booking & Reservations</h2>
                 <p>
                     All bookings are subject to availability. A reservation is only confirmed once you receive a
-                    confirmation email from Reva Chalets. We reserve the right to cancel bookings under exceptional circumstances.
+                    confirmation email from Riva Chalets. We reserve the right to cancel bookings under exceptional circumstances.
                 </p>
             </section>
 

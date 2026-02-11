@@ -29,7 +29,7 @@ const t = {
     },
     en: {
         title: 'Welcome Back',
-        subtitle: 'Sign in to access your Reva Chalets account',
+        subtitle: 'Sign in to access your Riva Chalets account',
         email: 'Email',
         emailPlaceholder: 'your@email.com',
         password: 'Password',

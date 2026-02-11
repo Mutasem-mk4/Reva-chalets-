@@ -38,7 +38,7 @@ const t = {
     },
     en: {
         title: 'Create Account',
-        subtitle: 'Join Reva Chalets and start your journey',
+        subtitle: 'Join Riva Chalets and start your journey',
         fullName: 'Full Name',
         namePlaceholder: 'John Doe',
         email: 'Email',

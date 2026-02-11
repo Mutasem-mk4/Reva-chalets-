@@ -12,7 +12,7 @@ export default async function RewardsPage({ params }: { params: Promise<{ lang: 
     return (
         <div className={`container ${styles.pageContainer}`}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Reva VIP Club</h1>
+                <h1 className={styles.title}>Riva VIP Club</h1>
                 <p className={styles.subtitle}>Exclusive discounts for our valued guests</p>
             </div>
 

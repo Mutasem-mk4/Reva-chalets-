@@ -74,11 +74,11 @@ const faqData: FAQSection[] = [
         icon: '🏡',
         items: [
             {
-                question: 'How do I list my property on Reva Chalets?',
+                question: 'How do I list my property on Riva Chalets?',
                 answer: 'Sign up as a host, complete your profile, and submit your property for review. Our team will verify your listing within 24-48 hours before it goes live.'
             },
             {
-                question: 'What commission does Reva Chalets charge?',
+                question: 'What commission does Riva Chalets charge?',
                 answer: 'We charge a competitive 10% commission on successful bookings. This covers payment processing, marketing, customer support, and our booking guarantee.'
             },
             {

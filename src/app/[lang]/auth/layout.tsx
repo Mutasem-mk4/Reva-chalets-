@@ -22,7 +22,7 @@ export default function AuthLayout({
                         <path d="M20 5 L20 1" />
                         <circle cx="20" cy="15" r="3" />
                     </svg>
-                    <span>Reva.</span>
+                    <span>Riva.</span>
                 </Link>
             </header>
             <main className="auth-main">
