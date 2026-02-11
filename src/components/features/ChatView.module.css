@@ -2,14 +2,14 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: var(--color-gray-100);
+    background-color: #F3F4F6;
 }
 
 .header {
     background: white;
-    padding: 16px;
-    border-bottom: 1px solid var(--color-gray-200);
-    box-shadow: var(--shadow-sm);
+    padding: 16px 20px;
+    border-bottom: 1px solid #E5E7EB;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     z-index: 10;
 }
 
@@ -24,8 +24,15 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--color-gray-600);
-    padding: 4px;
+    color: #4B5563;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.backButton:hover,
+.settingsButton:hover {
+    background: #F3F4F6;
 }
 
 .groupInfo {
@@ -33,37 +40,40 @@
 }
 
 .groupName {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--color-black);
+    color: #1F423A;
+    font-family: var(--font-serif);
 }
 
 .memberCount {
     font-size: 12px;
-    color: var(--color-gray-500);
+    color: #6B7280;
 }
 
 /* Messages List */
 .messagesList {
     flex: 1;
-    padding: 16px;
+    padding: 20px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+    background: #FAF9F6;
+    /* Creamy background */
 }
 
 .loader {
     text-align: center;
     margin-top: 20px;
-    color: var(--color-gray-500);
+    color: #9CA3AF;
 }
 
 .messageRow {
     display: flex;
     align-items: flex-end;
-    gap: 8px;
-    max-width: 80%;
+    gap: 10px;
+    max-width: 85%;
 }
 
 .myMessageRow {
@@ -72,95 +82,111 @@
 }
 
 .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .avatarPlaceholder {
     width: 100%;
     height: 100%;
-    background: var(--color-gold);
+    background: #E5A61D;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 700;
+    font-size: 15px;
 }
 
 .bubble {
-    padding: 10px 14px;
-    border-radius: 16px;
+    padding: 12px 16px;
+    border-radius: 20px;
     position: relative;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .otherBubble {
     background: white;
     border-bottom-left-radius: 4px;
+    color: #1F2937;
+    border: 1px solid #E5E7EB;
 }
 
 .myBubble {
-    background: var(--color-forest);
+    background: #1F423A;
     color: white;
     border-bottom-right-radius: 4px;
 }
 
 .senderName {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-gray-600);
-    margin-bottom: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #4B5563;
+    margin-bottom: 4px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 }
 
 .hostBadge {
-    background: var(--color-gold);
+    background: #E5A61D;
     color: white;
-    font-size: 9px;
-    padding: 1px 4px;
-    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .messageContent {
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 .time {
     font-size: 10px;
     display: block;
     text-align: right;
-    margin-top: 4px;
-    opacity: 0.7;
+    margin-top: 6px;
+    opacity: 0.6;
 }
 
 /* Input Area */
 .inputArea {
     background: white;
-    padding: 12px 16px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
     gap: 12px;
-    border-top: 1px solid var(--color-gray-200);
+    border-top: 1px solid #E5E7EB;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.inputWrapper {
+    flex: 1;
+    position: relative;
 }
 
 .input {
-    flex: 1;
-    border: 1px solid var(--color-gray-200);
-    border-radius: 24px;
-    padding: 10px 16px;
-    font-size: 14px;
+    width: 100%;
+    border: 1px solid #E5E7EB;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-size: 15px;
     outline: none;
+    transition: all 0.2s;
+    background: #F9FAFB;
 }
 
 .input:focus {
-    border-color: var(--color-forest);
+    border-color: #1F423A;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(31, 66, 58, 0.05);
 }
 
 .attachButton,
@@ -168,13 +194,40 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: var(--color-gray-500);
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.attachButton:hover {
+    color: #1F423A;
+    transform: scale(1.1);
 }
 
 .sendButton {
-    color: var(--color-forest);
+    color: #1F423A;
+}
+
+.sendButton:hover:not(:disabled) {
+    transform: scale(1.1);
 }
 
 .sendButton:disabled {
-    color: var(--color-gray-300);
+    color: #D1D5DB;
+}
+
+@media (max-width: 640px) {
+    .header {
+        padding: 12px 16px;
+    }
+
+    .inputArea {
+        padding: 12px 16px;
+    }
+
+    .bubble {
+        padding: 10px 14px;
+    }
 }

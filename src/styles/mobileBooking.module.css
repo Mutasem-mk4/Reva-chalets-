@@ -37,7 +37,7 @@
 }
 
 .bookBtn {
-    background: linear-gradient(135deg, #f5a623, #d4920a);
+    background: var(--gradient-forest);
     color: white;
     border: none;
     padding: 1rem 1.5rem;
@@ -45,7 +45,7 @@
     font-weight: 600;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
+    box-shadow: 0 4px 15px rgba(27, 59, 54, 0.25);
     touch-action: manipulation;
 }
 

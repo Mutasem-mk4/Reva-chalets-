@@ -45,24 +45,25 @@ export default function ChaletFilters({ chalets, onFilter }: ChaletFiltersProps)
                     flex-wrap: wrap;
                     margin-bottom: 2rem;
                     padding: 1rem 1.5rem;
-                    background: hsl(var(--card));
-                    border-radius: var(--radius);
-                    border: 1px solid hsl(var(--border));
+                    background: var(--color-cream-light);
+                    border-radius: 20px;
+                    border: 1px solid #E5E7EB;
                 }
 
                 .location-filter select {
                     padding: 0.75rem 2rem 0.75rem 1rem;
-                    border: 1px solid hsl(var(--border));
-                    border-radius: var(--radius);
-                    background: hsl(var(--background));
-                    color: hsl(var(--foreground));
+                    border: 1px solid #E5E7EB;
+                    border-radius: 12px;
+                    background: white;
+                    color: var(--color-forest);
                     font-size: 1rem;
                     cursor: pointer;
                     min-width: 200px;
                     appearance: none;
-                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+                    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231B3B36' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
                     background-repeat: no-repeat;
                     background-position: right 1rem center;
+                    font-family: var(--font-sans);
                 }
 
                 .location-filter select:focus {

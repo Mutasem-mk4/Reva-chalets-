@@ -87,6 +87,8 @@ export default function MobileHome({ userName = 'User Name', locale = 'ar' }: Mo
               locale={locale}
               phase={goldenCardData?.phase}
               {...goldenCardData?.details}
+              onRatePress={() => setActiveTab('rewards')}
+              onChatClick={() => setActiveTab('chat')}
             />
 
             {/* Search Section */}

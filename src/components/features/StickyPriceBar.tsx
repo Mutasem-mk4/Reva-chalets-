@@ -94,7 +94,7 @@ export default function StickyPriceBar({ chaletName, price, rating, onBookClick 
                 }
 
                 .rating {
-                    color: #f5a623;
+                    color: var(--color-gold);
                     font-weight: 600;
                 }
 
@@ -125,7 +125,7 @@ export default function StickyPriceBar({ chaletName, price, rating, onBookClick 
                 }
 
                 .book-btn {
-                    background: linear-gradient(135deg, #f5a623, #d4920a);
+                    background: var(--gradient-forest);
                     color: white;
                     border: none;
                     padding: 0.75rem 1.5rem;
@@ -139,7 +139,7 @@ export default function StickyPriceBar({ chaletName, price, rating, onBookClick 
 
                 .book-btn:hover {
                     transform: scale(1.05);
-                    box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+                    box-shadow: 0 4px 15px rgba(27, 59, 54, 0.3);
                 }
 
                 @media (max-width: 768px) {

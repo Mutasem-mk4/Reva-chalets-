@@ -44,12 +44,17 @@ export default function CategoryGrid({ locale = 'ar' }: CategoryGridProps) {
                 {categories.map((category) => (
                     <div key={category.id} className={styles.card}>
                         <div className={styles.imageWrapper}>
-                            {/* Placeholder gradient since we don't have actual images */}
+                            {/* Overlay */}
+                            <div className={styles.overlay} />
+
+                            {/* Placeholder gradient */}
                             <div className={styles.imagePlaceholder}></div>
+
+                            {/* Label Inside */}
+                            <span className={styles.label}>
+                                {locale === 'ar' ? category.titleAr : category.title}
+                            </span>
                         </div>
-                        <span className={styles.label}>
-                            {locale === 'ar' ? category.titleAr : category.title}
-                        </span>
                     </div>
                 ))}
             </div>

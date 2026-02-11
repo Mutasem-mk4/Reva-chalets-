@@ -12,8 +12,59 @@ interface SignupPageProps {
     params: Promise<{ lang: string }>;
 }
 
+const t = {
+    ar: {
+        title: 'إنشاء حساب',
+        subtitle: 'انضم إلى ريفا وابدأ رحلتك',
+        fullName: 'الاسم الكامل',
+        namePlaceholder: 'أدخل اسمك',
+        email: 'البريد الإلكتروني',
+        emailPlaceholder: 'example@email.com',
+        password: 'كلمة المرور',
+        passwordPlaceholder: '٦ أحرف على الأقل',
+        iWantTo: 'أريد أن',
+        bookChalets: 'أحجز شاليهات',
+        listProperty: 'أعرض عقاري',
+        createAccount: 'إنشاء الحساب',
+        orContinueWith: 'أو عبر',
+        continueWithGoogle: 'التسجيل بحساب Google',
+        haveAccount: 'لديك حساب بالفعل؟',
+        signIn: 'تسجيل الدخول',
+        checkEmail: 'تحقق من بريدك الإلكتروني',
+        confirmationSent: 'أرسلنا رابط التأكيد إلى',
+        clickToActivate: 'اضغط على الرابط لتفعيل حسابك.',
+        goToLogin: 'الذهاب لتسجيل الدخول',
+        passwordMinError: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل',
+    },
+    en: {
+        title: 'Create Account',
+        subtitle: 'Join Reva Chalets and start your journey',
+        fullName: 'Full Name',
+        namePlaceholder: 'John Doe',
+        email: 'Email',
+        emailPlaceholder: 'your@email.com',
+        password: 'Password',
+        passwordPlaceholder: 'At least 6 characters',
+        iWantTo: 'I want to',
+        bookChalets: 'Book Chalets',
+        listProperty: 'List My Property',
+        createAccount: 'Create Account',
+        orContinueWith: 'or continue with',
+        continueWithGoogle: 'Continue with Google',
+        haveAccount: 'Already have an account?',
+        signIn: 'Sign in',
+        checkEmail: 'Check Your Email',
+        confirmationSent: "We've sent a confirmation link to",
+        clickToActivate: 'Click the link to activate your account.',
+        goToLogin: 'Go to Login',
+        passwordMinError: 'Password must be at least 6 characters',
+    },
+};
+
 export default function SignupPage({ params }: SignupPageProps) {
     const { lang } = use(params);
+    const isAr = lang === 'ar';
+    const labels = isAr ? t.ar : t.en;
     const router = useRouter();
     const { signUp, signInWithGoogle } = useAuth();
     const [name, setName] = useState('');
@@ -31,7 +82,7 @@ export default function SignupPage({ params }: SignupPageProps) {
         setError('');
 
         if (password.length < 6) {
-            setError('Password must be at least 6 characters');
+            setError(labels.passwordMinError);
             setLoading(false);
             return;
         }
@@ -57,16 +108,16 @@ export default function SignupPage({ params }: SignupPageProps) {
 
     if (success) {
         return (
-            <div className={styles.authPage}>
+            <div className={styles.authPage} dir={isAr ? 'rtl' : 'ltr'}>
                 <div className={`${styles.authContainer} ${styles.successContainer}`}>
                     <div className={styles.successIcon}>
                         <Check size={48} />
                     </div>
-                    <h1>Check Your Email</h1>
-                    <p>We've sent a confirmation link to <strong>{email}</strong></p>
-                    <p>Click the link to activate your account.</p>
+                    <h1>{labels.checkEmail}</h1>
+                    <p>{labels.confirmationSent} <strong>{email}</strong></p>
+                    <p>{labels.clickToActivate}</p>
                     <Link href={`/${lang}/auth/login`} className={`${styles.authBtn} ${styles.authBtnPrimary}`} style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
-                        Go to Login
+                        {labels.goToLogin}
                     </Link>
                 </div>
             </div>
@@ -74,11 +125,11 @@ export default function SignupPage({ params }: SignupPageProps) {
     }
 
     return (
-        <div className={styles.authPage}>
+        <div className={styles.authPage} dir={isAr ? 'rtl' : 'ltr'}>
             <div className={styles.authContainer}>
                 <div className={styles.authHeader}>
-                    <h1>Create Account</h1>
-                    <p>Join Reva Chalets and start your journey</p>
+                    <h1>{labels.title}</h1>
+                    <p>{labels.subtitle}</p>
                 </div>
 
                 {error && (
@@ -90,7 +141,7 @@ export default function SignupPage({ params }: SignupPageProps) {
 
                 <form onSubmit={handleSubmit} className={styles.authForm}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="name">Full Name</label>
+                        <label htmlFor="name">{labels.fullName}</label>
                         <div className={styles.inputWrapper}>
                             <User size={20} />
                             <input
@@ -98,14 +149,14 @@ export default function SignupPage({ params }: SignupPageProps) {
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="John Doe"
+                                placeholder={labels.namePlaceholder}
                                 required
                             />
                         </div>
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{labels.email}</label>
                         <div className={styles.inputWrapper}>
                             <Email size={20} />
                             <input
@@ -113,14 +164,14 @@ export default function SignupPage({ params }: SignupPageProps) {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="your@email.com"
+                                placeholder={labels.emailPlaceholder}
                                 required
                             />
                         </div>
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">{labels.password}</label>
                         <div className={styles.inputWrapper}>
                             <Lock size={20} />
                             <input
@@ -128,7 +179,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="At least 6 characters"
+                                placeholder={labels.passwordPlaceholder}
                                 required
                                 minLength={6}
                             />
@@ -143,7 +194,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label>I want to</label>
+                        <label>{labels.iWantTo}</label>
                         <div className={styles.roleSelector}>
                             <button
                                 type="button"
@@ -151,7 +202,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                                 onClick={() => setRole('USER')}
                             >
                                 <span className={styles.roleIcon}>🏠</span>
-                                <span>Book Chalets</span>
+                                <span>{labels.bookChalets}</span>
                             </button>
                             <button
                                 type="button"
@@ -159,7 +210,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                                 onClick={() => setRole('HOST')}
                             >
                                 <span className={styles.roleIcon}>🔑</span>
-                                <span>List My Property</span>
+                                <span>{labels.listProperty}</span>
                             </button>
                         </div>
                     </div>
@@ -169,7 +220,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                             <LoadingSpinner size={20} color="white" />
                         ) : (
                             <>
-                                Create Account
+                                {labels.createAccount}
                                 <ArrowRight size={18} />
                             </>
                         )}
@@ -177,7 +228,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                 </form>
 
                 <div className={styles.authDivider}>
-                    <span>or continue with</span>
+                    <span>{labels.orContinueWith}</span>
                 </div>
 
                 <button
@@ -192,12 +243,12 @@ export default function SignupPage({ params }: SignupPageProps) {
                         <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                     </svg>
-                    Continue with Google
+                    {labels.continueWithGoogle}
                 </button>
 
                 <p className={styles.authSwitch}>
-                    Already have an account?{' '}
-                    <Link href={`/${lang}/auth/login`}>Sign in</Link>
+                    {labels.haveAccount}{' '}
+                    <Link href={`/${lang}/auth/login`}>{labels.signIn}</Link>
                 </p>
             </div>
         </div>

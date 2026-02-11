@@ -65,9 +65,9 @@ export default function ChaletListClient({ chalets, lang, dict }: ChaletListClie
           grid-column: 1 / -1;
           text-align: center;
           padding: 4rem 2rem;
-          background: hsl(var(--card));
-          border-radius: var(--radius);
-          border: 1px dashed hsl(var(--border));
+          background: var(--color-cream-light);
+          border-radius: 20px;
+          border: 1px dashed #E5E7EB;
         }
 
         .no-results p {

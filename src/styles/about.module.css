@@ -19,13 +19,7 @@
     font-family: var(--font-serif);
     font-size: 3.5rem;
     margin-bottom: 1rem;
-}
-
-.heroContent p {
-    font-size: 1.25rem;
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0.9;
+    color: white;
 }
 
 .story {
@@ -41,30 +35,30 @@
 .storyText h2 {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: hsl(var(--foreground));
+    color: var(--color-forest);
     font-family: var(--font-serif);
 }
 
 .storyText p {
     line-height: 1.6;
     margin-bottom: 1rem;
-    color: hsl(var(--muted-foreground));
+    color: #4B5563;
     font-size: 1.1rem;
 }
 
 .storyImage {
     height: 400px;
-    background: hsl(var(--secondary));
-    border-radius: var(--radius);
+    background: #E5E7EB;
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-style: italic;
-    color: hsl(var(--secondary-foreground));
+    color: #9CA3AF;
 }
 
 .values {
-    background: hsl(var(--card));
+    background: var(--color-cream-light);
     padding: 4rem 2rem;
     text-align: center;
 }
@@ -73,6 +67,7 @@
     font-size: 2.5rem;
     margin-bottom: 3rem;
     font-family: var(--font-serif);
+    color: var(--color-forest);
 }
 
 .valueGrid {
@@ -85,10 +80,10 @@
 
 .valueCard {
     padding: 2rem;
-    background: hsl(var(--card));
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-md);
-    border: 1px solid hsl(var(--border) / 0.5);
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     transition: transform 0.2s;
 }
 
@@ -105,11 +100,12 @@
 .valueCard h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: hsl(var(--primary));
+    color: var(--color-forest);
+    font-family: var(--font-serif);
 }
 
 .valueCard p {
-    color: hsl(var(--muted-foreground));
+    color: #6B7280;
 }
 
 @media (max-width: 768px) {

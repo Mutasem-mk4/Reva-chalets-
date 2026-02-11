@@ -1,34 +1,37 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function NotFound() {
+    const pathname = usePathname();
+    const locale = pathname?.startsWith('/en') ? 'en' : 'ar';
+
     return (
         <div className="not-found">
             <div className="container">
                 <div className="content">
                     <div className="error-code">404</div>
-                    <h1>Oops! Page Not Found</h1>
+                    <h1>{locale === 'ar' ? 'عذراً! الصفحة غير موجودة' : "Oops! Page Not Found"}</h1>
                     <p>
-                        The page you're looking for seems to have wandered off into the desert.
-                        Don't worry, let's get you back on track!
+                        {locale === 'ar' ? 'يبدو أن الصفحة التي تبحث عنها قد تاهت في الصحراء. لا تقلق، دعنا نعيدك إلى المسار الصحيح!' : "The page you're looking for seems to have wandered off into the desert. Don't worry, let's get you back on track!"}
                     </p>
 
                     <div className="actions">
-                        <Link href="/en" className="btn-primary">
-                            🏠 Go Home
+                        <Link href={`/${locale}`} className="btn-primary">
+                            🏠 {locale === 'ar' ? 'الرئيسية' : 'Go Home'}
                         </Link>
-                        <Link href="/en/chalets" className="btn-secondary">
-                            🏡 Browse Chalets
+                        <Link href={`/${locale}/chalets`} className="btn-secondary">
+                            🏡 {locale === 'ar' ? 'تصفح الشاليهات' : 'Browse Chalets'}
                         </Link>
                     </div>
 
                     <div className="suggestions">
-                        <h3>You might be looking for:</h3>
+                        <h3>{locale === 'ar' ? 'قد تكون تبحث عن:' : 'You might be looking for:'}</h3>
                         <ul>
-                            <li><Link href="/en/chalets">Our Luxury Chalets</Link></li>
-                            <li><Link href="/en/contact">Contact Us</Link></li>
-                            <li><Link href="/en/rewards">Rewards Program</Link></li>
+                            <li><Link href={`/${locale}/chalets`}>{locale === 'ar' ? 'شاليهاتنا الفاخرة' : 'Our Luxury Chalets'}</Link></li>
+                            <li><Link href={`/${locale}/contact`}>{locale === 'ar' ? 'اتصل بنا' : 'Contact Us'}</Link></li>
+                            <li><Link href={`/${locale}/rewards`}>{locale === 'ar' ? 'برنامج المكافآت' : 'Rewards Program'}</Link></li>
                         </ul>
                     </div>
                 </div>
@@ -41,7 +44,7 @@ export default function NotFound() {
                     align-items: center;
                     justify-content: center;
                     padding: 4rem 2rem;
-                    background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--secondary) / 0.3) 100%);
+                    background: #FAF8F3; /* Cream background */
                 }
 
                 .content {
@@ -53,133 +56,112 @@ export default function NotFound() {
                 .error-code {
                     font-size: 8rem;
                     font-weight: 800;
-                    background: linear-gradient(135deg, #f5a623, #d4920a);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
+                    color: #E5A61D; /* Riva Gold */
                     line-height: 1;
                     margin-bottom: 1rem;
-                    text-shadow: none;
+                    font-family: var(--font-serif);
                 }
 
                 h1 {
                     font-family: var(--font-serif);
                     font-size: 2.5rem;
-                    color: hsl(var(--foreground));
-                    margin-bottom: 1rem;
+                    color: #1F423A; /* Riva Forest Green */
+                    margin-bottom: 1.5rem;
                 }
 
                 p {
-                    color: hsl(var(--muted-foreground));
-                    font-size: 1.1rem;
-                    line-height: 1.7;
-                    margin-bottom: 2rem;
+                    color: #4B5563;
+                    font-size: 1.15rem;
+                    line-height: 1.8;
+                    margin-bottom: 2.5rem;
                 }
 
                 .actions {
                     display: flex;
-                    gap: 1rem;
+                    gap: 1.25rem;
                     justify-content: center;
                     flex-wrap: wrap;
-                    margin-bottom: 3rem;
+                    margin-bottom: 4rem;
                 }
 
                 .btn-primary {
                     display: inline-flex;
                     align-items: center;
-                    gap: 0.5rem;
-                    background: linear-gradient(135deg, #f5a623, #d4920a);
+                    gap: 0.6rem;
+                    background: #1F423A; /* Forest Green */
                     color: white;
-                    padding: 1rem 2rem;
-                    border-radius: 3rem;
-                    font-weight: 600;
+                    padding: 1rem 2.5rem;
+                    border-radius: 50px;
+                    font-weight: 700;
                     text-decoration: none;
-                    transition: all 0.2s ease;
-                    box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                    box-shadow: 0 4px 15px rgba(31, 66, 58, 0.15);
                 }
 
                 .btn-primary:hover {
                     transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
+                    box-shadow: 0 8px 25px rgba(31, 66, 58, 0.25);
+                    background: #2C5248;
                 }
 
                 .btn-secondary {
                     display: inline-flex;
                     align-items: center;
-                    gap: 0.5rem;
-                    background: hsl(var(--card));
-                    color: hsl(var(--foreground));
-                    padding: 1rem 2rem;
-                    border-radius: 3rem;
-                    font-weight: 600;
+                    gap: 0.6rem;
+                    background: white;
+                    color: #1F423A;
+                    padding: 1rem 2.5rem;
+                    border-radius: 50px;
+                    font-weight: 700;
                     text-decoration: none;
-                    border: 1px solid hsl(var(--border));
-                    transition: all 0.2s ease;
+                    border: 2px solid #1F423A;
+                    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 }
 
                 .btn-secondary:hover {
-                    border-color: hsl(var(--primary));
-                    color: hsl(var(--primary));
+                    background: #F3F4F6;
+                    transform: translateY(-2px);
                 }
 
                 .suggestions {
-                    padding-top: 2rem;
-                    border-top: 1px solid hsl(var(--border));
+                    padding-top: 2.5rem;
+                    border-top: 1px solid #E5E7EB;
                 }
 
                 .suggestions h3 {
-                    color: hsl(var(--foreground));
-                    font-size: 1rem;
-                    margin-bottom: 1rem;
+                    color: #1F423A;
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    margin-bottom: 1.25rem;
                 }
 
                 .suggestions ul {
                     list-style: none;
                     padding: 0;
                     display: flex;
-                    gap: 1.5rem;
+                    gap: 2rem;
                     justify-content: center;
                     flex-wrap: wrap;
                 }
 
                 .suggestions a {
-                    color: hsl(var(--primary));
+                    color: #E5A61D; /* Riva Gold */
                     text-decoration: none;
-                    font-weight: 500;
-                    transition: opacity 0.2s;
+                    font-weight: 700;
+                    transition: all 0.2s;
+                    border-bottom: 2px solid transparent;
                 }
 
                 .suggestions a:hover {
-                    opacity: 0.8;
+                    border-color: #E5A61D;
                 }
 
                 @media (max-width: 640px) {
-                    .error-code {
-                        font-size: 5rem;
-                    }
-
-                    h1 {
-                        font-size: 1.75rem;
-                    }
-
-                    p {
-                        font-size: 1rem;
-                    }
-
-                    .actions {
-                        flex-direction: column;
-                    }
-
-                    .btn-primary,
-                    .btn-secondary {
-                        width: 100%;
-                        justify-content: center;
-                    }
-
-                    .suggestions ul {
-                        flex-direction: column;
-                        gap: 0.75rem;
-                    }
+                    .error-code { font-size: 6rem; }
+                    h1 { font-size: 2rem; }
+                    .actions { flex-direction: column; }
+                    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+                    .suggestions ul { flex-direction: column; gap: 1rem; }
                 }
             `}</style>
         </div>

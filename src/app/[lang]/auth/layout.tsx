@@ -1,16 +1,21 @@
 'use client';
 
+import { use } from 'react';
 import Link from 'next/link';
 
 export default function AuthLayout({
     children,
+    params,
 }: {
     children: React.ReactNode;
+    params: Promise<{ lang: string }>;
 }) {
+    const { lang } = use(params);
+
     return (
         <div className="auth-layout">
             <header className="auth-nav">
-                <Link href="/en" className="auth-logo">
+                <Link href={`/${lang}`} className="auth-logo">
                     <svg viewBox="0 0 40 40" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <path d="M20 5 L5 18 L5 35 L35 35 L35 18 Z" />
                         <path d="M15 35 L15 25 L25 25 L25 35" />

@@ -6,15 +6,16 @@ import { Users, Home, StarFilled, Headphones } from '@/components/ui/Icons';
 interface Stat {
     value: number;
     suffix: string;
-    label: string;
+    labelEn: string;
+    labelAr: string;
     icon: React.ReactNode;
 }
 
 const STATS: Stat[] = [
-    { value: 500, suffix: '+', label: 'Happy Guests', icon: <Users size={32} /> },
-    { value: 50, suffix: '+', label: 'Luxury Chalets', icon: <Home size={32} /> },
-    { value: 4.9, suffix: '', label: 'Star Rating', icon: <StarFilled size={32} /> },
-    { value: 24, suffix: '/7', label: 'Support', icon: <Headphones size={32} /> }
+    { value: 500, suffix: '+', labelEn: 'Happy Guests', labelAr: 'ضيف سعيد', icon: <Users size={32} /> },
+    { value: 50, suffix: '+', labelEn: 'Luxury Chalets', labelAr: 'شاليه فاخر', icon: <Home size={32} /> },
+    { value: 4.9, suffix: '', labelEn: 'Star Rating', labelAr: 'تقييم عام', icon: <StarFilled size={32} /> },
+    { value: 24, suffix: '/7', labelEn: 'Support', labelAr: 'دعم فني', icon: <Headphones size={32} /> }
 ];
 
 function useCountUp(target: number, isVisible: boolean, duration: number = 2000) {
@@ -44,7 +45,7 @@ function useCountUp(target: number, isVisible: boolean, duration: number = 2000)
     return count;
 }
 
-export default function StatsCounter() {
+export default function StatsCounter({ locale = 'ar' }: { locale?: string }) {
     const [isVisible, setIsVisible] = useState(false);
     const ref = useRef<HTMLElement>(null);
 
@@ -71,7 +72,7 @@ export default function StatsCounter() {
             <div className="container">
                 <div className="stats-grid">
                     {STATS.map((stat, idx) => (
-                        <StatItem key={idx} stat={stat} isVisible={isVisible} delay={idx * 100} />
+                        <StatItem key={idx} stat={stat} isVisible={isVisible} delay={idx * 100} locale={locale} />
                     ))}
                 </div>
             </div>
@@ -79,7 +80,9 @@ export default function StatsCounter() {
             <style jsx>{`
                 .stats-section {
                     padding: 4rem 0;
-                    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+                    margin: 4rem 0;
+                    background: linear-gradient(135deg, #1F423A 0%, #2A5A4E 100%);
+                    border-radius: 32px;
                 }
 
                 .stats-grid {
@@ -91,6 +94,9 @@ export default function StatsCounter() {
                 @media (max-width: 768px) {
                     .stats-grid {
                         grid-template-columns: repeat(2, 1fr);
+                    }
+                    .stats-section {
+                        border-radius: 0;
                     }
                 }
 
@@ -104,7 +110,7 @@ export default function StatsCounter() {
     );
 }
 
-function StatItem({ stat, isVisible, delay }: { stat: Stat; isVisible: boolean; delay: number }) {
+function StatItem({ stat, isVisible, delay, locale }: { stat: Stat; isVisible: boolean; delay: number, locale: string }) {
     const count = useCountUp(stat.value, isVisible);
     const [show, setShow] = useState(false);
 
@@ -124,7 +130,7 @@ function StatItem({ stat, isVisible, delay }: { stat: Stat; isVisible: boolean; 
             <span className="value">
                 {displayValue}{stat.suffix}
             </span>
-            <span className="label">{stat.label}</span>
+            <span className="label">{locale === 'ar' ? stat.labelAr : stat.labelEn}</span>
 
             <style jsx>{`
                 .stat-item {

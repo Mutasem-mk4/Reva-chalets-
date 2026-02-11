@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request: NextRequest) {
     try {
@@ -59,12 +60,38 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
         const userId = searchParams.get('userId');
+        const host = searchParams.get('host');
+
+        let whereClause: any = {};
+
+        if (host === 'true') {
+            const supabase = await createClient();
+            const { data: { user }, error } = await supabase.auth.getUser();
+
+            if (error || !user) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+
+            // Find chalets owned by this user
+            const chalets = await prisma.chalet.findMany({
+                where: { ownerId: user.id },
+                select: { id: true }
+            });
+
+            const chaletIds = chalets.map((c: { id: string }) => c.id);
+            whereClause = { chaletId: { in: chaletIds } };
+        } else if (userId) {
+            whereClause = { userId };
+        }
 
         const bookings = await prisma.booking.findMany({
-            where: userId ? { userId } : {},
-            include: { chalet: true },
-            orderBy: { startDate: 'desc' }
+            where: whereClause,
+            include: { chalet: { select: { name: true, images: true } } },
+            orderBy: { createdAt: 'desc' }
         });
+
+        // Parse chalet images if they are JSON strings (depending on how prisma returns them, usually object if Json type, but let's be safe if it's string in DB)
+        // Actually prisma Json type returns object.
 
         return NextResponse.json(bookings);
     } catch (error) {

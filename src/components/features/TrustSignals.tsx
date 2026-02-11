@@ -97,15 +97,16 @@ export function TrustBadges() {
                     align-items: center;
                     gap: 0.35rem;
                     padding: 0.5rem 0.75rem;
-                    background: hsl(var(--secondary));
+                    background: var(--color-cream-dark);
                     border-radius: 2rem;
                     font-size: 0.75rem;
                     font-weight: 500;
-                    color: hsl(var(--foreground));
+                    color: var(--color-forest);
+                    border: 1px solid #E5E7EB;
                 }
                 
                 .badge :global(svg) {
-                    color: hsl(var(--primary));
+                    color: var(--color-forest);
                 }
             `}</style>
         </div>
@@ -128,14 +129,14 @@ export function GuaranteeBadge() {
                     align-items: center;
                     gap: 0.75rem;
                     padding: 1rem 1.25rem;
-                    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
-                    border: 1px solid rgba(34, 197, 94, 0.2);
+                    background: #F0FDF4;
+                    border: 1px solid #D1FAE5;
                     border-radius: 0.75rem;
                     margin: 1rem 0;
                 }
                 
                 .guarantee-badge :global(svg) {
-                    color: #22c55e;
+                    color: var(--color-forest);
                     flex-shrink: 0;
                 }
                 
@@ -147,7 +148,7 @@ export function GuaranteeBadge() {
                 
                 .content strong {
                     font-size: 0.875rem;
-                    color: hsl(var(--foreground));
+                    color: var(--color-forest);
                 }
                 
                 .content span {

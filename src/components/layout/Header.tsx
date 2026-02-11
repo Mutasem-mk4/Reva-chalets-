@@ -247,10 +247,10 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.home.scrolled,
         .header.open {
             height: 70px;
-            background: hsl(var(--background) / 0.85);
+            background: rgba(250, 249, 246, 0.95); /* Cream with opacity */
             backdrop-filter: blur(16px);
-            color: hsl(var(--foreground));
-            border-bottom: 1px solid hsl(var(--border) / 0.5);
+            color: var(--color-forest);
+            border-bottom: 1px solid rgba(27, 59, 54, 0.1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
@@ -263,7 +263,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.inner .icon-btn,
         .header.home.scrolled .icon-btn,
         .header.open .icon-btn {
-            color: hsl(var(--foreground));
+            color: var(--color-forest);
         }
 
         /* Secondary Button in Theme Mode */
@@ -271,14 +271,14 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.home.scrolled .btn-secondary,
         .header.open .btn-secondary {
             background: transparent;
-            color: hsl(var(--foreground));
-            border: 1px solid hsl(var(--border));
+            color: var(--color-forest);
+            border: 1px solid rgba(27, 59, 54, 0.2);
         }
 
         .header.inner .btn-secondary:hover,
         .header.home.scrolled .btn-secondary:hover,
         .header.open .btn-secondary:hover {
-            background: hsl(var(--muted));
+            background: rgba(27, 59, 54, 0.05);
         }
 
         /* Adjustments for Promo Banner */
@@ -452,7 +452,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           width: 85%;
           max-width: 320px;
           height: 100vh;
-          background: hsl(var(--background));
+          background: var(--color-cream);
           z-index: 1100;
           transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           padding: 1.5rem;

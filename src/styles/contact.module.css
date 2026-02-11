@@ -1,7 +1,7 @@
 .container {
     min-height: 80vh;
     padding: 4rem 2rem;
-    background: hsl(var(--background));
+    background: var(--color-cream);
 }
 
 .content {
@@ -10,26 +10,27 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
-    background: hsl(var(--card));
-    border-radius: 1.5rem;
+    background: white;
+    border-radius: 24px;
     padding: 3rem;
-    box-shadow: var(--shadow-lg);
-    border: 1px solid hsl(var(--border) / 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .infoSection h1 {
     font-size: 3rem;
     font-family: var(--font-serif);
     margin-bottom: 1rem;
-    color: hsl(var(--primary));
+    color: var(--color-forest);
 }
 
 .subtitle {
     font-size: 1.1rem;
-    color: hsl(var(--muted-foreground));
+    color: #6B7280;
     margin-bottom: 3rem;
 }
 
+/* ... existing flex styles ... */
 .contactDetails {
     display: flex;
     flex-direction: column;
@@ -44,29 +45,33 @@
 
 .icon {
     font-size: 1.5rem;
-    background: hsl(var(--muted));
+    background: #F0FDF4;
+    /* Mint green */
     padding: 1rem;
     border-radius: 50%;
-    color: hsl(var(--primary));
+    color: var(--color-forest);
 }
 
 .detailItem h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: hsl(var(--foreground));
+    color: var(--color-forest);
+    font-family: var(--font-serif);
 }
 
 .detailItem p {
-    color: hsl(var(--muted-foreground));
+    color: #4B5563;
     line-height: 1.5;
 }
 
 .formSection {
-    background: hsl(var(--muted) / 0.3);
+    background: #FAFAFA;
     padding: 2rem;
-    border-radius: 1rem;
+    border-radius: 20px;
+    border: 1px solid #F3F4F6;
 }
 
+/* ... existing form styles ... */
 .form {
     display: flex;
     flex-direction: column;
@@ -81,30 +86,31 @@
 
 .formGroup label {
     font-weight: 500;
-    color: hsl(var(--foreground));
+    color: var(--color-forest);
     font-size: 0.9rem;
 }
 
 .formGroup input,
 .formGroup textarea {
-    padding: 0.75rem;
-    border: 1px solid hsl(var(--border));
-    border-radius: 8px;
+    padding: 0.85rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
     font-size: 1rem;
-    background: hsl(var(--background));
-    color: hsl(var(--foreground));
+    background: white;
+    color: #1F2937;
     transition: all 0.2s;
+    font-family: var(--font-sans);
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus {
     outline: none;
-    border-color: hsl(var(--primary));
-    box-shadow: 0 0 0 3px rgba(15, 61, 58, 0.1);
+    border-color: var(--color-forest);
+    box-shadow: 0 0 0 4px rgba(27, 59, 54, 0.1);
 }
 
 .submitBtn {
-    background: linear-gradient(135deg, #f5a623, #d4920a);
+    background: var(--gradient-gold);
     color: white;
     border: none;
     padding: 1rem 2rem;

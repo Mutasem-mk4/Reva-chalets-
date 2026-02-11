@@ -34,28 +34,28 @@ export default function RewardsView({ locale = 'ar' }: RewardsViewProps) {
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.title}>Rewards</h1>
-                <p className={styles.subtitle}>Exclusive discounts for your trip</p>
+                <h1 className={styles.title}>{locale === 'ar' ? 'المكافآت' : 'Rewards'}</h1>
+                <p className={styles.subtitle}>{locale === 'ar' ? 'خصومات حصرية لرحلتك' : 'Exclusive discounts for your trip'}</p>
             </header>
 
             {/* Tabs */}
-            <div className={styles.tabs}>
-                <button
-                    className={`${styles.tab} ${activeType === 'ZAD' ? styles.activeTab : ''}`}
-                    onClick={() => setActiveType('ZAD')}
-                >
-                    <span className={styles.tabIcon}>⛽</span>
-                    <span>Zad</span>
-                    <span className={styles.tabBadge}>Pre-Trip</span>
-                </button>
-                <button
-                    className={`${styles.tab} ${activeType === 'KAIF' ? styles.activeTab : ''}`}
-                    onClick={() => setActiveType('KAIF')}
-                >
-                    <span className={styles.tabIcon}>🎡</span>
-                    <span>Kaif</span>
-                    <span className={styles.tabBadge}>Post-Review</span>
-                </button>
+            <div className={styles.tabsContainer}>
+                <div className={styles.tabs}>
+                    <button
+                        className={`${styles.tab} ${activeType === 'ZAD' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveType('ZAD')}
+                    >
+                        <span className={styles.tabIcon}>🎯</span>
+                        <span>{locale === 'ar' ? 'زاد' : 'Zad'}</span>
+                    </button>
+                    <button
+                        className={`${styles.tab} ${activeType === 'KAIF' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveType('KAIF')}
+                    >
+                        <span className={styles.tabIcon}>🌟</span>
+                        <span>{locale === 'ar' ? 'كيف' : 'Kaif'}</span>
+                    </button>
+                </div>
             </div>
 
             {/* Content */}
@@ -64,23 +64,35 @@ export default function RewardsView({ locale = 'ar' }: RewardsViewProps) {
                     <div className={styles.loader}>Loading rewards...</div>
                 ) : (
                     <div className={styles.grid}>
-                        {discounts.map((discount) => (
+                        {discounts.length > 0 ? discounts.map((discount) => (
                             <div key={discount.id} className={styles.card}>
                                 <div className={styles.cardIcon}>
                                     {getCategoryIcon(discount.category)}
                                 </div>
-                                <div className={styles.cardInfo}>
-                                    <h3 className={styles.cardTitle}>
-                                        {locale === 'ar' ? discount.nameAr : discount.name}
-                                    </h3>
+                                <div className={styles.cardBody}>
+                                    <div className={styles.cardHeader}>
+                                        <h3 className={styles.cardTitle}>
+                                            {locale === 'ar' ? discount.nameAr : discount.name}
+                                        </h3>
+                                        <div className={styles.discountValue}>
+                                            {discount.value}% OFF
+                                        </div>
+                                    </div>
                                     <p className={styles.cardDesc}>{discount.description}</p>
-                                    <div className={styles.partnerName}>{discount.partner?.name}</div>
+                                    <div className={styles.cardFooter}>
+                                        <span className={styles.partnerName}>{discount.partner?.name || 'Riva Partner'}</span>
+                                        <button className={styles.redeemBtn}>
+                                            {locale === 'ar' ? 'استخدام' : 'Redeem'}
+                                        </button>
+                                    </div>
                                 </div>
-                                <button className={styles.redeemBtn}>
-                                    Redeem
-                                </button>
                             </div>
-                        ))}
+                        )) : (
+                            <div className={styles.emptyState}>
+                                <div className={styles.emptyIcon}>🎁</div>
+                                <p>{locale === 'ar' ? 'لا توجد مكافآت متاحة حالياً' : 'No rewards available yet'}</p>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

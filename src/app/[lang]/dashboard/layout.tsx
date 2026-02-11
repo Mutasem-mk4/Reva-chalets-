@@ -30,7 +30,7 @@ export default function DashboardLayout({
     useEffect(() => {
         const role = user?.user_metadata?.role;
         // Only redirect if we have a valid user and they are NOT authorised
-        if (!loading && (!user || (role !== 'admin' && role !== 'owner'))) {
+        if (!loading && (!user || (role !== 'admin' && role !== 'HOST'))) {
             // Check if we are already on the login page to avoid loops (though dashboard layout shouldn't run on login)
             // Use the resolved lang
             router.push(`/${lang}/login`);
@@ -87,6 +87,9 @@ export default function DashboardLayout({
                     )}
                     <Link href="/dashboard/chalets" className={styles.navLink}>
                         🏠 My Chalets
+                    </Link>
+                    <Link href="/dashboard/calendar" className={styles.navLink}>
+                        📅 Availability
                     </Link>
                     {user.user_metadata?.role === 'admin' && (
                         <Link href="/dashboard/finances" className={styles.navLink}>

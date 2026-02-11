@@ -2,28 +2,49 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '@/styles/dashboard-chalets.module.css'; // Reusing styles where applicable
 
 export default function NewChaletPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         location: '',
         price: '',
         description: '',
-        amenities: [] as string[] // Simplification for now
+        imageUrl: '',
+        amenities: '' // Comma separated for now
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setError('');
 
-        // Simulate API save
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const res = await fetch('/api/chalets', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    images: formData.imageUrl ? [formData.imageUrl] : [],
+                    amenities: formData.amenities.split(',').map(s => s.trim()).filter(Boolean),
+                    capacity: 2 // Default for now
+                })
+            });
 
-        setLoading(false);
-        router.push('/dashboard/chalets');
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Failed to create chalet');
+            }
+
+            router.push('/dashboard/chalets');
+            router.refresh();
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,6 +54,12 @@ export default function NewChaletPage() {
     return (
         <div className="add-chalet-page">
             <h1 style={{ marginBottom: '2rem' }}>Add New Chalet</h1>
+
+            {error && (
+                <div style={{ background: '#fee2e2', color: '#ef4444', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+                    {error}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="form-container">
                 <div className="form-group">
@@ -84,11 +111,26 @@ export default function NewChaletPage() {
                 </div>
 
                 <div className="form-group">
-                    <label>Images (Mock)</label>
-                    <div className="file-upload">
-                        <span>📁 Click to upload images</span>
-                        <input type="file" multiple />
-                    </div>
+                    <label>Image URL (Temporary)</label>
+                    <input
+                        name="imageUrl"
+                        placeholder="https://example.com/image.jpg"
+                        value={formData.imageUrl}
+                        onChange={handleChange}
+                    />
+                    <small style={{ color: '#666', marginTop: '0.25rem' }}>
+                        * Real file upload will be added later. Use a public image URL for testing.
+                    </small>
+                </div>
+
+                <div className="form-group">
+                    <label>Amenities (Comma separated)</label>
+                    <input
+                        name="amenities"
+                        placeholder="Pool, WiFi, BBQ, AC"
+                        value={formData.amenities}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="actions">
@@ -146,22 +188,6 @@ export default function NewChaletPage() {
             width: 100%;
          }
 
-         .file-upload {
-            border: 2px dashed hsl(var(--border));
-            padding: 2rem;
-            text-align: center;
-            border-radius: var(--radius);
-            cursor: pointer;
-            position: relative;
-         }
-
-         .file-upload input {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-         }
-
          .actions {
             display: flex;
             gap: 1rem;
@@ -177,6 +203,11 @@ export default function NewChaletPage() {
             font-weight: 600;
             flex: 2;
             cursor: pointer;
+         }
+         
+         .save-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
          }
 
          .cancel-btn {

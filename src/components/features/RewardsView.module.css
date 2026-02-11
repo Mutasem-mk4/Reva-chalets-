@@ -1,6 +1,6 @@
 .container {
-    padding: 16px;
-    background-color: var(--color-cream);
+    padding: 20px;
+    background-color: #FAF9F6;
     min-height: 100%;
 }
 
@@ -12,131 +12,189 @@
     font-family: var(--font-serif);
     font-size: 28px;
     font-weight: 700;
-    color: var(--color-forest);
+    color: #1F423A;
     margin-bottom: 4px;
 }
 
 .subtitle {
     font-size: 14px;
-    color: var(--color-gray-600);
+    color: #6B7280;
 }
 
 /* Tabs */
+.tabsContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
 .tabs {
     display: flex;
-    background: white;
+    background: #F3F4F6;
     padding: 4px;
-    border-radius: 16px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 50px;
+    width: fit-content;
 }
 
 .tab {
-    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px;
+    gap: 10px;
+    padding: 10px 24px;
     border: none;
     background: transparent;
-    border-radius: 12px;
+    border-radius: 40px;
     font-size: 14px;
     font-weight: 600;
-    color: var(--color-gray-500);
+    color: #6B7280;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .activeTab {
-    background: var(--color-forest);
+    background: #1F423A;
     color: white;
+    box-shadow: 0 4px 12px rgba(31, 66, 58, 0.2);
 }
 
 .tabIcon {
     font-size: 16px;
 }
 
-.tabBadge {
-    font-size: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-weight: 500;
-}
-
-.tab:not(.activeTab) .tabBadge {
-    background: var(--color-gray-100);
-    color: var(--color-gray-600);
-}
-
 /* Grid */
 .grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
     background: white;
-    padding: 16px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-sm);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    gap: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #F3F4F6;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .cardIcon {
-    width: 48px;
-    height: 48px;
-    background: var(--color-cream);
-    border-radius: 12px;
+    width: 64px;
+    height: 64px;
+    background: #F0FDF4;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 32px;
 }
 
-.cardInfo {
+.cardBody {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
 }
 
 .cardTitle {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--color-forest);
-    margin-bottom: 2px;
+    color: #1F423A;
+    margin: 0;
+}
+
+.discountValue {
+    font-size: 12px;
+    font-weight: 700;
+    color: #E5A61D;
+    background: rgba(229, 166, 29, 0.1);
+    padding: 2px 8px;
+    border-radius: 6px;
 }
 
 .cardDesc {
-    font-size: 12px;
-    color: var(--color-gray-500);
-    margin-bottom: 4px;
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.cardFooter {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .partnerName {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--color-gold-dark);
+    font-size: 11px;
+    font-weight: 700;
+    color: #9CA3AF;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .redeemBtn {
-    background: var(--color-gold);
+    background: #1F423A;
     color: white;
     border: none;
     padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 12px;
+    border-radius: 10px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.redeemBtn:hover {
+    background: #152C25;
+}
+
+.emptyState {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 2px dashed #E5E7EB;
+}
+
+.emptyIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
 }
 
 .loader {
+    grid-column: 1 / -1;
     text-align: center;
     padding: 40px;
-    color: var(--color-gray-500);
-    font-size: 14px;
+    color: #6B7280;
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
 }

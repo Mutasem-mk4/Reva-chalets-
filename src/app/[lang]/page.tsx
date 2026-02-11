@@ -4,11 +4,14 @@ import ChaletCard from '@/components/features/ChaletCard';
 import Link from 'next/link';
 import styles from '@/styles/home.module.css';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import ParallaxHero from '@/components/ui/ParallaxHero';
+import MobileStyleHero from '@/components/layout/MobileStyleHero';
 import TestimonialsCarousel from '@/components/features/TestimonialsCarousel';
 import FeaturedAs from '@/components/features/FeaturedAs';
 import StatsCounter from '@/components/features/StatsCounter';
 import RecentlyViewed from '@/components/features/RecentlyViewed';
+import SearchBar from '@/components/features/SearchBar';
+import CategoryGrid from '@/components/features/CategoryGrid';
+import GoldenCard from '@/components/features/GoldenCard';
 import { ArrowRight } from '@/components/ui/Icons';
 import { DotPattern } from '@/components/ui/Patterns';
 
@@ -18,14 +21,31 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const chalets = await getChalets();
 
   return (
-    <div className={styles.homePage}>
-      {/* Parallax Hero Section */}
-      <ParallaxHero
+    <div className={styles.homePage} data-cache-bust="v2-mobile-overhaul">
+      {/* Mobile-Style Hero Section - Updated */}
+      <MobileStyleHero
         title={dict.home.heroTitle}
         subtitle={dict.home.heroSubtitle}
-        ctaText={dict.nav.bookNow}
-        ctaHref={`/${lang}/chalets`}
       />
+
+      {/* Golden Card Integration - Overlapping the Hero */}
+      <div className="container mt-[-140px] mb-12 relative z-20">
+        <ScrollReveal>
+          <GoldenCard phase="WAITING" />
+        </ScrollReveal>
+      </div>
+
+      <div className="container mb-12">
+        <ScrollReveal delay={0.1}>
+          <SearchBar locale={lang} />
+        </ScrollReveal>
+      </div>
+
+      <div className="container mb-12">
+        <ScrollReveal delay={0.2}>
+          <CategoryGrid locale={lang} />
+        </ScrollReveal>
+      </div>
 
       {/* Recently Viewed (only shows if there are viewed items) */}
       <RecentlyViewed lang={lang} />
@@ -37,7 +57,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* Stats Counter */}
       <ScrollReveal>
-        <StatsCounter />
+        <StatsCounter locale={lang} />
       </ScrollReveal>
 
       {/* Featured Section */}

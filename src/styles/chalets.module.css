@@ -2,6 +2,7 @@
 .pageContainer {
     padding-top: 4rem;
     padding-bottom: 4rem;
+    background-color: var(--color-cream);
 }
 
 .pageTitle {
@@ -9,7 +10,7 @@
     margin-bottom: 3rem;
     text-align: center;
     font-family: var(--font-serif);
-    color: hsl(var(--primary));
+    color: var(--color-forest);
 }
 
 .chaletGrid {
@@ -22,18 +23,19 @@
 .gallerySection {
     padding-top: 2rem;
     padding-bottom: 2rem;
-    background: hsl(var(--background));
+    padding-bottom: 2rem;
+    background: var(--color-cream);
 }
 
 .gallery {
-    height: 60vh;
+    height: 65vh;
     width: 100%;
     position: relative;
     margin-bottom: -4rem;
-    /* Overlap content */
+    border-radius: 24px;
     overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
-
 
 .mainImage {
     width: 100%;
@@ -44,311 +46,241 @@
 .contentGrid {
     display: grid;
     grid-template-columns: 1fr 380px;
-    /* Wider sidebar */
-    gap: 4rem;
+    gap: 3rem;
     position: relative;
     z-index: 10;
+    margin-top: 2rem;
 }
 
 .mainInfo {
-    background: hsl(var(--card));
-    padding: 3rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-xl, 0 20px 25px -5px rgb(0 0 0 / 0.1));
+    background: white;
+    padding: 3.5rem;
+    border-radius: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .mainInfo h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-    color: hsl(var(--primary));
+    font-size: 3.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-forest);
+    font-family: var(--font-serif);
+    font-weight: 700;
 }
 
 .location {
     font-size: 1.1rem;
-    color: hsl(var(--foreground));
-    opacity: 0.7;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 1.5rem;
 }
 
 .rating {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: hsl(var(--secondary));
-    border-radius: 2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.6rem 1.2rem;
+    background: #F0FDF4;
+    border-radius: 50px;
     font-weight: 600;
-    color: hsl(var(--primary));
-    margin-bottom: 2rem;
+    color: var(--color-forest);
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    border: 1px solid #D1FAE5;
 }
 
 .divider {
     height: 1px;
-    background: hsl(var(--border));
-    margin: 2rem 0;
+    background: #F3F4F6;
+    margin: 3rem 0;
 }
 
 .description {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: hsl(var(--foreground));
-    opacity: 0.85;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #374151;
 }
 
 .amenitiesList {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
 }
 
 .amenityItem {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 10px;
     font-weight: 500;
+    color: #4B5563;
+    font-size: 1.05rem;
 }
 
 /* Reviews */
 .reviewsGrid {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .reviewCard {
-    background: hsl(var(--background));
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    border: 1px solid hsl(var(--border));
+    background: #F9FAFB;
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid #E5E7EB;
 }
 
 .reviewHeader {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
+    background: rgba(31, 66, 58, 0.1);
+    color: var(--color-forest);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-family: var(--font-serif);
+    font-size: 1.1rem;
 }
 
 .reviewName {
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1F2937;
 }
 
 .reviewDate {
-    font-size: 0.75rem;
-    opacity: 0.6;
+    font-size: 0.8rem;
+    color: #9CA3AF;
 }
 
 .reviewRating {
     margin-left: auto;
-    color: hsl(var(--accent));
+    color: var(--color-gold);
     font-weight: 700;
+    font-size: 1rem;
 }
 
 .reviewText {
-    font-style: italic;
-    opacity: 0.8;
+    font-style: normal;
+    color: #4B5563;
+    line-height: 1.6;
 }
 
 /* Policies */
 .policies {
-    background: hsl(var(--secondary) / 0.3);
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    margin-top: 1.5rem;
+    background: #F3F4F6;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-top: 2rem;
     display: grid;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 .policyItem {
-    font-size: 0.95rem;
+    font-size: 1rem;
+    color: #374151;
 }
 
 /* Sidebar */
 .bookingSidebar {
     position: sticky;
     top: 6rem;
-    /* Adjust for header height */
     height: fit-content;
-    padding-top: 4rem;
-    /* Compensate for negative margin overlap if needed */
 }
 
 .bookingCard {
-    background: hsl(var(--card));
-    padding: 2rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-luxury, 0 25px 50px -12px rgb(0 0 0 / 0.25));
-    border: 1px solid hsl(var(--border));
+    background: white;
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .priceTag {
     text-align: center;
     margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #F3F4F6;
 }
 
 .amount {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     font-weight: 700;
-    color: hsl(var(--primary));
+    color: var(--color-forest);
     font-family: var(--font-serif);
     display: block;
 }
 
 .period {
-    font-size: 0.875rem;
-    color: hsl(var(--foreground));
-    opacity: 0.6;
+    font-size: 0.9rem;
+    color: #6B7280;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    display: block;
 }
 
 .hint {
     text-align: center;
-    font-size: 0.75rem;
-    margin-top: 1rem;
-    opacity: 0.6;
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    color: #9CA3AF;
 }
 
 @media (max-width: 1024px) {
     .contentGrid {
         grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .gallery {
-        height: 40vh;
-        margin-bottom: 0;
+        gap: 3rem;
     }
 
     .mainInfo {
-        padding: 2rem;
+        padding: 2.5rem;
         box-shadow: none;
-        background: transparent;
+        border: none;
     }
 
     .bookingSidebar {
-        padding-top: 0;
+        display: none;
     }
 }
 
 @media (max-width: 768px) {
-    .pageContainer {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-    }
-
-    .pageTitle {
-        font-size: 1.75rem;
-        margin-bottom: 1.25rem;
-    }
-
-    .chaletGrid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .amenitiesList {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.5rem;
-    }
-
-    .gallery {
-        height: 40vh;
-        margin-bottom: 0;
-    }
-
     .mainInfo {
-        padding: 1.25rem;
-        border-radius: 0;
-        box-shadow: none;
+        padding: 2rem 1.5rem;
     }
 
     .mainInfo h1 {
-        font-size: 1.5rem;
+        font-size: 2.25rem;
     }
 
-    .location {
-        font-size: 0.95rem;
-    }
-
-    .sectionTitle {
-        font-size: 1.1rem;
-    }
-
-    .description {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-
-    .reviewCard {
-        padding: 1rem;
-    }
-
-    .policies {
-        padding: 1rem;
+    .gallery {
+        height: 45vh;
+        border-radius: 0;
     }
 }
 
 @media (max-width: 480px) {
-    .pageTitle {
-        font-size: 1.5rem;
-    }
-
-    .mainInfo {
-        padding: 1rem;
-    }
-
     .mainInfo h1 {
-        font-size: 1.35rem;
+        font-size: 1.85rem;
     }
 
-    .amenitiesList {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+    .location {
+        font-size: 1rem;
     }
 
-    .amenityItem {
-        font-size: 0.85rem;
-        gap: 0.35rem;
-    }
-
-    .gallery {
-        height: 35vh;
-    }
-
-    .rating {
-        padding: 0.35rem 0.75rem;
-        font-size: 0.85rem;
-    }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   MOBILE BOOKING - Hide desktop sidebar on mobile
-   The MobileBookingBar component handles mobile booking
-   ═══════════════════════════════════════════════════════════════ */
-
-@media (max-width: 1024px) {
-    .bookingSidebar {
-        display: none;
-    }
-
-    /* Add padding at bottom for the mobile booking bar */
-    .contentGrid {
-        padding-bottom: 100px;
+    .description {
+        font-size: 1.05rem;
     }
 }

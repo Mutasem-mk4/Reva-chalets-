@@ -14,6 +14,19 @@
     border-radius: 1.5rem;
     padding: 2.5rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    animation: authSlideUp 0.5s ease-out;
+}
+
+@keyframes authSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .authHeader {
@@ -93,6 +106,11 @@
     color: hsl(var(--muted-foreground));
 }
 
+.inputHint {
+    font-size: 0.8rem;
+    color: hsl(var(--muted-foreground));
+}
+
 .togglePassword {
     background: none;
     border: none;
@@ -114,10 +132,16 @@
     justify-content: flex-end;
 }
 
+/* RTL: flip formFooter */
+[dir="rtl"] .formFooter {
+    justify-content: flex-start;
+}
+
 .forgotLink {
     font-size: 0.875rem;
     color: hsl(var(--primary));
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 .forgotLink:hover {
@@ -147,11 +171,13 @@
 
 .roleBtn:hover {
     border-color: hsl(var(--primary) / 0.5);
+    transform: translateY(-2px);
 }
 
 .roleBtn.active {
     border-color: hsl(var(--primary));
     background: hsl(var(--primary) / 0.1);
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
 }
 
 .roleIcon {
@@ -168,18 +194,23 @@
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     border: none;
 }
 
 .authBtnPrimary {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)));
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary) / 0.85));
     color: white;
+    box-shadow: 0 4px 12px hsl(var(--primary) / 0.2);
 }
 
 .authBtnPrimary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px hsl(var(--primary) / 0.3);
+    box-shadow: 0 10px 25px hsl(var(--primary) / 0.35);
+}
+
+.authBtnPrimary:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .authBtnPrimary:disabled {
@@ -195,6 +226,8 @@
 
 .authBtnGoogle:hover:not(:disabled) {
     background: hsl(var(--secondary));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .authDivider {
@@ -215,6 +248,7 @@
 .authDivider span {
     font-size: 0.875rem;
     color: hsl(var(--muted-foreground));
+    white-space: nowrap;
 }
 
 .authSwitch {
@@ -228,9 +262,27 @@
     color: hsl(var(--primary));
     font-weight: 600;
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 .authSwitch a:hover {
+    text-decoration: underline;
+}
+
+.authFooter {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.authFooter a {
+    color: hsl(var(--primary));
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.authFooter a:hover {
     text-decoration: underline;
 }
 
@@ -249,4 +301,74 @@
     justify-content: center;
     margin: 0 auto 1.5rem;
     color: white;
+    animation: successPop 0.4s ease-out;
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.successContainer h1 {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    color: hsl(var(--foreground));
+}
+
+.successContainer p {
+    color: hsl(var(--muted-foreground));
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.authLogo {
+    display: block;
+    margin: 0 auto 1rem;
+    width: 40px;
+    color: hsl(var(--primary));
+}
+
+/* ═══════════════════════════════════════════ */
+/* RTL-specific overrides                     */
+/* ═══════════════════════════════════════════ */
+
+[dir="rtl"] .inputWrapper {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .inputWrapper input {
+    text-align: right;
+}
+
+[dir="rtl"] .authError {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] .authBtn {
+    flex-direction: row-reverse;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    .authContainer {
+        padding: 1.75rem;
+        border-radius: 1rem;
+        margin: 0 1rem;
+    }
+
+    .authHeader h1 {
+        font-size: 1.5rem;
+    }
 }

@@ -12,8 +12,41 @@ interface LoginPageProps {
     params: Promise<{ lang: string }>;
 }
 
+const t = {
+    ar: {
+        title: 'مرحباً بعودتك',
+        subtitle: 'سجّل دخولك للوصول إلى حسابك في ريفا',
+        email: 'البريد الإلكتروني',
+        emailPlaceholder: 'example@email.com',
+        password: 'كلمة المرور',
+        passwordPlaceholder: '••••••••',
+        forgotPassword: 'نسيت كلمة المرور؟',
+        signIn: 'تسجيل الدخول',
+        orContinueWith: 'أو الدخول عبر',
+        continueWithGoogle: 'الدخول بحساب Google',
+        noAccount: 'ليس لديك حساب؟',
+        signUp: 'إنشاء حساب',
+    },
+    en: {
+        title: 'Welcome Back',
+        subtitle: 'Sign in to access your Reva Chalets account',
+        email: 'Email',
+        emailPlaceholder: 'your@email.com',
+        password: 'Password',
+        passwordPlaceholder: '••••••••',
+        forgotPassword: 'Forgot password?',
+        signIn: 'Sign In',
+        orContinueWith: 'or continue with',
+        continueWithGoogle: 'Continue with Google',
+        noAccount: "Don't have an account?",
+        signUp: 'Sign up',
+    },
+};
+
 export default function LoginPage({ params }: LoginPageProps) {
     const { lang } = use(params);
+    const isAr = lang === 'ar';
+    const labels = isAr ? t.ar : t.en;
     const router = useRouter();
     const { signIn, signInWithGoogle } = useAuth();
     const [email, setEmail] = useState('');
@@ -47,11 +80,11 @@ export default function LoginPage({ params }: LoginPageProps) {
     };
 
     return (
-        <div className={styles.authPage}>
+        <div className={styles.authPage} dir={isAr ? 'rtl' : 'ltr'}>
             <div className={styles.authContainer}>
                 <div className={styles.authHeader}>
-                    <h1>Welcome Back</h1>
-                    <p>Sign in to access your Reva Chalets account</p>
+                    <h1>{labels.title}</h1>
+                    <p>{labels.subtitle}</p>
                 </div>
 
                 {error && (
@@ -63,7 +96,7 @@ export default function LoginPage({ params }: LoginPageProps) {
 
                 <form onSubmit={handleSubmit} className={styles.authForm}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{labels.email}</label>
                         <div className={styles.inputWrapper}>
                             <Email size={20} />
                             <input
@@ -71,14 +104,14 @@ export default function LoginPage({ params }: LoginPageProps) {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="your@email.com"
+                                placeholder={labels.emailPlaceholder}
                                 required
                             />
                         </div>
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">{labels.password}</label>
                         <div className={styles.inputWrapper}>
                             <Lock size={20} />
                             <input
@@ -86,7 +119,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                                 type={showPassword ? 'text' : 'password'}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
+                                placeholder={labels.passwordPlaceholder}
                                 required
                             />
                             <button
@@ -101,7 +134,7 @@ export default function LoginPage({ params }: LoginPageProps) {
 
                     <div className={styles.formFooter}>
                         <Link href={`/${lang}/auth/forgot-password`} className={styles.forgotLink}>
-                            Forgot password?
+                            {labels.forgotPassword}
                         </Link>
                     </div>
 
@@ -110,7 +143,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                             <LoadingSpinner size={20} color="white" />
                         ) : (
                             <>
-                                Sign In
+                                {labels.signIn}
                                 <ArrowRight size={18} />
                             </>
                         )}
@@ -118,7 +151,7 @@ export default function LoginPage({ params }: LoginPageProps) {
                 </form>
 
                 <div className={styles.authDivider}>
-                    <span>or continue with</span>
+                    <span>{labels.orContinueWith}</span>
                 </div>
 
                 <button
@@ -133,12 +166,12 @@ export default function LoginPage({ params }: LoginPageProps) {
                         <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                     </svg>
-                    Continue with Google
+                    {labels.continueWithGoogle}
                 </button>
 
                 <p className={styles.authSwitch}>
-                    Don't have an account?{' '}
-                    <Link href={`/${lang}/auth/signup`}>Sign up</Link>
+                    {labels.noAccount}{' '}
+                    <Link href={`/${lang}/auth/signup`}>{labels.signUp}</Link>
                 </p>
             </div>
         </div>

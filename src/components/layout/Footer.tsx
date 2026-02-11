@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Visa, Mastercard, ShieldCheck, Lightning } from '@/components/ui/Icons';
-import { WaveDivider } from '@/components/ui/Patterns';
 import Logo from '@/components/ui/Logo';
 
 // Default dictionary values as fallback
@@ -17,7 +16,6 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
   const dict = propDict || defaultDict;
   return (
     <footer className="footer">
-      <WaveDivider position="top" color="hsl(var(--secondary))" style={{ transform: 'translateY(-100%)', pointerEvents: 'none' }} />
       <div className="container footer-content pt-16">
         {/* Brand */}
         <div className="brand">
@@ -65,10 +63,11 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
 
       <style jsx>{`
         .footer {
-          background-color: hsl(var(--secondary));
-          color: hsl(var(--secondary-foreground));
+          background-color: var(--color-forest);
+          color: var(--color-cream);
           padding: 4rem 0 2rem;
           margin-top: auto;
+          position: relative;
         }
 
         .footer-content {
@@ -78,19 +77,19 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
           margin-bottom: 3rem;
         }
 
-
-
         .brand p {
-          opacity: 0.8;
+          opacity: 0.75;
           font-size: 0.9rem;
+          color: #A7F3D0;
         }
 
         .footer-section h4 {
           font-size: 0.85rem;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.08em;
           margin-bottom: 1rem;
-          opacity: 0.6;
+          color: #A7F3D0;
+          opacity: 0.7;
         }
 
         .footer-nav {
@@ -100,14 +99,15 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
         }
 
         .footer-nav :global(a) {
-          opacity: 0.8;
+          opacity: 0.85;
           transition: opacity 0.2s, color 0.2s;
           font-size: 0.95rem;
+          color: var(--color-cream);
         }
 
         .footer-nav :global(a:hover) {
           opacity: 1;
-          color: hsl(var(--primary));
+          color: var(--color-gold-light);
         }
 
         .payment-badges {
@@ -120,12 +120,13 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
           display: inline-flex;
           align-items: center;
           gap: 0.35rem;
-          background: rgba(255,255,255,0.1);
+          background: rgba(255,255,255,0.08);
           padding: 0.35rem 0.6rem;
           border-radius: 6px;
           font-size: 0.75rem;
           font-weight: 500;
-          border: 1px solid rgba(255,255,255,0.15);
+          border: 1px solid rgba(255,255,255,0.12);
+          color: #D1FAE5;
         }
 
         .badge.visa,
@@ -135,23 +136,24 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
 
         .badge.cliq {
           border-color: #2563eb;
-          color: #60a5fa;
+          color: #93C5FD;
         }
 
         .badge.ssl {
-          color: #22c55e;
-          border-color: rgba(34, 197, 94, 0.3);
+          color: #6EE7B7;
+          border-color: rgba(110, 231, 183, 0.3);
         }
 
         .footer-bottom {
-          border-top: 1px solid hsl(var(--border) / 0.3);
+          border-top: 1px solid rgba(167, 243, 208, 0.15);
           padding-top: 1.5rem;
           text-align: center;
         }
 
         .footer-bottom p {
           font-size: 0.85rem;
-          opacity: 0.6;
+          opacity: 0.5;
+          color: #A7F3D0;
         }
 
         @media (min-width: 768px) {

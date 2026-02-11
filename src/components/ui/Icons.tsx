@@ -399,6 +399,19 @@ export const Trash = createIcon(
     </>
 );
 
+export const Ticket = createIcon(
+    <>
+        <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
+        <path d="M13 5v2" />
+        <path d="M13 17v2" />
+        <path d="M13 11v2" />
+    </>
+);
+
+export const Crown = createIcon(
+    <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+);
+
 export const TrendingUp = createIcon(
     <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
 );
@@ -503,6 +516,8 @@ const Icons = {
     FileText,
     Camera,
     Plane,
+    Ticket,
+    Crown,
 };
 
 export default Icons;

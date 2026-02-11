@@ -2,12 +2,14 @@
 
 import React from 'react';
 import styles from './GoldenCard.module.css';
+import { MapPin, Calendar, Clock, Lock, Users, Ticket, Plus, Crown, Star } from '@/components/ui/Icons';
 
 export type BookingPhase =
-    | 'NOT_BOOKED'      // لم يحجز بعد
-    | 'BOOKED_PENDING'  // حجز ولم يحن الوقت
-    | 'IN_PROGRESS'     // خلال وقت الحجز
-    | 'COMPLETED';      // انتهى الحجز
+    | 'LOCKED'          // لم يحجز بعد
+    | 'WAITING'         // حجز ولم يحن الوقت
+    | 'ZAD'             // حجز مع ميزات زاد
+    | 'CHILLING'        // خلال وقت الحجز
+    | 'PASSED';         // انتهى الحجز
 
 interface GoldenCardProps {
     phase?: BookingPhase;
@@ -17,143 +19,260 @@ interface GoldenCardProps {
     farmLocation?: string;
     remainingTime?: string;
     groupMembers?: number;
+    ticketCount?: number;
     locale?: string;
+    onRatePress?: () => void;
     onChatClick?: () => void;
 }
 
 export default function GoldenCard({
-    phase = 'BOOKED_PENDING',
-    farmName = 'Farm Name',
-    bookingDate = 'Booking Date',
-    tripStartTime = 'Trip start time',
-    farmLocation = 'Farm location',
-    remainingTime = 'Remaining Time',
-    groupMembers = 6,
+    phase = 'WAITING',
+    farmName = 'Al-Reef Luxury Farm',
+    bookingDate = '2025-06-15',
+    tripStartTime = '02:00 PM',
+    farmLocation = 'Dead Sea',
+    remainingTime = '48 Hours',
+    groupMembers = 5,
+    ticketCount = 1,
     locale = 'ar',
+    onRatePress,
     onChatClick
 }: GoldenCardProps) {
+    const isAr = locale === 'ar';
 
-    const getPhaseStyles = () => {
+    const renderPassContent = () => {
+        const ActiveDot = () => (
+            <div className={styles.activeHeader}>
+                <div className={styles.dotContainer}>
+                    <div className={`${styles.dot} ${styles.dotActive}`} />
+                </div>
+                <span className={styles.statusLabel}>{isAr ? 'نشط' : 'Active'}</span>
+            </div>
+        );
+
         switch (phase) {
-            case 'NOT_BOOKED':
-                return { cardClass: styles.notBooked, statusText: 'Start your journey' };
-            case 'BOOKED_PENDING':
-                return { cardClass: styles.bookedPending, statusText: 'Your upcoming trip' };
-            case 'IN_PROGRESS':
-                return { cardClass: styles.inProgress, statusText: 'You are at the farm' };
-            case 'COMPLETED':
-                return { cardClass: styles.completed, statusText: 'Rate your experience' };
+            case 'LOCKED':
+                return (
+                    <>
+                        <div className={`${styles.badge} ${styles.badgeMissing}`}>
+                            <span className={styles.badgeText}>{isAr ? 'مكافآت مفقودة' : 'Missing Rewards'}</span>
+                        </div>
+                        <div className={styles.centerContent}>
+                            <span className={styles.mainStatusText}>{isAr ? 'غير مفعلة' : 'Inactive'}</span>
+                            <span className={styles.subStatusText}>{isAr ? 'أكمل رحلتك السابقة للتفعيل' : 'Complete previous trip to unlock'}</span>
+                        </div>
+                        <div className={styles.iconsRow}>
+                            <div className={styles.iconBox} style={{ backgroundColor: '#FFAB91' }}>
+                                <Lock size={14} color="white" />
+                            </div>
+                            <div className={styles.iconBox} style={{ backgroundColor: '#9FA8DA' }}>
+                                <Lock size={14} color="white" />
+                            </div>
+                        </div>
+                    </>
+                );
+
+            case 'WAITING':
+                return (
+                    <>
+                        <ActiveDot />
+                        <div className={`${styles.badge} ${styles.badgeWaiting}`}>
+                            <Lock size={12} color="#BF360C" />
+                            <span className={styles.badgeText}>{isAr ? 'يفتح قريباً' : 'Opens soon'}</span>
+                        </div>
+                        <div className={styles.avatarSection}>
+                            <Crown size={18} className={styles.crown} />
+                            <div className={styles.avatarCircle}>
+                                <Users size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.groupWithStats}>
+                            <div className={styles.groupRow}>
+                                <div className={styles.membersOverlap}>
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className={styles.miniAvatar} style={{ left: `${(i - 1) * 12}px`, zIndex: i }}>
+                                            <Users size={8} color="#1B3B36" />
+                                        </div>
+                                    ))}
+                                    <Plus size={10} color="#1B3B36" style={{ position: 'absolute', left: '50px', top: '4px' }} />
+                                </div>
+                            </div>
+                            <div className={styles.bottomStatsRow}>
+                                <div className={styles.statBox}>
+                                    <Users size={10} color="#1B3B36" />
+                                    <span>{groupMembers}</span>
+                                </div>
+                                <div className={`${styles.statBox} ${styles.ticketBox}`}>
+                                    <Ticket size={10} color="#E05D44" />
+                                    <span>{ticketCount}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+
+            case 'ZAD':
+                return (
+                    <>
+                        <ActiveDot />
+                        <div className={`${styles.badge} ${styles.badgeZad}`}>
+                            <Plus size={14} color="white" />
+                            <span className={styles.badgeText} style={{ color: 'white' }}>{isAr ? 'مكافآت زاد' : 'Zad rewards'}</span>
+                        </div>
+                        <div className={styles.avatarSection}>
+                            <Crown size={18} className={styles.crown} />
+                            <div className={styles.avatarCircle}>
+                                <Users size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.groupWithStats}>
+                            <div className={styles.groupRow}>
+                                <div className={styles.membersOverlap}>
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className={styles.miniAvatar} style={{ left: `${(i - 1) * 12}px`, zIndex: i }}>
+                                            <Users size={8} color="#1B3B36" />
+                                        </div>
+                                    ))}
+                                    <Plus size={10} color="#1B3B36" style={{ position: 'absolute', left: '50px', top: '4px' }} />
+                                </div>
+                            </div>
+                            <div className={styles.bottomStatsRow}>
+                                <div className={styles.statBox}>
+                                    <Users size={10} color="#1B3B36" />
+                                    <span>{groupMembers}</span>
+                                </div>
+                                <div className={`${styles.statBox} ${styles.ticketBox}`}>
+                                    <Ticket size={10} color="#E05D44" />
+                                    <span>{ticketCount}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+
+            case 'CHILLING':
+                return (
+                    <>
+                        <ActiveDot />
+                        <div className={`${styles.badge} ${styles.badgeChilling}`}>
+                            <span className={styles.badgeText}>{isAr ? 'وقت استرخاء' : 'Chill Phase'}</span>
+                        </div>
+                        <div className={styles.avatarSection}>
+                            <Crown size={18} className={styles.crown} />
+                            <div className={styles.avatarCircle}>
+                                <Users size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.groupWithStats}>
+                            <div className={styles.groupRow}>
+                                <div className={styles.membersOverlap}>
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className={styles.miniAvatar} style={{ left: `${(i - 1) * 12}px`, zIndex: i }}>
+                                            <Users size={8} color="#1B3B36" />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className={styles.bottomStatsRow}>
+                                <div className={styles.statBox}>
+                                    <Users size={10} color="#1B3B36" />
+                                    <span>{groupMembers}</span>
+                                </div>
+                                <div className={`${styles.statBox} ${styles.ticketBox}`}>
+                                    <Ticket size={10} color="#E05D44" />
+                                    <span>{ticketCount}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+
+            case 'PASSED':
+                return (
+                    <>
+                        <div className={styles.passedHeader}>
+                            <div className={styles.dotContainer}>
+                                <div className={`${styles.dot} ${styles.dotPassed}`} />
+                            </div>
+                            <span className={styles.statusLabel}>{isAr ? 'مكتملة' : 'Completed'}</span>
+                        </div>
+
+                        <div className={`${styles.badge} ${styles.badgeRiva}`} onClick={onRatePress}>
+                            <Star size={14} color="white" fill="white" />
+                            <span className={styles.badgeText} style={{ color: 'white' }}>{isAr ? 'قيّم واربح' : 'Rate & Win'}</span>
+                        </div>
+
+                        <div className={styles.avatarSection}>
+                            <Crown size={18} className={styles.crown} />
+                            <div className={styles.avatarCircle}>
+                                <Users size={20} />
+                            </div>
+                        </div>
+                        <div className={styles.groupWithStats}>
+                            <div className={styles.bottomStatsRow}>
+                                <div className={styles.statBox}>
+                                    <Users size={10} color="#1B3B36" />
+                                    <span>{groupMembers}</span>
+                                </div>
+                                <div className={`${styles.statBox} ${styles.ticketBoxRiva}`}>
+                                    <Ticket size={10} color="#5B21B6" />
+                                    <span style={{ color: '#5B21B6' }}>{ticketCount}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+
             default:
-                return { cardClass: styles.bookedPending, statusText: 'Your upcoming trip' };
+                return null;
         }
     };
 
-    const { cardClass, statusText } = getPhaseStyles();
-
     return (
-        <div className={`${styles.card} ${cardClass}`}>
-            {/* Left side - Farm preview */}
-            <div className={styles.previewSection}>
-                <button className={styles.viewButton}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" strokeWidth="2" />
-                        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" />
-                    </svg>
-                    <span>View</span>
-                </button>
-
-                {/* Farm images grid */}
-                <div className={styles.imageGrid}>
-                    <div className={styles.mainImage}></div>
-                    <div className={styles.smallImages}>
-                        <div className={styles.smallImage}></div>
-                        <div className={styles.smallImage}></div>
-                        <div className={styles.smallImage}></div>
-                        <div className={styles.smallImage}></div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Center - Trip info */}
+        <div className={`${styles.card} ${styles[phase.toLowerCase()]}`}>
+            {/* Left Section - Trip Info */}
             <div className={styles.infoSection}>
-                <span className={styles.statusText}>{statusText}</span>
-                <h3 className={styles.farmName}>{farmName}</h3>
+                <div>
+                    <h4 className={styles.headerText}>
+                        {phase === 'PASSED'
+                            ? (isAr ? 'اكتملت الرحلة' : 'Trip Completed')
+                            : (isAr ? 'رحلتك القادمة' : 'Your upcoming trip')}
+                    </h4>
+                    <h3 className={styles.farmName}>( {farmName} )</h3>
 
-                <div className={styles.details}>
-                    <div className={styles.detailRow}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" />
-                            <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" strokeWidth="2" />
-                        </svg>
-                        <span>{bookingDate}</span>
-                    </div>
-
-                    <div className={styles.detailRow}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-                            <path d="M12 6v6l4 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                        <span>{tripStartTime}</span>
-                    </div>
-
-                    <div className={styles.detailRow}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z" stroke="currentColor" strokeWidth="2" />
-                            <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2" />
-                        </svg>
-                        <span>{farmLocation}</span>
+                    <div className={styles.details}>
+                        <div className={styles.detailRow}>
+                            <Calendar size={14} color="#A7F3D0" />
+                            <span className={styles.detailText}>{bookingDate}</span>
+                        </div>
+                        <div className={styles.detailRow}>
+                            <Clock size={14} color="#A7F3D0" />
+                            <span className={styles.detailText}>{tripStartTime}</span>
+                        </div>
                     </div>
                 </div>
 
-                <button className={styles.remainingTimeBtn}>
-                    {remainingTime}
-                </button>
+                {/* Bottom Group: Timer + Location */}
+                <div className={styles.bottomLeftGroup}>
+                    <div className={styles.timerBadge}>
+                        <span className={styles.timerText}>
+                            {phase === 'PASSED'
+                                ? (isAr ? 'قيم تجربتك للمكافآت' : 'Rate us for rewards')
+                                : (isAr ? `الوقت متبقي > ${remainingTime}` : `Time > ${remainingTime}`)}
+                        </span>
+                    </div>
+
+                    <div className={styles.detailRow}>
+                        <MapPin size={14} color="#A7F3D0" />
+                        <span className={styles.detailText}>{farmLocation}</span>
+                    </div>
+                </div>
             </div>
 
-            {/* Right side - Pass & Group */}
+            {/* Right Section - Dynamic Pass Card */}
             <div className={styles.passSection}>
                 <div className={styles.passCard}>
-                    <span className={styles.activeLabel}>
-                        <span className={styles.activeDot}></span>
-                        Active
-                    </span>
-
-                    <button className={styles.openButton}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2" />
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2" />
-                        </svg>
-                        <span>Open in [h]</span>
-                    </button>
-
-                    {/* Character illustration */}
-                    <div className={styles.characterIcon}>
-                        🏍️
-                    </div>
-
-                    {/* Group members */}
-                    <div className={styles.groupMembers}>
-                        <div className={styles.memberAvatars}>
-                            <span className={styles.currencyIcon}>€</span>
-                            <span className={styles.currencyIcon}>€</span>
-                            <span className={styles.currencyIcon}>฿</span>
-                        </div>
-                        <span className={styles.memberCount}>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2" />
-                                <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="2" />
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="2" />
-                            </svg>
-                            {groupMembers}
-                        </span>
-                        <button className={styles.chatIconWrapper} onClick={onChatClick}>
-                            <span className={styles.chatIcon}>💬</span>
-                        </button>
-                    </div>
-
-                    <button className={styles.viewPassBtn}>
-                        View Pass
-                    </button>
+                    {renderPassContent()}
                 </div>
             </div>
         </div>

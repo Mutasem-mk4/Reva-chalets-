@@ -1,6 +1,8 @@
 // Utility functions for guest verification
 
 export interface Booking {
+    id?: string;
+    groupId?: string;
     chaletId: string;
     chaletName: string;
     checkIn: string;
@@ -67,6 +69,8 @@ export function createMockBooking(chaletId: string, chaletName: string): void {
     checkoutDate.setDate(checkoutDate.getDate() - 5); // 5 days ago
 
     const mockBooking: Booking = {
+        id: `mock-bk-${Date.now()}`,
+        groupId: `mock-grp-${chaletId}`,
         chaletId,
         chaletName,
         checkIn: pastDate.toISOString().split('T')[0],

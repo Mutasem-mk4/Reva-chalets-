@@ -8,7 +8,7 @@ import TrustSeals from './TrustSeals';
 import SmartDatePicker from './SmartDatePicker';
 import BookingProgress from './BookingProgress';
 
-export default function BookingForm({ dict, price }: { dict: any, price: number }) {
+export default function BookingForm({ dict, price, chaletId }: { dict: any, price: number, chaletId: string }) {
   const [step, setStep] = useState<'details' | 'payment'>('details');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
@@ -16,6 +16,7 @@ export default function BookingForm({ dict, price }: { dict: any, price: number 
   const [isGuestOpen, setIsGuestOpen] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showGift, setShowGift] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Calculate generic nights logic
   const getDays = () => {
@@ -39,12 +40,40 @@ export default function BookingForm({ dict, price }: { dict: any, price: number 
     setStep('payment');
   };
 
-  const handlePaymentSuccess = () => {
-    setSuccess(true);
-    // Delay gift reveal for effect
-    setTimeout(() => {
-      setShowGift(true);
-    }, 1500);
+  const handlePaymentSuccess = async () => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chaletId,
+          startDate: checkIn,
+          endDate: checkOut,
+          guestName: 'Web User', // Should ideally come from a form or auth
+          guestEmail: 'web@user.com',
+          guestPhone: '000000000',
+          guestCount: guests,
+          totalPrice: total,
+          pricePerNight: nightPrice,
+          nights: days
+        })
+      });
+
+      if (response.ok) {
+        setSuccess(true);
+        setTimeout(() => {
+          setShowGift(true);
+        }, 1500);
+      } else {
+        const err = await response.json();
+        alert(err.error || 'Failed to create booking');
+      }
+    } catch (e) {
+      console.error("Booking failed", e);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (success) {

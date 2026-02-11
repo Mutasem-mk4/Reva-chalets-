@@ -38,17 +38,18 @@ export default function TrustBanner() {
         .trust-banner {
           display: flex;
           gap: 1rem;
-          background: hsl(var(--secondary) / 0.5);
-          padding: 1rem;
-          border-radius: var(--radius);
+          background: var(--color-cream-dark);
+          padding: 1.5rem;
+          border-radius: 20px;
           margin-top: 2rem;
           flex-wrap: wrap;
+          border: 1px solid #E5E7EB;
         }
 
         .trust-item {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.75rem;
           flex: 1;
           min-width: 140px;
         }
@@ -57,7 +58,11 @@ export default function TrustBanner() {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: hsl(var(--primary));
+            color: var(--color-forest);
+            background: #D1FAE5;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
         }
 
         .text {
@@ -66,48 +71,37 @@ export default function TrustBanner() {
         }
 
         strong {
-          color: hsl(var(--primary));
-          font-weight: 600;
+          color: var(--color-forest);
+          font-weight: 700;
           font-size: 0.9rem;
         }
 
         small {
           opacity: 0.7;
           font-size: 0.75rem;
+          color: var(--color-forest);
         }
 
         .reva-promise {
-            background: rgba(217, 119, 6, 0.1);
+            background: #FFFBEB;
             padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: 12px;
+            border: 1px solid #FCD34D;
         }
 
         .reva-promise strong {
-            color: #b45309;
+            color: #B45309;
         }
 
         @media (max-width: 480px) {
           .trust-banner {
-            gap: 0.75rem;
-            padding: 0.75rem;
+            gap: 1rem;
+            padding: 1rem;
           }
 
           .trust-item {
-            min-width: 45%;
-            flex: 0 0 45%;
-          }
-
-          .icon {
-            font-size: 0.9rem;
-          }
-
-          strong {
-            font-size: 0.8rem;
-          }
-
-          small {
-            font-size: 0.7rem;
+            min-width: 100%;
+            flex: 0 0 100%;
           }
         }
       `}</style>

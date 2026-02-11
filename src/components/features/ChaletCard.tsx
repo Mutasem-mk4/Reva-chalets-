@@ -86,30 +86,30 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
 
                     <style jsx>{`
                     .chalet-card {
-                        background: rgba(255, 255, 255, 0.05);
-                        backdrop-filter: blur(10px);
-                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        background: var(--color-cream-light);
+                        border: 1px solid #E5E7EB;
                         border-radius: 20px;
                         overflow: hidden;
                         height: 100%;
                         display: flex;
                         flex-direction: column;
-                        transition: border-color 0.3s ease;
+                        transition: border-color 0.3s ease, box-shadow 0.3s ease;
                         max-width: 100%;
                         width: 100%;
+                        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
                     }
 
                     /* Hover Glow Effect */
                     :global(.tilt-card:hover) .chalet-card {
-                        border-color: rgba(251, 191, 36, 0.4);
-                        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                        border-color: rgba(27, 59, 54, 0.3);
+                        box-shadow: 0 12px 32px rgba(0,0,0,0.12);
                     }
 
                     .image-wrapper {
                         position: relative;
                         aspect-ratio: 4/3;
                         overflow: hidden;
-                        background: hsl(var(--secondary));
+                        background: var(--color-cream-dark);
                     }
 
                     .card-image {
@@ -127,15 +127,15 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                         position: absolute;
                         top: 1rem;
                         right: 1rem;
-                        background: rgba(15, 23, 42, 0.6);
+                        background: rgba(27, 59, 54, 0.85);
                         backdrop-filter: blur(4px);
                         padding: 0.35rem 0.85rem;
                         border-radius: 2rem;
                         font-size: 0.75rem;
                         font-weight: 600;
-                        color: #f5a623;
+                        color: #D1FAE5;
                         z-index: 10;
-                        border: 1px solid rgba(245, 166, 35, 0.4);
+                        border: 1px solid rgba(167, 243, 208, 0.3);
                     }
 
                     .urgency-badge {
@@ -160,9 +160,9 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                     }
 
                     .urgency-badge.popular {
-                        background: linear-gradient(135deg, #f5a623, #d4920a);
+                        background: linear-gradient(135deg, var(--color-gold), var(--color-gold-light));
                         color: white;
-                        box-shadow: 0 2px 10px rgba(245, 166, 35, 0.4);
+                        box-shadow: 0 2px 10px rgba(229, 166, 29, 0.4);
                     }
 
                     .urgency-badge.limited {
@@ -195,14 +195,14 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                         font-size: 1.25rem;
                         margin: 0;
                         font-weight: 700;
-                        color: hsl(var(--foreground));
+                        color: var(--color-forest);
                     }
 
                     .rating {
                         display: inline-flex;
                         align-items: center;
                         gap: 0.25rem;
-                        color: #f5a623;
+                        color: var(--color-gold);
                         font-weight: 700;
                         font-size: 0.9rem;
                     }
@@ -226,11 +226,12 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                     }
 
                     .amenity-tag {
-                        background: hsl(var(--secondary)); 
-                        color: hsl(var(--secondary-foreground));
+                        background: #F0FDF4;
+                        color: var(--color-forest);
                         font-size: 0.75rem;
                         padding: 0.25rem 0.6rem;
                         border-radius: 6px;
+                        border: 1px solid #D1FAE5;
                     }
 
                     .footer {
@@ -278,7 +279,7 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                     .amount {
                         font-size: 1.25rem;
                         font-weight: 700;
-                        color: hsl(var(--primary));
+                        color: var(--color-forest);
                     }
 
                     .period {
@@ -288,14 +289,14 @@ export default function ChaletCard({ chalet, lang, dict }: ChaletCardProps) {
                     }
 
                     .book-btn {
-                        background: linear-gradient(135deg, #f5a623, #d4920a);
+                        background: var(--gradient-forest);
                         color: #ffffff;
                         padding: 0.6rem 1.2rem;
                         border-radius: 99px;
                         font-size: 0.9rem;
                         font-weight: 600;
                         transition: all 0.3s ease;
-                        box-shadow: 0 4px 12px rgba(245, 166, 35, 0.3);
+                        box-shadow: 0 4px 12px rgba(27, 59, 54, 0.25);
                     }
 
                     :global(.tilt-card:hover) .book-btn {

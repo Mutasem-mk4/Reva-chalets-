@@ -87,16 +87,16 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
             <header className={styles.header}>
                 <div className={styles.headerContent}>
                     <button className={styles.backButton}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M19 12H5M12 19l-7-7 7-7" />
                         </svg>
                     </button>
                     <div className={styles.groupInfo}>
-                        <h2 className={styles.groupName}>{locale === 'ar' ? 'مجموعة الشاليه' : 'Chalet Group'}</h2>
-                        <span className={styles.memberCount}>6 members</span>
+                        <h2 className={styles.groupName}>{locale === 'ar' ? 'رحلة الشاليه' : 'Chalet Trip'}</h2>
+                        <span className={styles.memberCount}>6 {locale === 'ar' ? 'أعضاء' : 'members'}</span>
                     </div>
                     <button className={styles.settingsButton}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="1" />
                             <circle cx="12" cy="5" r="1" />
                             <circle cx="12" cy="19" r="1" />
@@ -107,11 +107,12 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
 
             <div className={styles.messagesList}>
                 {loading && messages.length === 0 ? (
-                    <div className={styles.loader}>Loading conversation...</div>
+                    <div className={styles.loader}>
+                        <span>{locale === 'ar' ? 'جاري تحميل المحادثة...' : 'Loading conversation...'}</span>
+                    </div>
                 ) : (
                     messages.map((msg) => {
                         const isMe = msg.senderId === currentUserId;
-                        // Assuming host-1 is the Maazib for demo
                         const isHost = msg.senderId === 'host-1';
 
                         return (
@@ -132,7 +133,7 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
                                     {!isMe && (
                                         <div className={styles.senderName}>
                                             {msg.sender.name}
-                                            {isHost && <span className={styles.hostBadge}>👑 Maazib</span>}
+                                            {isHost && <span className={styles.hostBadge}>👑 {locale === 'ar' ? 'المعزب' : 'Maazib'}</span>}
                                         </div>
                                     )}
                                     <p className={styles.messageContent}>{msg.content}</p>
@@ -149,19 +150,21 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
 
             <form className={styles.inputArea} onSubmit={handleSend}>
                 <button type="button" className={styles.attachButton}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
                     </svg>
                 </button>
-                <input
-                    type="text"
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Type a message..."
-                    className={styles.input}
-                />
+                <div className={styles.inputWrapper}>
+                    <input
+                        type="text"
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                        placeholder={locale === 'ar' ? 'اكتب رسالة...' : 'Type a message...'}
+                        className={styles.input}
+                    />
+                </div>
                 <button type="submit" className={styles.sendButton} disabled={!inputText.trim()}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="22" y1="2" x2="11" y2="13" />
                         <polygon points="22 2 15 22 11 13 2 9 22 2" />
                     </svg>

@@ -1,289 +1,332 @@
 .card {
-    display: grid;
-    grid-template-columns: 100px 1fr 120px;
-    gap: 12px;
-    background: linear-gradient(135deg, #E5A61D 0%, #F5C24D 50%, #D4920A 100%);
-    border-radius: 16px;
-    padding: 12px;
-    margin: 16px 0;
-    box-shadow: 0 4px 20px rgba(229, 166, 29, 0.3);
+    display: flex;
+    justify-content: space-between;
+    background: var(--gradient-card-dark);
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+    min-height: 180px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
-}
-
-/* Phase Variants */
-.notBooked {
-    background: linear-gradient(135deg, #9CA3AF 0%, #D1D5DB 50%, #6B7280 100%);
-    box-shadow: 0 4px 20px rgba(107, 114, 128, 0.3);
-}
-
-.bookedPending {
-    background: linear-gradient(135deg, #E5A61D 0%, #F5C24D 50%, #D4920A 100%);
-    box-shadow: 0 4px 20px rgba(229, 166, 29, 0.3);
-}
-
-.inProgress {
-    background: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #16A34A 100%);
-    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
-}
-
-.completed {
-    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 50%, #2563EB 100%);
-    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
-}
-
-/* Preview Section - Left */
-.previewSection {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.viewButton {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(0, 0, 0, 0.3);
     color: white;
-    border: none;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    cursor: pointer;
-    width: fit-content;
 }
 
-.imageGrid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 4px;
-}
-
-.mainImage {
-    width: 100%;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><rect fill="%23ccc" width="100" height="50"/></svg>');
-    background-size: cover;
-}
-
-.smallImages {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-}
-
-.smallImage {
-    width: 100%;
-    aspect-ratio: 1;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-}
-
-/* Info Section - Center */
+/* Phase classes */
 .infoSection {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    color: white;
+    justify-content: space-between;
 }
 
-.statusText {
-    font-size: 11px;
-    font-weight: 500;
-    opacity: 0.9;
+.headerText {
+    font-size: 14px;
+    font-weight: 400;
+    color: #A7F3D0;
+    opacity: 0.8;
 }
 
 .farmName {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    margin: 0;
-    color: #8B0000;
-    /* Dark red matching reference */
+    margin: 4px 0 12px 0;
+    color: #FFFFFF;
+    font-family: var(--font-logo);
 }
 
 .details {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    margin-top: 4px;
+    gap: 8px;
 }
 
 .detailRow {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    color: #1A1A1A;
+    gap: 10px;
 }
 
-.detailRow svg {
+.icon {
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
 }
 
-.remainingTimeBtn {
-    margin-top: auto;
-    background: white;
-    color: #1A1A1A;
-    border: none;
+.detailText {
+    font-size: 14px;
+    color: #D1FAE5;
+}
+
+/* Bottom Left Group */
+.bottomLeftGroup {
+    margin-top: 16px;
+}
+
+.timerBadge {
+    background: rgba(255, 255, 255, 0.1);
     padding: 6px 12px;
     border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
+    margin-bottom: 8px;
     width: fit-content;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timerText {
+    font-size: 12px;
+    font-weight: 700;
+    color: #A7F3D0;
 }
 
 /* Pass Section - Right */
 .passSection {
-    display: flex;
-    align-items: stretch;
+    width: 140px;
 }
 
 .passCard {
-    background: #FAF8F3;
-    border-radius: 12px;
-    padding: 8px;
+    background: #FAF9F6;
+    border-radius: 16px;
+    height: 100%;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    width: 100%;
     position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.activeLabel {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 9px;
-    color: #22C55E;
-    font-weight: 500;
-    position: absolute;
-    top: 6px;
-    right: 6px;
+.statusLabel {
+    font-size: 10px;
+    font-weight: 700;
+    color: #1F423A;
+    text-transform: uppercase;
 }
 
-.activeDot {
-    width: 6px;
-    height: 6px;
-    background: #22C55E;
+.dotContainer {
+    margin-right: 4px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
 }
 
-.openButton {
+.dotActive {
+    background: #10B981;
+}
+
+.dotPassed {
+    background: #6B7280;
+}
+
+.activeHeader,
+.passedHeader {
     display: flex;
     align-items: center;
-    gap: 4px;
-    background: #3D5A47;
-    color: white;
+    margin-bottom: 12px;
+}
+
+.passBtn,
+.rateBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
     border: none;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 9px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 12px;
+    font-size: 10px;
+    font-weight: 700;
 }
 
-.characterIcon {
-    font-size: 32px;
-    margin: 4px 0;
+.passBtn {
+    background: #1F423A;
+    color: white;
 }
 
-.groupMembers {
+.rateBtn {
+    background: #1F423A;
+    color: white;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.badgeMissing {
+    background-color: #A5D6A7;
+    color: #1B3B36;
+}
+
+.badgeWaiting {
+    background-color: #FFE0B2;
+    color: #BF360C;
+}
+
+.badgeZad {
+    background-color: #E05D44;
+    color: white;
+    cursor: pointer;
+}
+
+.badgeChilling {
+    background-color: #B2DFDB;
+    color: #004D40;
+}
+
+.badgeRiva {
+    background-color: #D1C4E9;
+    color: white;
+    cursor: pointer;
+}
+
+.badgeText {
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* Crown & Avatar */
+.crown {
+    margin-bottom: -6px;
+    z-index: 10;
+    color: #1B3B36;
+}
+
+.avatarCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 2px solid #1B3B36;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #F3F4F6;
+    color: #1B3B36;
+}
+
+/* Group Stats */
+.groupWithStats {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     margin-top: auto;
 }
 
-.memberAvatars {
+.groupRow {
+    height: 20px;
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
-.currencyIcon {
-    width: 16px;
-    height: 16px;
-    background: #E5A61D;
-    border-radius: 50%;
+.membersOverlap {
+    display: flex;
+    width: 60px;
+    height: 20px;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+.miniAvatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #E5E7EB;
+    border: 1px solid white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
-    color: white;
-    font-weight: bold;
-    margin-left: -4px;
-    border: 1px solid white;
+    position: absolute;
+    color: #1B3B36;
 }
 
-.currencyIcon:first-child {
-    margin-left: 0;
-}
-
-.memberCount {
+.bottomStatsRow {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.statBox {
+    background-color: #F3F4F6;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #374151;
+}
+
+.ticketBox {
+    background-color: #FFEBEE;
+    color: #E05D44;
+}
+
+.ticketBoxRiva {
+    background-color: #F3E5F5;
+    color: #5B21B6;
+}
+
+.centerContent {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 2px;
-    font-size: 10px;
-    color: #374151;
-    font-weight: 600;
+    text-align: center;
+    margin: 8px 0;
 }
 
-.chatIcon {
-    font-size: 12px;
+.mainStatusText {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1F2937;
 }
 
-.viewPassBtn {
-    background: #3D5A47;
-    color: white;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 4px;
+.subStatusText {
+    font-size: 8px;
+    color: #6B7280;
 }
 
-/* Responsive */
-@media (max-width: 380px) {
-    .card {
-        grid-template-columns: 80px 1fr 100px;
-        padding: 10px;
-        gap: 8px;
-    }
-
-    .farmName {
-        font-size: 14px;
-    }
-
-    .detailRow {
-        font-size: 10px;
-    }
-
-    .characterIcon {
-        font-size: 24px;
-    }
+.iconsRow {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
 
-/* Add button reset for chat icon wrapper */
-.chatIconWrapper {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+.iconBox {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
 }
 
-.chatIconWrapper:hover {
-    transform: scale(1.1);
+/* Media Queries */
+@media (max-width: 640px) {
+    .card {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .passSection {
+        width: 100%;
+        height: auto;
+    }
+
+    .passCard {
+        min-height: 140px;
+        flex-direction: column;
+        /* Ensure vertical stack on mobile for internal card layout */
+        justify-content: space-evenly;
+    }
 }
