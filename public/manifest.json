@@ -1,0 +1,22 @@
+{
+    "name": "Riva Chalets",
+    "short_name": "Riva",
+    "description": "Luxury Chalet Rentals in Jordan",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAF9F6",
+    "theme_color": "#1B3B36",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/images/logo-en.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/logo-en.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

@@ -46,6 +46,17 @@ export const metadata: Metadata = {
         description: 'Luxury Chalets in Jordan - Book Now',
         images: ['/images/hero.png'],
     },
+    icons: {
+        icon: '/images/logo-en.png',
+        shortcut: '/images/logo-en.png',
+        apple: '/images/logo-en.png',
+    },
+    manifest: '/manifest.json',
+    themeColor: '#1B3B36',
+    other: {
+        'apple-mobile-web-app-capable': 'yes',
+        'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    },
     robots: {
         index: true,
         follow: true,
@@ -55,6 +66,10 @@ export const metadata: Metadata = {
 // export async function generateStaticParams() {
 //    return [{ lang: 'en' }, { lang: 'ar' }];
 // }
+
+import GoogleAnalytics from '@/components/features/GoogleAnalytics';
+
+// ... (imports)
 
 export default async function RootLayout({
     children,
@@ -70,6 +85,8 @@ export default async function RootLayout({
     return (
         <html lang={lang} dir={dir} data-theme="light">
             <body className={`${inter.variable} ${ebGaramond.variable} ${cairo.className}`}>
+                <GoogleAnalytics GA_MEASUREMENT_ID="G-PLACEHOLDER" />
+
                 {/* Skip to content link for accessibility */}
                 <a href="#main-content" className="skip-to-content">
                     Skip to content
