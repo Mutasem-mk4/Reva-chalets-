@@ -30,11 +30,12 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
   }
 
   return (
-    <div className="chalet-detail">
+    <div className="chalet-detail" style={{ background: 'var(--color-cream)' }}>
       {/* Track this view */}
       <ViewedTracker chaletId={chalet.id} chaletName={chalet.name} chaletImage={chalet.images[0]} chaletPrice={chalet.price} />
       {/* Sticky Price Bar */}
       <StickyPriceBarWrapper chaletName={chalet.name} price={chalet.price} rating={chalet.rating} />
+
       {/* Gallery Section */}
       <div className={styles.gallerySection}>
         <div className="container">
@@ -51,7 +52,7 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
             <Breadcrumb
               lang={lang}
               items={[
-                { label: lang === 'ar' ? 'الشاليهات' : 'Chalets', href: `/${lang}/chalets` },
+                { label: dict.nav.chalets, href: `/${lang}/chalets` },
                 { label: chalet.name }
               ]}
             />
@@ -64,7 +65,7 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
 
             <div className={styles.rating}>
               <StarFilled size={16} color="#E5A61D" />
-              {chalet.rating} (120 reviews)
+              {chalet.rating} (120 {lang === 'ar' ? 'تقييم' : 'reviews'})
             </div>
 
             {/* Live Viewers */}
@@ -93,22 +94,22 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
 
             <div className={styles.divider}></div>
 
-            <h2>Guest Reviews</h2>
+            <h2>{(dict.chalet as any).guestReviews || 'Guest Reviews'}</h2>
             <ReviewList reviews={chalet.reviews} />
             <ReviewForm chaletId={chalet.id} chaletName={chalet.name} />
 
             <div className={styles.divider}></div>
 
-            <h2>Things to Know</h2>
+            <h2>{(dict.chalet as any).thingsToKnow || 'Things to Know'}</h2>
             <div className={styles.policies}>
               <div className={styles.policyItem}>
-                <strong>Check-in</strong>: 15:00 onwards
+                <strong>{(dict.chalet as any).checkIn || 'Check-in'}</strong>: {(dict.chalet as any).checkInTime || '15:00 onwards'}
               </div>
               <div className={styles.policyItem}>
-                <strong>Check-out</strong>: Before 11:00
+                <strong>{(dict.chalet as any).checkOut || 'Check-out'}</strong>: {(dict.chalet as any).checkOutTime || 'Before 11:00'}
               </div>
               <div className={styles.policyItem}>
-                <strong>Cancellation</strong>: Free up to 48 hours before check-in.
+                <strong>{(dict.chalet as any).cancellation || 'Cancellation'}</strong>: {(dict.chalet as any).cancellationPolicy || 'Free up to 48 hours before check-in.'}
               </div>
             </div>
           </ScrollReveal>
@@ -129,7 +130,7 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
 
               <GuaranteeBadge />
 
-              <p className={styles.hint}>No payment required today.</p>
+              <p className={styles.hint}>{(dict.chalet as any).noPayment || 'No payment required today.'}</p>
             </div>
           </ScrollReveal>
         </div>
