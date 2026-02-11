@@ -203,7 +203,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           height: 64px;
           width: auto;
           object-fit: contain;
-          filter: brightness(0); /* Force Black on cream bg for visibility */
+          /* Filter to match #1B3B36 (Forest Green) from White */
+          filter: brightness(0) saturate(100%) invert(18%) sepia(10%) saturate(1966%) hue-rotate(124deg) brightness(97%) contrast(90%);
         }
 
         .header-content {
