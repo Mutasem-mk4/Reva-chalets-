@@ -13,7 +13,6 @@ const defaultDict = {
 
 export default function Header({ lang, dict: propDict }: { lang: string, dict: any }) {
   const dict = propDict || defaultDict;
-  const [theme, setTheme] = useState('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -38,27 +37,14 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Theme logic removed - Light mode enforced
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme');
-    if (storedTheme) {
-      setTheme(storedTheme);
-      document.documentElement.setAttribute('data-theme', storedTheme);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
-    }
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
 
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
 
   const switchLanguage = () => {
     const newLang = lang === 'en' ? 'ar' : 'en';
@@ -106,10 +92,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
               {lang === 'en' ? 'عربي' : 'EN'}
             </button>
 
-            <button onClick={toggleTheme} className="icon-btn desktop-only" aria-label="Toggle theme">
-              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-            </button>
-
             <Link href={`/${lang}/chalets`} className="btn-primary desktop-only">
               {dict.nav.bookNow}
             </Link>
@@ -129,9 +111,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         <div className="mobile-menu-header">
           <button onClick={switchLanguage} className="mobile-action-btn">
             {lang === 'en' ? 'عربي' : 'EN'}
-          </button>
-          <button onClick={toggleTheme} className="mobile-action-btn">
-            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
           </button>
         </div>
 

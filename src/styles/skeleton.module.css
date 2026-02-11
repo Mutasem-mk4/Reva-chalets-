@@ -261,39 +261,3 @@
         height: 2rem;
     }
 }
-
-/* Dark mode support */
-[data-theme='dark'] .skeletonText,
-[data-theme='dark'] .skeletonTitle,
-[data-theme='dark'] .skeletonImage,
-[data-theme='dark'] .skeletonAvatar,
-[data-theme='dark'] .skeletonButton,
-[data-theme='dark'] .imageWrapper,
-[data-theme='dark'] .titleSkeleton,
-[data-theme='dark'] .ratingSkeleton,
-[data-theme='dark'] .descSkeleton,
-[data-theme='dark'] .tagSkeleton,
-[data-theme='dark'] .priceSkeleton,
-[data-theme='dark'] .btnSkeleton,
-[data-theme='dark'] .gallerySkeleton,
-[data-theme='dark'] .sidebar {
-    background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-    background-size: 200% 100%;
-}
-
-[data-theme='dark'] .chaletCardSkeleton {
-    background: #1e293b;
-    border-color: #334155;
-}
-
-[data-theme='dark'] .heroSkeleton {
-    background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
-    background-size: 200% 100%;
-}
-
-[data-theme='dark'] .heroTitleSkeleton,
-[data-theme='dark'] .heroSubtitleSkeleton,
-[data-theme='dark'] .heroBtnSkeleton {
-    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
-    background-size: 200% 100%;
-}
