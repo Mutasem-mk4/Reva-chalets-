@@ -37,7 +37,7 @@ export default function LayoutWrapper({ children, lang, dict }: LayoutWrapperPro
     // Full layout for regular pages
     return (
         <>
-            <PromoBanner />
+            {/* PromoBanner removed by user request */}
             <Header lang={lang} dict={dict} />
             <main style={{ flex: 1 }}>{children}</main>
             <FloatingSupport />

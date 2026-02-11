@@ -63,8 +63,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             <Image
               src={logoSrc}
               alt="Riva"
-              width={80}
-              height={36}
+              width={120}
+              height={54}
               className="logo-img"
               priority
             />
