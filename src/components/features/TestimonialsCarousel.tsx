@@ -20,36 +20,45 @@ const TESTIMONIALS: Testimonial[] = [
         name: 'Sarah Mitchell',
         location: 'London, UK',
         rating: 5,
-        comment: 'Absolutely breathtaking! The Dead Sea villa exceeded all our expectations. The infinity pool overlooking the sea was the highlight of our trip to Jordan.',
+        comment: 'Absolutely breathtaking! The Royal Dead Sea Villa exceeded all expectations. The infinity pool at sunset is a memory we will cherish forever.',
         avatar: '👩‍💼',
         stayedAt: 'Royal Dead Sea Villa'
     },
     {
         id: 't2',
-        name: 'Ahmed Al-Rashid',
-        location: 'Dubai, UAE',
+        name: 'Khalid Al-Otaibi',
+        location: 'Riyadh, KSA',
         rating: 5,
-        comment: 'The attention to detail was remarkable. From the moment we arrived, we felt like royalty. Will definitely be returning with family.',
-        avatar: '👨‍💻',
-        stayedAt: 'Petra Desert Lodge'
+        comment: 'The Ajloun Forest Retreat was pure magic. Waking up to the sound of birds and the smell of pine trees was exactly the escape we needed.',
+        avatar: '👨‍✈️',
+        stayedAt: 'Ajloun Forest Retreat'
     },
     {
         id: 't3',
         name: 'Maria Garcia',
         location: 'Madrid, Spain',
         rating: 5,
-        comment: 'A hidden gem! The Ajloun cabin was so peaceful and the views of the forest were magical. Perfect escape from city life.',
+        comment: 'We loved the history at Jerash Heritage Lodge. It felt authentic yet comfortable. The traditional breakfast in the garden was delicious!',
         avatar: '👩‍🎨',
-        stayedAt: 'Ajloun Forest Cabin'
+        stayedAt: 'Jerash Heritage Lodge'
     },
     {
         id: 't4',
         name: 'James Chen',
         location: 'Singapore',
         rating: 5,
-        comment: 'Incredible service and stunning location. The team went above and beyond to make our honeymoon special. Highly recommended!',
-        avatar: '👨‍✈️',
-        stayedAt: 'Aqaba Luxury Suite'
+        comment: 'Amman Sky Penthouse is world-class. The view of the city lights at night is stunning, and the location in Abdoun is perfect.',
+        avatar: '👨‍💻',
+        stayedAt: 'Amman Sky Penthouse'
+    },
+    {
+        id: 't5',
+        name: 'Layla Massad',
+        location: 'Dubai, UAE',
+        rating: 5,
+        comment: 'Salt Valley Farm was a joy for our kids. Authentic Jordanian hospitality at its best. We felt like family.',
+        avatar: '👩‍⚕️',
+        stayedAt: 'Salt Valley Farm'
     }
 ];
 
@@ -78,8 +87,7 @@ export default function TestimonialsCarousel() {
     return (
         <section className="testimonials-section relative overflow-hidden">
             <CurveDivider position="top" color="hsl(var(--background))" style={{ height: '4rem', zIndex: 5 }} />
-            <DotPattern color="hsl(var(--foreground))" style={{ top: 0, right: 0, width: '16rem', height: '16rem', opacity: 0.03 }} />
-            <BlobShape color="hsl(var(--primary))" style={{ bottom: 0, left: 0, width: '24rem', height: '24rem', opacity: 0.03 }} />
+            <CurveDivider position="top" color="hsl(var(--background))" style={{ height: '4rem', zIndex: 5 }} />
 
             <div className="container relative z-10">
                 <div className="section-header">

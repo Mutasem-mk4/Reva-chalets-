@@ -20,28 +20,30 @@ export default function ContactPage() {
             <div className={styles.content}>
                 <div className={styles.infoSection}>
                     <h1>Get in Touch</h1>
-                    <p className={styles.subtitle}>Have a question? We'd love to hear from you.</p>
+                    <p className={styles.subtitle}>Have a question? We'd love to hear from you. Reach out to the Riva Concierge team.</p>
 
                     <div className={styles.contactDetails}>
                         <div className={styles.detailItem}>
                             <span className={styles.icon}><MapPin size={24} /></span>
                             <div>
                                 <h3>Visit Us</h3>
-                                <p>Abdali Boulevard, Floor 15<br />Amman, Jordan</p>
+                                <p>Riva HQ, Campbell Gray Living<br />Abdali Boulevard, Amman</p>
                             </div>
                         </div>
                         <div className={styles.detailItem}>
                             <span className={styles.icon}><Phone size={24} /></span>
                             <div>
                                 <h3>Call Us</h3>
-                                <p>+962 79 000 0000</p>
+                                <p><a href="tel:+962790000000" style={{ color: 'inherit' }}>+962 79 000 0000</a></p>
+                                <p className={styles.note}>Daily 9am - 10pm</p>
                             </div>
                         </div>
                         <div className={styles.detailItem}>
                             <span className={styles.icon}><Email size={24} /></span>
                             <div>
                                 <h3>Email Us</h3>
-                                <p>hello@reva-chalets.com</p>
+                                <p><a href="mailto:hello@riva.jo" style={{ color: 'inherit' }}>hello@riva.jo</a></p>
+                                <p><a href="mailto:partners@riva.jo" style={{ color: 'inherit' }}>partners@riva.jo</a></p>
                             </div>
                         </div>
                     </div>

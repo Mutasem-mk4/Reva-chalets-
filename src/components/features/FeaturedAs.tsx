@@ -2,18 +2,18 @@
 
 export default function FeaturedAs() {
     const partners = [
-        'TripAdvisor',
-        'Booking.com',
-        'Lonely Planet',
-        'Forbes Travel',
-        'National Geographic',
-        'Travel + Leisure'
+        'Royal Jordanian',
+        'Visit Jordan',
+        'Zain',
+        'Jordan Times',
+        'Roya TV',
+        'Condé Nast Middle East'
     ];
 
     return (
         <section className="featured-as">
             <div className="container">
-                <p className="label">Trusted by the World&apos;s Best</p>
+                <p className="label">Trusted Partners & Features</p>
                 <div className="logos">
                     {partners.map((name, idx) => (
                         <span key={idx} className="logo-text">
