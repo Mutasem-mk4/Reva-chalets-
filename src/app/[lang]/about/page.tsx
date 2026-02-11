@@ -1,4 +1,10 @@
 import styles from '@/styles/about.module.css';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About Us',
+    description: 'Learn about Riva Chalets — redefining luxury hospitality in Jordan. Our story, values, and commitment to excellence.',
+};
 
 export default function AboutPage() {
     return (

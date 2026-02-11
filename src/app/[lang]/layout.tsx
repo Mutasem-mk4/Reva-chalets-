@@ -16,31 +16,39 @@ const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-serif', s
 
 export const metadata: Metadata = {
     title: {
-        template: '%s | Reva Chalets',
-        default: 'Reva Chalets | Luxury Booking in Jordan',
+        template: '%s | Riva Chalets',
+        default: 'Riva Chalets | حجز شاليهات فاخرة في الأردن',
     },
-    description: 'Experience the finest luxury chalets in Jordan. Book your perfect getaway at the Dead Sea, Petra, and Aqaba with Reva Chalets.',
-    keywords: ['Chalets', 'Jordan', 'Luxury Booking', 'Dead Sea', 'Petra', 'Vacation Rental'],
-    authors: [{ name: 'Reva Chalets Team' }],
+    description: 'Experience the finest luxury chalets in Jordan. Book your perfect getaway at the Dead Sea, Ajloun, and Jerash with Riva Chalets. احجز شاليهك الآن.',
+    keywords: ['Chalets', 'Jordan', 'Luxury Booking', 'Dead Sea', 'Ajloun', 'Jerash', 'Vacation Rental', 'شاليهات', 'الأردن', 'حجز', 'ريفا'],
+    authors: [{ name: 'Riva Chalets' }],
+    metadataBase: new URL('https://riva-jo.me'),
     openGraph: {
-        title: 'Reva Chalets | Luxury Booking in Jordan',
-        description: 'Experience the finest luxury chalets in Jordan.',
-        url: 'https://reva-chalets.com',
-        siteName: 'Reva Chalets',
+        title: 'Riva Chalets | Luxury Chalets in Jordan',
+        description: 'Discover and book premium luxury chalets across Jordan. Dead Sea, Ajloun, Jerash & more.',
+        url: 'https://riva-jo.me',
+        siteName: 'Riva Chalets',
         images: [
             {
-                url: '/images/og-image.jpg',
+                url: '/images/hero.png',
                 width: 1200,
                 height: 630,
+                alt: 'Riva Chalets - Luxury Getaway in Jordan',
             },
         ],
         locale: 'en_US',
+        alternateLocale: 'ar_JO',
         type: 'website',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Reva Chalets',
-        description: 'Luxury Chalets in Jordan',
+        title: 'Riva Chalets',
+        description: 'Luxury Chalets in Jordan - Book Now',
+        images: ['/images/hero.png'],
+    },
+    robots: {
+        index: true,
+        follow: true,
     },
 };
 
