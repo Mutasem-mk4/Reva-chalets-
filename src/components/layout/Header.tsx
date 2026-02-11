@@ -203,7 +203,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           height: 64px;
           width: auto;
           object-fit: contain;
-          filter: none; /* Original colors on cream bg */
+          filter: brightness(0); /* Force Black on cream bg for visibility */
         }
 
         .header-content {
