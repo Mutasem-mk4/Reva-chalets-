@@ -1,8 +1,11 @@
 /* Home Page Styles */
 
-/* Hero Section */
 /* Hero Section - Now handled by MobileStyleHero.tsx */
 /* Legacy styles removed to prevent conflicts */
+
+.homePage {
+    overflow-x: hidden;
+}
 
 .ctaBtn {
     display: inline-block;
@@ -26,7 +29,7 @@
 
 /* Featured Section */
 .featured {
-    padding: 8rem 0;
+    padding: 4rem 0;
 }
 
 .bgFaded {
@@ -37,13 +40,13 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     border-bottom: 1px solid hsl(var(--border));
-    padding-bottom: 1rem;
+    padding-bottom: 0.75rem;
 }
 
 .sectionTitle {
-    font-size: var(--text-4xl);
+    font-size: var(--text-3xl);
     font-family: var(--font-serif);
     color: hsl(var(--primary));
 }
@@ -51,7 +54,7 @@
 .viewAll {
     color: hsl(var(--primary));
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -64,8 +67,8 @@
 
 .chaletGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -74,22 +77,22 @@
 
 .goldenCardSection {
     max-width: 600px;
-    margin: -120px auto 0;
+    margin: -80px auto 0;
     padding: 0 1rem;
     position: relative;
     z-index: 20;
 }
 
 .searchSection {
-    max-width: 800px;
-    margin: 3rem auto;
+    max-width: 700px;
+    margin: 2rem auto;
     padding: 0 1rem;
 }
 
 .sectionWrapper {
     padding: 0 1rem;
     max-width: 1140px;
-    margin: 2rem auto;
+    margin: 1.5rem auto;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -97,24 +100,24 @@
    ═══════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
     .featured {
-        padding: 3rem 0;
+        padding: 2.5rem 0;
     }
 
     .sectionHeader {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.25rem;
         border-bottom: none;
         padding-bottom: 0;
     }
 
     .sectionTitle {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
     .viewAll {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
     }
 
     .chaletGrid {
@@ -124,11 +127,15 @@
 
     .goldenCardSection {
         max-width: 100%;
-        margin-top: -100px;
+        margin-top: -60px;
     }
 
     .searchSection {
-        margin: 2rem auto;
+        margin: 1.5rem auto;
+    }
+
+    .sectionWrapper {
+        margin: 1rem auto;
     }
 }
 
@@ -137,20 +144,24 @@
    ═══════════════════════════════════════════════════════ */
 @media (max-width: 480px) {
     .featured {
-        padding: 2rem 0;
+        padding: 1.5rem 0;
     }
 
     .sectionTitle {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
 
     .chaletGrid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.75rem;
     }
 
     .goldenCardSection {
-        margin-top: -80px;
+        margin-top: -50px;
+    }
+
+    .searchSection {
+        margin: 1rem auto;
     }
 }
 
@@ -164,6 +175,6 @@
     }
 
     .featured {
-        padding: 6rem 0;
+        padding: 5rem 0;
     }
 }

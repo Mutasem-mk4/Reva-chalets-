@@ -13,7 +13,6 @@ import SearchBar from '@/components/features/SearchBar';
 import CategoryGrid from '@/components/features/CategoryGrid';
 import GoldenCard from '@/components/features/GoldenCard';
 import { ArrowRight } from '@/components/ui/Icons';
-import { DotPattern } from '@/components/ui/Patterns';
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -32,42 +31,31 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* ═══ GOLDEN CARD ═══ */}
       <div className={styles.goldenCardSection}>
-        <ScrollReveal>
-          <GoldenCard phase="WAITING" />
-        </ScrollReveal>
+        <GoldenCard phase="WAITING" />
       </div>
 
       {/* ═══ SEARCH BAR ═══ */}
       <div className={styles.searchSection}>
-        <ScrollReveal delay={0.1}>
-          <SearchBar locale={lang} />
-        </ScrollReveal>
+        <SearchBar locale={lang} />
       </div>
 
       {/* ═══ CATEGORIES ═══ */}
       <div className={styles.sectionWrapper}>
-        <ScrollReveal delay={0.2}>
-          <CategoryGrid locale={lang} />
-        </ScrollReveal>
+        <CategoryGrid locale={lang} />
       </div>
 
       {/* ═══ RECENTLY VIEWED ═══ */}
       <RecentlyViewed lang={lang} />
 
       {/* ═══ SOCIAL PROOF ═══ */}
-      <ScrollReveal delay={0.1}>
-        <FeaturedAs />
-      </ScrollReveal>
+      <FeaturedAs />
 
       {/* ═══ STATS ═══ */}
-      <ScrollReveal>
-        <StatsCounter locale={lang} />
-      </ScrollReveal>
+      <StatsCounter locale={lang} />
 
       {/* ═══ FEATURED CHALETS ═══ */}
-      <section className={`${styles.featured} ${styles.bgFaded} relative overflow-hidden`}>
-        <DotPattern opacity={0.05} color="hsl(var(--primary))" />
-        <div className="container relative z-10">
+      <section className={`${styles.featured} ${styles.bgFaded}`}>
+        <div className="container">
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>{dict.home.featured}</h2>
             <Link href={`/${lang}/chalets`} className={styles.viewAll}>
@@ -76,8 +64,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </div>
 
           <div className={styles.chaletGrid}>
-            {chalets.map((chalet, idx) => (
-              <ScrollReveal key={chalet.id} delay={idx * 0.1}>
+            {chalets.map((chalet) => (
+              <ScrollReveal key={chalet.id}>
                 <ChaletCard chalet={chalet} lang={lang} dict={dict} />
               </ScrollReveal>
             ))}
@@ -86,9 +74,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* ═══ TESTIMONIALS ═══ */}
-      <ScrollReveal delay={0.2}>
-        <TestimonialsCarousel />
-      </ScrollReveal>
+      <TestimonialsCarousel />
     </div>
   );
 }

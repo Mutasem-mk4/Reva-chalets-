@@ -79,9 +79,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    background: var(--color-gray-700);
-    color: var(--color-white);
-    border: none;
+    background: #F3F4F6;
+    color: #374151;
+    border: 1px solid #E5E7EB;
     padding: 8px 16px;
     border-radius: 20px;
     font-size: 13px;
@@ -92,7 +92,8 @@
 }
 
 .filterTag:hover {
-    background: var(--color-gray-600);
+    background: #E5E7EB;
+    border-color: #D1D5DB;
 }
 
 .filterTag svg {

@@ -2,7 +2,7 @@
 
 .heroWrapper {
     position: relative;
-    min-height: 85vh;
+    min-height: 75vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,11 +54,11 @@
 
 .subtitle {
     font-family: var(--font-sans);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.9);
     max-width: 500px;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
 }
 
 .ctaButton {
@@ -101,7 +101,7 @@
 /* ─── TABLET ─── */
 @media (max-width: 768px) {
     .heroWrapper {
-        min-height: 75vh;
+        min-height: 65vh;
     }
 
     .heroContent {
@@ -129,20 +129,20 @@
 /* ─── MOBILE ─── */
 @media (max-width: 480px) {
     .heroWrapper {
-        min-height: 70vh;
+        min-height: 60vh;
     }
 
     .heroContent {
-        padding: 60px 1.25rem 0;
+        padding: 50px 1rem 0;
     }
 
     .title {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
 
     .subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 2rem;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
     }
 
     .ctaButton {
@@ -158,7 +158,7 @@
 /* ─── LARGE DESKTOP ─── */
 @media (min-width: 1200px) {
     .title {
-        font-size: 4.5rem;
+        font-size: 4rem;
     }
 
     .subtitle {
