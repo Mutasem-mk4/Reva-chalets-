@@ -86,13 +86,16 @@ export default function TestimonialsCarousel() {
 
     return (
         <section className="testimonials-section relative overflow-hidden">
-            <CurveDivider position="top" color="hsl(var(--background))" style={{ height: '4rem', zIndex: 5 }} />
-            <CurveDivider position="top" color="hsl(var(--background))" style={{ height: '4rem', zIndex: 5 }} />
+            {/* CurveDivider removed by user request */}
 
             <div className="container relative z-10">
                 <div className="section-header">
-                    <span className="label">What Our Guests Say</span>
-                    <h2>Trusted by Travelers Worldwide</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-forest">
+                        {isAr ? 'ماذا يقول ضيوفنا' : 'What Our Guests Say'}
+                    </h2>
+                    <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                        {isAr ? 'تجارب حقيقية من زبائننا المميزين في شاليهات ريفا' : 'Real experiences from our distinguished guests at Riva Chalets'}
+                    </p>
                 </div>
 
                 <div

@@ -186,16 +186,21 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.home.scrolled .icon-btn,
         .header.inner .lang-btn,
         .header.home.scrolled .lang-btn {
-          color: var(--color-forest);
-        }
-
-        /* Logo image — natural colors, no filters */
-        .header.home :global(.logo-img),
-        .header.inner :global(.logo-img),
-        .header.home.scrolled :global(.logo-img) {
-          height: 48px;
+        /* Logo image — Dynamic visibility */
+        .header.home :global(.logo-img) {
+          height: 64px;
           width: auto;
           object-fit: contain;
+          filter: brightness(0) invert(1); /* Force White on transparent bg */
+          transition: filter 0.3s ease;
+        }
+
+        .header.inner :global(.logo-img),
+        .header.home.scrolled :global(.logo-img) {
+          height: 64px;
+          width: auto;
+          object-fit: contain;
+          filter: none; /* Original colors on cream bg */
         }
 
         .header-content {
