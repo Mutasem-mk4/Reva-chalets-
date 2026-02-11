@@ -1,7 +1,10 @@
-'use client';
+import { useParams } from 'next/navigation';
 
 export default function FeaturedAs() {
-    const partners = [
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
+
+    const partnersEn = [
         'Royal Jordanian',
         'Visit Jordan',
         'Zain',
@@ -10,10 +13,22 @@ export default function FeaturedAs() {
         'Condé Nast Middle East'
     ];
 
+    const partnersAr = [
+        'الملكية الأردنية',
+        'هيئة تنشيط السياحة',
+        'زين',
+        'جوردان تايمز',
+        'رؤيا TV',
+        'كوندي ناست'
+    ];
+
+    const partners = isAr ? partnersAr : partnersEn;
+    const label = isAr ? 'شركاء نعتز بهم' : 'Trusted Partners & Features';
+
     return (
         <section className="featured-as">
             <div className="container">
-                <p className="label">Trusted Partners & Features</p>
+                <p className="label">{label}</p>
                 <div className="logos">
                     {partners.map((name, idx) => (
                         <span key={idx} className="logo-text">

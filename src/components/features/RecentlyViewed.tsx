@@ -74,10 +74,10 @@ export default function RecentlyViewed({ lang }: { lang: string }) {
                         <span className="icon">
                             <Eye size={20} />
                         </span>
-                        <h3>Continue Where You Left Off</h3>
+                        <h3>{lang === 'ar' ? 'أكمل من حيث توقفت' : 'Continue Where You Left Off'}</h3>
                     </div>
                     <Link href={`/${lang}/chalets`} className="view-all">
-                        View All <ArrowRight size={14} style={{ display: 'inline', marginLeft: '0.25rem' }} />
+                        {lang === 'ar' ? 'عرض الكل' : 'View All'} <ArrowRight size={14} style={{ display: 'inline', marginLeft: '0.25rem', transform: lang === 'ar' ? 'rotate(180deg)' : 'none' }} />
                     </Link>
                 </div>
 
@@ -98,7 +98,7 @@ export default function RecentlyViewed({ lang }: { lang: string }) {
                             </div>
                             <div className="item-info">
                                 <span className="item-name">{item.name}</span>
-                                <span className="item-price">{item.price} JOD/night</span>
+                                <span className="item-price">{item.price} {lang === 'ar' ? 'دينار/ليلة' : 'JOD/night'}</span>
                             </div>
                         </Link>
                     ))}
