@@ -62,7 +62,11 @@ const TESTIMONIALS: Testimonial[] = [
     }
 ];
 
+import { useParams } from 'next/navigation';
+
 export default function TestimonialsCarousel() {
+    const params = useParams();
+    const isAr = params?.lang === 'ar';
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
