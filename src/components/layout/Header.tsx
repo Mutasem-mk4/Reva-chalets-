@@ -480,8 +480,13 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           }
         }
 
-        /* Mobile adjustments */
-        @media (max-width: 767px) {
+        @media (max-width: 1024px) {
+          .desktop-nav {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 768px) {
           .header.home,
           .header.inner {
             height: 56px;
@@ -491,9 +496,10 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             padding: 0 0.75rem;
           }
 
-          .desktop-nav {
+          .desktop-only {
             display: none !important;
           }
+
 
           .actions {
             gap: 0;

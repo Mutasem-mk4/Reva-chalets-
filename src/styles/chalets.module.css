@@ -112,9 +112,7 @@
 }
 
 .mainInfo {
-    background: white;
-    padding: 3.5rem;
-    border-radius: 32px;
+    background: hsl(var(--card));
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.03);
 }
@@ -321,7 +319,9 @@
     }
 
     .mainInfo h1 {
-        font-size: 2.25rem;
+        font-size: 1.75rem;
+        overflow-wrap: break-word;
+        /* Ensure wrapping */
     }
 
     .gallery {
