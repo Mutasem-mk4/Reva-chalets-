@@ -9,10 +9,23 @@ export default async function ChaletsPage({ params }: { params: Promise<{ lang: 
   const chalets = await getChalets();
 
   return (
-    <div className={`container ${styles.pageContainer}`}>
-      <h1 className={styles.pageTitle}>{dict.nav.chalets}</h1>
+    <div className={styles.page}>
+      {/* Mini Hero Header */}
+      <div className={styles.pageHero}>
+        <div className={styles.pageHeroContent}>
+          <h1 className={styles.pageTitle}>{dict.nav.chalets}</h1>
+          <p className={styles.pageSubtitle}>
+            {lang === 'ar'
+              ? 'اكتشف أفخم الشاليهات في الأردن'
+              : 'Discover the finest chalets in Jordan'}
+          </p>
+        </div>
+      </div>
 
-      <ChaletListClient chalets={chalets} lang={lang} dict={dict} />
+      {/* Content */}
+      <div className={`container ${styles.pageContent}`}>
+        <ChaletListClient chalets={chalets} lang={lang} dict={dict} />
+      </div>
     </div>
   );
 }

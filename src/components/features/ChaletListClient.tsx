@@ -19,44 +19,58 @@ export default function ChaletListClient({ chalets, lang, dict }: ChaletListClie
   return (
     <>
       {/* Filters */}
-      <ChaletFilters chalets={chalets} onFilter={setFilteredChalets} />
+      <ChaletFilters chalets={chalets} onFilter={setFilteredChalets} lang={lang} />
 
       {/* Map */}
-      <div className="mb-12">
+      <div className="map-wrapper">
         <MapWrapper chalets={filteredChalets} />
       </div>
 
       {/* Results Count */}
       <p className="results-count">
-        {filteredChalets.length} {filteredChalets.length === 1 ? 'chalet' : 'chalets'} found
+        {filteredChalets.length} {lang === 'ar'
+          ? (filteredChalets.length === 1 ? 'شاليه' : 'شاليهات')
+          : (filteredChalets.length === 1 ? 'chalet' : 'chalets')
+        } {lang === 'ar' ? '' : 'found'}
       </p>
 
       {/* Grid */}
       <div className="chalet-grid">
         {filteredChalets.length > 0 ? (
           filteredChalets.map((chalet, idx) => (
-            <ScrollReveal key={chalet.id} delay={idx * 0.1}>
+            <ScrollReveal key={chalet.id} delay={idx * 0.08}>
               <ChaletCard chalet={chalet} lang={lang} dict={dict} />
             </ScrollReveal>
           ))
         ) : (
           <div className="no-results">
-            <p>No chalets match your search.</p>
-            <button onClick={() => setFilteredChalets(chalets)}>Clear Filters</button>
+            <span className="no-results-icon">🔍</span>
+            <p>{lang === 'ar' ? 'لا توجد نتائج مطابقة' : 'No chalets match your search.'}</p>
+            <button onClick={() => setFilteredChalets(chalets)}>
+              {lang === 'ar' ? 'مسح الفلاتر' : 'Clear Filters'}
+            </button>
           </div>
         )}
       </div>
 
       <style jsx>{`
+        .map-wrapper {
+          margin-bottom: 2rem;
+          border-radius: 20px;
+          overflow: hidden;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+
         .results-count {
-          color: hsl(var(--muted-foreground));
+          color: var(--color-gray-500);
           margin-bottom: 1.5rem;
           font-size: 0.9rem;
+          font-weight: 500;
         }
 
         .chalet-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+          grid-template-columns: repeat(3, 1fr);
           gap: 2rem;
           width: 100%;
         }
@@ -67,29 +81,54 @@ export default function ChaletListClient({ chalets, lang, dict }: ChaletListClie
           padding: 4rem 2rem;
           background: var(--color-cream-light);
           border-radius: 20px;
-          border: 1px dashed #E5E7EB;
+          border: 1px dashed var(--color-gray-200);
         }
 
-        .no-results p {
-          color: hsl(var(--muted-foreground));
+        .no-results-icon {
+          font-size: 2.5rem;
+          display: block;
           margin-bottom: 1rem;
         }
 
+        .no-results p {
+          color: var(--color-gray-500);
+          margin-bottom: 1.25rem;
+          font-size: 1.05rem;
+        }
+
         .no-results button {
-          background: linear-gradient(135deg, #f5a623, #d4920a);
+          background: var(--gradient-gold);
           color: #ffffff;
-          padding: 0.6rem 1.5rem;
+          padding: 0.7rem 1.75rem;
           border: none;
-          border-radius: 3rem;
+          border-radius: 99px;
           cursor: pointer;
           font-weight: 600;
-          box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
+          font-size: 0.9rem;
+          box-shadow: 0 4px 15px rgba(229, 166, 29, 0.3);
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .no-results button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(229, 166, 29, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+          .chalet-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
         @media (max-width: 768px) {
           .chalet-grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 1.25rem;
+          }
+
+          .map-wrapper {
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
           }
         }
       `}</style>
