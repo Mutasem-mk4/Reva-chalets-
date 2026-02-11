@@ -186,6 +186,9 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.home.scrolled .icon-btn,
         .header.inner .lang-btn,
         .header.home.scrolled .lang-btn {
+          color: var(--color-forest);
+        }
+
         /* Logo image — Dynamic visibility */
         .header.home :global(.logo-img) {
           height: 64px;
