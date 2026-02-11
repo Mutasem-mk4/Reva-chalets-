@@ -71,7 +71,7 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
       </div>
 
       <div className="container footer-bottom">
-        <p>&copy; {new Date().getFullYear()} Riva Chalets. {dict.footer?.allRights || 'All rights reserved.'}</p>
+        <p>&copy; {new Date().getFullYear()} Riva Chalets. {dict.footer?.allRights || 'All rights reserved.'} <span style={{ opacity: 0.3, fontSize: '0.7em', marginLeft: '5px' }}>v1.0.5</span></p>
       </div>
 
       <style jsx>{`
