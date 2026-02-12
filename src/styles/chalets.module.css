@@ -123,6 +123,9 @@
     color: var(--color-forest);
     font-family: var(--font-serif);
     font-weight: 700;
+    text-align: start;
+    unicode-bidi: plaintext;
+    /* Helps with mixed English/Arabic titles */
 }
 
 .location {

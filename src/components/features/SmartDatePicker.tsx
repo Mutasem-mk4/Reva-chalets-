@@ -123,6 +123,7 @@ export default function SmartDatePicker({
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                     min={getMinDate()}
+                    lang={isAr ? "ar-JO" : "en-US"}
                 />
             </div>
             {feedback && (
@@ -151,18 +152,39 @@ export default function SmartDatePicker({
                 input {
                     width: 100%;
                     padding: 0.875rem 1rem;
+                    /* Ensure space for calendar icon in both directions */
+                    padding-inline-end: 2.5rem; 
                     border: 2px solid hsl(var(--border));
                     border-radius: 0.75rem;
                     font-size: 1rem;
                     outline: none;
                     transition: all 0.2s ease;
                     background: white;
+                    /* Fix for text alignment in RTL */
+                    text-align: start;
                 }
 
                 input:focus {
                     border-color: #f5a623;
                     box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
                 }
+                
+                /* Native calendar picker icon alignment adjustments */
+                input::-webkit-calendar-picker-indicator {
+                    position: absolute;
+                    right: 1rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    padding: 0;
+                    cursor: pointer;
+                }
+                
+                ${isAr ? `
+                    input::-webkit-calendar-picker-indicator {
+                        right: auto;
+                        left: 1rem;
+                    }
+                ` : ''}
 
                 .feedback {
                     font-size: 0.8rem;
