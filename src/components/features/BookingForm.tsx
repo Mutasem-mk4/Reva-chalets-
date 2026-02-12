@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useToast } from '@/components/ui/Toast';
 import { ChevronLeft, ChevronUp, ChevronDown, CheckCircle, Sparkles, Gift, Plus, Minus } from '@/components/ui/Icons';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import PaymentForm from './PaymentForm';
@@ -35,8 +36,14 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
   const serviceFee = Math.round(subtotal * 0.10);
   const total = subtotal + cleaningFee + serviceFee;
 
+  const { showToast } = useToast();
+
   const handleDetailsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (days === 0) {
+      showToast(dict.booking?.selectDatesError || "Please select check-in and check-out dates.", "error");
+      return;
+    }
     setStep('payment');
   };
 
@@ -62,15 +69,17 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
 
       if (response.ok) {
         setSuccess(true);
+        showToast("Booking successful!", "success");
         setTimeout(() => {
           setShowGift(true);
         }, 1500);
       } else {
         const err = await response.json();
-        alert(err.error || 'Failed to create booking');
+        showToast(err.error || 'Failed to create booking', 'error');
       }
     } catch (e) {
       console.error("Booking failed", e);
+      showToast("Something went wrong. Please try again.", "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -324,8 +333,8 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
         </div>
       </div>
 
-      <button type="submit" className="submit-btn" disabled={days === 0}>
-        {dict?.booking?.reserve || "Reserve"}
+      <button type="submit" className="submit-btn" disabled={days === 0 || isSubmitting}>
+        {isSubmitting ? <LoadingSpinner size={24} color="white" /> : (dict?.booking?.reserve || "Reserve")}
       </button>
 
       {days > 0 && (
