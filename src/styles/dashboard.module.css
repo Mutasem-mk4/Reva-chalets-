@@ -1,67 +1,53 @@
 .dashboardContainer {
     display: flex;
     min-height: 100vh;
-    background-color: #f8fafc;
-    /* Slate 50 */
+    background-color: #FAFAF9;
+    /* Stone-50 */
+    color: #1c1917;
+    /* Stone-900 */
+    font-family: var(--font-sans);
 }
 
-/* Mobile Header */
-.mobileHeader {
-    display: none;
-    background: white;
-    padding: 1rem;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid hsl(var(--border));
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 40;
-}
-
-.mobileBrand {
-    font-weight: 700;
-    font-size: 1.25rem;
-}
-
-.menuToggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    cursor: pointer;
-}
-
-/* Sidebar */
+/* Sidebar - Glassmorphism */
 .sidebar {
     width: 280px;
-    background-color: hsl(var(--card));
-    border-right: 1px solid hsl(var(--border));
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 2rem;
     position: sticky;
     top: 0;
     height: 100vh;
     z-index: 50;
-    transition: transform 0.3s ease-in-out;
+    box-shadow: 1px 0 20px rgba(0, 0, 0, 0.02);
 }
 
 .sidebarHeader {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
+.brand {
+    font-size: 1.5rem;
+    font-family: var(--font-serif);
+    color: #1c1917;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
 .roleBadge {
-    font-size: 0.625rem;
-    background: hsl(var(--primary) / 0.1);
-    color: hsl(var(--primary));
-    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    background: linear-gradient(135deg, #1c1917, #44403c);
+    color: white;
+    padding: 0.3rem 0.6rem;
     border-radius: 999px;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .nav {
@@ -72,134 +58,279 @@
 }
 
 .navLink {
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius);
-    color: hsl(var(--foreground));
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    color: #57534e;
+    /* Stone-600 */
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
     display: flex;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.875rem;
+    text-decoration: none;
 }
 
 .navLink:hover {
-    background-color: hsl(var(--secondary));
+    background-color: rgba(0, 0, 0, 0.03);
+    color: #1c1917;
+    transform: translateX(4px);
+}
+
+.activeLink {
+    background-color: #1c1917;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.activeLink:hover {
+    background-color: #292524;
+    color: white;
+    transform: none;
 }
 
 .userData {
-    border-top: 1px solid hsl(var(--border));
-    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userEmail {
+    font-size: 0.875rem;
+    color: #78716c;
+    font-weight: 500;
 }
 
 .logoutBtn {
     background: none;
     border: none;
     color: #ef4444;
-    font-size: 0.875rem;
     cursor: pointer;
-    padding: 0;
-    margin-top: 0.5rem;
-    text-decoration: underline;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.logoutBtn:hover {
+    background: #fef2f2;
+}
+
+/* Main Content */
 .mainContent {
     flex: 1;
-    padding: 2rem;
+    padding: 3rem;
     overflow-y: auto;
-    /* Add padding ONLY if header is present, managed by media query below */
 }
 
-.loading {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
+.pageHeader {
+    margin-bottom: 2.5rem;
 }
 
-/* Stats Cards & Tables */
+.pageTitle {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: #1c1917;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.03em;
+}
+
+.pageSubtitle {
+    color: #78716c;
+    font-size: 1.1rem;
+}
+
+/* Stats Cards (Floating Glass) */
 .statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .statCard {
-    background: hsl(var(--card));
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background: white;
+    padding: 1.75rem;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.statCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.statIconWrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #FAFAF9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .statValue {
-    font-size: 2rem;
-    font-weight: 700;
-    color: hsl(var(--primary));
-    margin: 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1c1917;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.04em;
 }
 
 .statLabel {
-    font-size: 0.875rem;
-    color: 0.7;
+    font-size: 0.95rem;
+    color: #78716c;
+    font-weight: 500;
 }
 
+/* Modern Table (Recent Bookings) */
 .tableCard {
-    background: hsl(var(--card));
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    border: 1px solid hsl(var(--border));
-    overflow-x: auto;
-    /* Allow horizontal scroll for table */
+    background: white;
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
 
 .tableTitle {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: #1c1917;
+}
+
+.tableContainer {
+    overflow-x: auto;
 }
 
 .table {
     width: 100%;
-    border-collapse: collapse;
-    min-width: 600px;
-    /* Force scroll on small screens */
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 800px;
 }
 
 .table th {
     text-align: left;
-    padding: 1rem;
-    border-bottom: 1px solid hsl(var(--border));
-    font-size: 0.875rem;
-    color: 0.7;
+    padding: 1rem 1.5rem;
+    color: #78716c;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .table td {
-    padding: 1rem;
-    border-bottom: 1px solid hsl(var(--border));
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    color: #44403c;
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background-color: #FAFAF9;
+}
+
+/* Status Badges */
+.statusBadge {
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    display: inline-block;
 }
 
 .statusConfirmed {
-    color: #16a34a;
     background: #dcfce7;
-    padding: 0.25rem 0.5rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
+    color: #15803d;
 }
 
 .statusPending {
-    color: #d97706;
     background: #fef3c7;
-    padding: 0.25rem 0.5rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
+    color: #b45309;
 }
 
-.overlay {
+.statusCancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* User Avatar in Table */
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4b5563;
+}
+
+.userName {
+    font-weight: 600;
+    color: #1c1917;
+}
+
+/* Mobile Header */
+.mobileHeader {
     display: none;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 1rem 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+}
+
+.menuToggle {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #1c1917;
 }
 
 /* Mobile Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .dashboardContainer {
         flex-direction: column;
     }
@@ -214,25 +345,41 @@
         left: 0;
         bottom: 0;
         transform: translateX(-100%);
-        width: 250px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 280px;
+        background: white;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
     }
 
-    .sidebarOpen {
+    .sidebar.sidebarOpen {
         transform: translateX(0);
     }
 
-    .overlay {
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 45;
+    .mainContent {
+        padding: 6rem 1.5rem 2rem;
     }
 
-    .mainContent {
-        padding-top: 5rem;
-        /* Space for mobile header */
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        z-index: 45;
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    .overlay.visible {
+        display: block;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }

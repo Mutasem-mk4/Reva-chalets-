@@ -55,60 +55,76 @@ export default function DashboardOverview() {
 
     return (
         <div>
-            <h1 style={{ marginBottom: '2rem' }}>Dashboard Overview</h1>
+            <div className={styles.pageHeader}>
+                <h1 className={styles.pageTitle}>Welcome back, {user.user_metadata?.full_name?.split(' ')[0] || 'Host'}</h1>
+                <p className={styles.pageSubtitle}>Here's what's happening with your chalets today.</p>
+            </div>
 
             {isLoadingData ? (
-                <LoadingSpinner />
+                <div style={{ padding: '4rem', display: 'flex', justifyContent: 'center' }}>
+                    <LoadingSpinner />
+                </div>
             ) : (
                 <>
                     <div className={styles.statsGrid}>
                         {stats.map((stat, idx) => (
                             <div key={idx} className={styles.statCard}>
-                                <div className="flex justify-between items-start mb-2">
-                                    <div className={styles.statLabel}>{stat.label}</div>
+                                <div className={styles.statIconWrapper}>
                                     {stat.icon}
                                 </div>
                                 <div className={styles.statValue}>{stat.value}</div>
+                                <div className={styles.statLabel}>{stat.label}</div>
                             </div>
                         ))}
                     </div>
 
                     <div className={styles.tableCard}>
-                        <h2 className={styles.tableTitle}>Recent Bookings</h2>
-                        {recentBookings.length === 0 ? (
-                            <p style={{ padding: '1rem', color: '#6b7280' }}>No bookings yet.</p>
-                        ) : (
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        <th>Guest</th>
-                                        <th>Chalet</th>
-                                        <th>Dates</th>
-                                        <th>Status</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {recentBookings.map((booking: any) => (
-                                        <tr key={booking.id}>
-                                            <td>{booking.guestName}</td>
-                                            <td>{booking.chaletName}</td>
-                                            <td>{booking.dates}</td>
-                                            <td>
-                                                <span className={
-                                                    booking.status === 'CONFIRMED' ? styles.statusConfirmed :
-                                                        booking.status === 'PENDING' ? styles.statusPending :
-                                                            styles.statusCancelled || ''
-                                                }>
-                                                    {booking.status}
-                                                </span>
-                                            </td>
-                                            <td>{booking.amount}</td>
+                        <div className={styles.tableHeader}>
+                            <h2 className={styles.tableTitle}>Recent Bookings</h2>
+                        </div>
+
+                        <div className={styles.tableContainer}>
+                            {recentBookings.length === 0 ? (
+                                <p style={{ padding: '1rem', color: '#6b7280' }}>No bookings yet.</p>
+                            ) : (
+                                <table className={styles.table}>
+                                    <thead>
+                                        <tr>
+                                            <th>Guest</th>
+                                            <th>Chalet</th>
+                                            <th>Dates</th>
+                                            <th>Status</th>
+                                            <th>Amount</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        )}
+                                    </thead>
+                                    <tbody>
+                                        {recentBookings.map((booking: any) => (
+                                            <tr key={booking.id}>
+                                                <td>
+                                                    <div className={styles.userCell}>
+                                                        <div className={styles.userAvatar}>
+                                                            {booking.guestName?.charAt(0) || 'G'}
+                                                        </div>
+                                                        <span className={styles.userName}>{booking.guestName}</span>
+                                                    </div>
+                                                </td>
+                                                <td>{booking.chaletName}</td>
+                                                <td>{booking.dates}</td>
+                                                <td>
+                                                    <span className={`${styles.statusBadge} ${booking.status === 'CONFIRMED' ? styles.statusConfirmed :
+                                                            booking.status === 'PENDING' ? styles.statusPending :
+                                                                styles.statusCancelled
+                                                        }`}>
+                                                        {booking.status}
+                                                    </span>
+                                                </td>
+                                                <td style={{ fontWeight: 600 }}>{booking.amount}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
                     </div>
                 </>
             )}
