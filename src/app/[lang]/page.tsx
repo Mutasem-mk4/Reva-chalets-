@@ -31,7 +31,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* ═══ GOLDEN CARD ═══ */}
       <div className={styles.goldenCardSection}>
-        <GoldenCard phase="WAITING" />
+        <GoldenCard phase="WAITING" locale={lang} />
       </div>
 
       {/* ═══ SEARCH BAR ═══ */}

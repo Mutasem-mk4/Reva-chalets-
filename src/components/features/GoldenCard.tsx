@@ -27,18 +27,18 @@ interface GoldenCardProps {
 
 export default function GoldenCard({
     phase = 'WAITING',
-    farmName = 'Al-Reef Luxury Farm',
-    bookingDate = '2025-06-15',
-    tripStartTime = '02:00 PM',
-    farmLocation = 'Dead Sea',
-    remainingTime = '48 Hours',
-    groupMembers = 5,
-    ticketCount = 1,
     locale = 'ar',
     onRatePress,
     onChatClick
 }: GoldenCardProps) {
     const isAr = locale === 'ar';
+
+    // Localized Defaults
+    const displayFarmName = farmName || (isAr ? 'مزرعة الريف الفاخرة' : 'Al-Reef Luxury Farm');
+    const displayBookingDate = bookingDate || '2025-06-15';
+    const displayTripStartTime = tripStartTime || '02:00 PM';
+    const displayFarmLocation = farmLocation || (isAr ? 'البحر الميت' : 'Dead Sea');
+    const displayRemainingTime = remainingTime || (isAr ? '48 ساعة' : '48 Hours');
 
     const renderPassContent = () => {
         const ActiveDot = () => (
@@ -238,16 +238,16 @@ export default function GoldenCard({
                             ? (isAr ? 'اكتملت الرحلة' : 'Trip Completed')
                             : (isAr ? 'رحلتك القادمة' : 'Your upcoming trip')}
                     </h4>
-                    <h3 className={styles.farmName}>( {farmName} )</h3>
+                    <h3 className={styles.farmName}>( {displayFarmName} )</h3>
 
                     <div className={styles.details}>
                         <div className={styles.detailRow}>
                             <Calendar size={14} color="#A7F3D0" />
-                            <span className={styles.detailText}>{bookingDate}</span>
+                            <span className={styles.detailText}>{displayBookingDate}</span>
                         </div>
                         <div className={styles.detailRow}>
                             <Clock size={14} color="#A7F3D0" />
-                            <span className={styles.detailText}>{tripStartTime}</span>
+                            <span className={styles.detailText}>{displayTripStartTime}</span>
                         </div>
                     </div>
                 </div>
@@ -258,13 +258,13 @@ export default function GoldenCard({
                         <span className={styles.timerText}>
                             {phase === 'PASSED'
                                 ? (isAr ? 'قيم تجربتك للمكافآت' : 'Rate us for rewards')
-                                : (isAr ? `الوقت متبقي > ${remainingTime}` : `Time > ${remainingTime}`)}
+                                : (isAr ? `الوقت متبقي > ${displayRemainingTime}` : `Time > ${displayRemainingTime}`)}
                         </span>
                     </div>
 
                     <div className={styles.detailRow}>
                         <MapPin size={14} color="#A7F3D0" />
-                        <span className={styles.detailText}>{farmLocation}</span>
+                        <span className={styles.detailText}>{displayFarmLocation}</span>
                     </div>
                 </div>
             </div>
