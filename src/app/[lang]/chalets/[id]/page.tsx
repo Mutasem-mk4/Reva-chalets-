@@ -126,7 +126,7 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
                 <span className={styles.period}>/ {dict.chalet.pricePerNight}</span>
               </div>
 
-              <BookingForm dict={dict} price={chalet.price} chaletId={chalet.id} />
+              <BookingForm dict={dict} price={chalet.price} chaletId={chalet.id} locale={lang} />
 
               <GuaranteeBadge />
 

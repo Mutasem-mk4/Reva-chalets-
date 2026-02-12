@@ -7,14 +7,17 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 // Simplified Stripe-like component
 export default function PaymentForm({
   amount,
-  onSuccess
+  onSuccess,
+  locale = 'en'
 }: {
   amount: number;
   onSuccess: () => void;
+  locale?: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'cliq'>('card');
+  const isAr = locale === 'ar';
 
   const handlePay = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,19 +35,19 @@ export default function PaymentForm({
     if (isSuccess) {
       onSuccess();
     } else {
-      setError('Card declined. Please try again with a different card.');
+      setError(isAr ? 'تم رفض البطاقة. يرجى المحاولة مرة أخرى.' : 'Card declined. Please try again with a different card.');
     }
   };
 
   return (
     <div className="payment-container">
       <div className="header">
-        <span className="secure-badge"><Lock size={14} /> Secure Payment</span>
+        <span className="secure-badge"><Lock size={14} /> {isAr ? 'دفع آمن' : 'Secure Payment'}</span>
         <span className="brand">Stripe</span>
       </div>
 
       <div className="amount-display">
-        Total to pay: <strong>{amount} JOD</strong>
+        {isAr ? 'الإجمالي للدفع:' : 'Total to pay:'} <strong>{amount} JOD</strong>
       </div>
 
       {/* Payment Method Switcher */}
@@ -54,21 +57,21 @@ export default function PaymentForm({
           onClick={() => setPaymentMethod('card')}
           type="button"
         >
-          Credit Card
+          {isAr ? 'بطاقة ائتمان' : 'Credit Card'}
         </button>
         <button
           className={`tab ${paymentMethod === 'cliq' ? 'active' : ''}`}
           onClick={() => setPaymentMethod('cliq')}
           type="button"
         >
-          <Lightning size={14} /> CliQ (Instant)
+          <Lightning size={14} /> {isAr ? 'كليك (فوري)' : 'CliQ (Instant)'}
         </button>
       </div>
 
       <form onSubmit={handlePay} className="payment-form">
         {paymentMethod === 'card' ? (
           <div className="form-row">
-            <label>Card Information</label>
+            <label>{isAr ? 'بيانات البطاقة' : 'Card Information'}</label>
             <div className="card-input-mock">
               <span className="icon"><CreditCard size={18} /></span>
               <input
@@ -97,21 +100,22 @@ export default function PaymentForm({
         ) : (
           <div className="cliq-section">
             <div className="cliq-info">
-              <p>Send <strong>{amount} JOD</strong> to:</p>
+              <p>{isAr ? `أرسل ${amount} دينار إلى:` : `Send ${amount} JOD to:`}</p>
               <div className="alias-box">
                 <span className="alias-label">ALIA (Reva Corp)</span>
                 <span className="alias-value">REVACHALETS</span>
               </div>
             </div>
             <div className="form-row">
-              <label>Transaction Reference ID</label>
+              <label>{isAr ? 'رقم المرجع (Ref ID)' : 'Transaction Reference ID'}</label>
               <input
                 type="text"
                 placeholder="e.g. 123456789"
                 className="cliq-input"
                 required={paymentMethod === 'cliq'}
+                style={{ textAlign: isAr ? 'right' : 'left' }}
               />
-              <small className="cliq-hint">Enter the REF number from your banking app</small>
+              <small className="cliq-hint">{isAr ? 'أدخل الرقم المرجعي من تطبيق البنك الخاص بك' : 'Enter the REF number from your banking app'}</small>
             </div>
           </div>
         )}
@@ -119,7 +123,7 @@ export default function PaymentForm({
         {error && <div className="error-message">{error}</div>}
 
         <button type="submit" disabled={loading} className="pay-btn flex items-center justify-center gap-2">
-          {loading ? <LoadingSpinner size={20} color="white" /> : (paymentMethod === 'cliq' ? 'Confirm Transfer' : `Pay ${amount} JOD`)}
+          {loading ? <LoadingSpinner size={20} color="white" /> : (paymentMethod === 'cliq' ? (isAr ? 'تأكيد التحويل' : 'Confirm Transfer') : (isAr ? `دفع ${amount} دينار` : `Pay ${amount} JOD`))}
         </button>
       </form>
 
@@ -132,11 +136,12 @@ export default function PaymentForm({
         .payment-container {
           background: #fff;
           border: 1px solid #e2e8f0;
-          border-radius: 8px;
+          border-radius: 16px;
           padding: 1.5rem;
           margin-top: 1rem;
           color: #334155;
           font-family: var(--font-sans);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
 
         .header {
@@ -153,6 +158,9 @@ export default function PaymentForm({
           font-size: 0.75rem;
           color: #10b981;
           font-weight: 500;
+          background: #ecfdf5;
+          padding: 4px 8px;
+          border-radius: 6px;
         }
 
         .brand {
@@ -164,48 +172,61 @@ export default function PaymentForm({
 
         .amount-display {
           margin-bottom: 1.5rem;
-          font-size: 1rem;
+          font-size: 1.1rem;
+          text-align: center;
+          padding: 1rem;
+          background: #f8fafc;
+          border-radius: 12px;
+          border: 1px dashed #e2e8f0;
         }
 
         .form-row {
-          margin-bottom: 1rem;
+          margin-bottom: 1.25rem;
         }
 
         label {
           display: block;
           font-size: 0.875rem;
-          font-weight: 500;
+          font-weight: 600;
           margin-bottom: 0.5rem;
-          color: #64748b;
+          color: #475569;
         }
 
         .card-input-mock {
           border: 1px solid #e2e8f0;
-          border-radius: 6px;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           padding: 0 0.75rem;
-          background: #f8fafc;
-          transition: border-color 0.2s;
+          background: white;
+          transition: all 0.2s;
+          height: 48px;
         }
         
         .card-input-mock:focus-within {
           border-color: #635bff;
-          box-shadow: 0 0 0 2px rgba(99, 91, 255, 0.2);
+          box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.1);
         }
 
         .icon {
           margin-right: 0.5rem;
           opacity: 0.5;
+          display: flex;
         }
 
         input {
           border: none;
           background: transparent;
-          padding: 0.75rem 0;
-          font-size: 0.9rem;
+          padding: 0.5rem 0;
+          font-size: 0.95rem;
           outline: none;
-          color: #334155;
+          color: #1e293b;
+          font-family: monospace;
+        }
+        
+        input::placeholder {
+            color: #cbd5e1;
+            font-family: var(--font-sans);
         }
 
         .card-number {
@@ -213,16 +234,16 @@ export default function PaymentForm({
         }
         
         .card-expiry {
-          width: 60px;
+          width: 70px;
           text-align: center;
           border-left: 1px solid #e2e8f0;
           border-right: 1px solid #e2e8f0;
-          padding: 0.75rem 0.5rem;
+          padding: 0 0.5rem;
           margin: 0 0.5rem;
         }
 
         .card-cvc {
-          width: 40px;
+          width: 50px;
           text-align: center;
         }
 
@@ -231,25 +252,31 @@ export default function PaymentForm({
           background: #635bff; /* Stripe Blurple */
           color: white;
           border: none;
-          padding: 0.875rem;
-          border-radius: 6px;
+          padding: 1rem;
+          border-radius: 12px;
           font-weight: 600;
-          font-size: 1rem;
+          font-size: 1.05rem;
           cursor: pointer;
-          transition: background 0.2s;
+          transition: all 0.2s;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
+          margin-top: 1.5rem;
+          box-shadow: 0 4px 12px rgba(99, 91, 255, 0.25);
         }
 
         .pay-btn:hover {
           background: #4f46e5;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(99, 91, 255, 0.35);
         }
         
         .pay-btn:disabled {
           background: #94a3b8;
           cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
         }
 
         .error-message {
@@ -257,10 +284,13 @@ export default function PaymentForm({
           font-size: 0.875rem;
           margin-bottom: 1rem;
           text-align: center;
+          background: #fef2f2;
+          padding: 0.75rem;
+          border-radius: 8px;
         }
 
         .stripe-footer {
-          margin-top: 1rem;
+          margin-top: 1.5rem;
           text-align: center;
           font-size: 0.75rem;
           color: #94a3b8;
@@ -272,8 +302,8 @@ export default function PaymentForm({
           gap: 0.5rem;
           margin-bottom: 1.5rem;
           background: #f1f5f9;
-          padding: 0.25rem;
-          border-radius: 8px;
+          padding: 0.35rem;
+          border-radius: 12px;
         }
 
         .tab {
@@ -284,11 +314,11 @@ export default function PaymentForm({
           gap: 0.35rem;
           border: none;
           background: transparent;
-          padding: 0.5rem;
-          font-size: 0.875rem;
+          padding: 0.6rem;
+          font-size: 0.9rem;
           font-weight: 500;
           color: #64748b;
-          border-radius: 6px;
+          border-radius: 8px;
           cursor: pointer;
           transition: all 0.2s;
         }
@@ -296,57 +326,81 @@ export default function PaymentForm({
         .tab.active {
           background: white;
           color: #0f172a;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+          font-weight: 600;
         }
 
         /* CliQ Styles */
         .cliq-info {
            background: #eff6ff;
            border: 1px dashed #3b82f6;
-           padding: 1rem;
-           border-radius: 8px;
+           padding: 1.25rem;
+           border-radius: 12px;
            margin-bottom: 1.5rem;
            text-align: center;
         }
 
         .alias-box {
-           margin-top: 0.5rem;
+           margin-top: 0.75rem;
            background: white;
-           padding: 0.5rem 1rem;
-           border-radius: 6px;
+           padding: 0.75rem 1.25rem;
+           border-radius: 8px;
            display: inline-flex;
            gap: 1rem;
            align-items: center;
-           border: 1px solid #e2e8f0;
+           border: 1px solid #bfdbfe;
+           box-shadow: 0 2px 5px rgba(59, 130, 246, 0.05);
         }
 
         .alias-label {
            font-size: 0.75rem;
            color: #64748b;
            text-transform: uppercase;
+           font-weight: 600;
         }
 
         .alias-value {
            font-weight: 700;
            color: #1e293b;
            font-family: monospace;
-           font-size: 1.1rem;
+           font-size: 1.2rem;
+           letter-spacing: 0.5px;
         }
 
         .cliq-input {
            width: 100%;
            border: 1px solid #e2e8f0;
-           border-radius: 6px;
-           padding: 0.75rem;
+           border-radius: 10px;
+           padding: 0.875rem;
            background: #f8fafc;
+           transition: all 0.2s;
+           font-family: monospace;
+           font-size: 1.1rem;
+           letter-spacing: 1px;
+        }
+        .cliq-input:focus {
+           border-color: #3b82f6;
+           background: white;
+           box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
         .cliq-hint {
             display: block;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
             color: #94a3b8;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
         }
+
+        ${isAr ? `
+            .header { direction: rtl; }
+            .amount-display { direction: rtl; }
+            .payment-tabs { direction: rtl; }
+            .form-row { direction: rtl; }
+            label { text-align: right; }
+            .cliq-info { direction: rtl; }
+            .alias-box { flex-direction: row-reverse; }
+            .icon { margin-left: 0.5rem; margin-right: 0; }
+        ` : ''}
       `}</style>
     </div>
   );

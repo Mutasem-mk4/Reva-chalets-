@@ -12,29 +12,35 @@ const DEFAULT_STEPS = [
     { label: 'Confirmed', description: 'Booking complete' }
 ];
 
-export default function BookingProgress({ currentStep, steps = DEFAULT_STEPS }: BookingProgressProps) {
+export default function BookingProgress({ currentStep, steps = DEFAULT_STEPS, locale = 'en' }: BookingProgressProps & { locale?: string }) {
+    const isAr = locale === 'ar';
     const progressPercent = ((currentStep - 1) / (steps.length - 1)) * 100;
 
     const renderMessage = () => {
         switch (currentStep) {
-            case 1: return <><Calendar size={16} /> Choose your perfect dates</>;
-            case 2: return <><Lock size={16} /> Almost there! Complete payment</>;
-            case 3: return <><CheckCircle size={16} /> Booking confirmed!</>;
+            case 1: return <><Calendar size={16} /> {isAr ? 'اختر تواريخ إقامتك' : 'Choose your perfect dates'}</>;
+            case 2: return <><Lock size={16} /> {isAr ? 'أكمل عملية الدفع الآمن' : 'Almost there! Complete payment'}</>;
+            case 3: return <><CheckCircle size={16} /> {isAr ? 'تم تأكيد الحجز!' : 'Booking confirmed!'}</>;
             default: return '';
         }
     };
 
     return (
-        <div className="booking-progress">
+        <div className="booking-progress" style={{ direction: isAr ? 'rtl' : 'ltr' }}>
             <div className="progress-header">
-                <span className="step-indicator">Step {currentStep} of {steps.length}</span>
+                <span className="step-indicator">
+                    {isAr ? `خطوة ${currentStep} من ${steps.length}` : `Step ${currentStep} of ${steps.length}`}
+                </span>
                 <span className="message">{renderMessage()}</span>
             </div>
 
             <div className="progress-bar">
                 <div
                     className="progress-fill"
-                    style={{ width: `${progressPercent}%` }}
+                    style={{
+                        width: `${progressPercent}%`,
+                        [isAr ? 'right' : 'left']: 0
+                    }}
                 />
                 <div className="steps">
                     {steps.map((step, idx) => (

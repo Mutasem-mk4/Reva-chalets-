@@ -8,7 +8,7 @@ import TrustSeals from './TrustSeals';
 import SmartDatePicker from './SmartDatePicker';
 import BookingProgress from './BookingProgress';
 
-export default function BookingForm({ dict, price, chaletId }: { dict: any, price: number, chaletId: string }) {
+export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { dict: any, price: number, chaletId: string, locale?: string }) {
   const [step, setStep] = useState<'details' | 'payment'>('details');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
@@ -200,30 +200,31 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
   if (step === 'payment') {
     return (
       <div>
-        <BookingProgress currentStep={2} />
+        <BookingProgress currentStep={2} locale={locale} />
         <button onClick={() => setStep('details')} className="back-btn flex items-center gap-1">
-          <ChevronLeft size={16} /> Back to details
+          {locale === 'ar' ? <ChevronDown size={16} style={{ transform: 'rotate(90deg)' }} /> : <ChevronLeft size={16} />}
+          {locale === 'ar' ? 'العودة للتفاصيل' : 'Back to details'}
         </button>
         <div className="summary-box">
           <h4>{dict.chalet.book} Summary</h4>
           <div className="summary-row">
-            <span>{price} JOD x {days} nights</span>
+            <span>{price} JOD x {days} {locale === 'ar' ? 'ليال' : 'nights'}</span>
             <span>{subtotal} JOD</span>
           </div>
           <div className="summary-row">
-            <span>Cleaning Fee</span>
+            <span>{dict?.fees?.cleaning || 'Cleaning Fee'}</span>
             <span>{cleaningFee} JOD</span>
           </div>
           <div className="summary-row">
-            <span>Service Fee</span>
+            <span>{dict?.fees?.service || 'Service Fee'}</span>
             <span>{serviceFee} JOD</span>
           </div>
           <div className="total-row">
-            <span>Total</span>
+            <span>{dict?.booking?.total || 'Total'}</span>
             <span>{total} JOD</span>
           </div>
         </div>
-        <PaymentForm amount={total} onSuccess={handlePaymentSuccess} />
+        <PaymentForm amount={total} onSuccess={handlePaymentSuccess} locale={locale} />
         <TrustSeals />
 
         <style jsx>{`
@@ -233,31 +234,43 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
                         color: hsl(var(--foreground));
                         font-size: 0.875rem;
                         cursor: pointer;
-                        margin-bottom: 0.5rem;
-                        opacity: 0.7;
+                        margin-bottom: 1rem;
+                        opacity: 0.8;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.5rem 0;
                     }
-                    .back-btn:hover { opacity: 1; }
+                    .back-btn:hover { opacity: 1; text-decoration: underline; }
                     
                     .summary-box {
-                        background: hsl(var(--secondary) / 0.5);
-                        padding: 1rem;
-                        border-radius: var(--radius);
-                        margin-bottom: 1.5rem;
+                        background: hsl(var(--secondary) / 0.3);
+                        padding: 1.5rem;
+                        border-radius: 16px;
+                        margin-bottom: 2rem;
+                        border: 1px solid hsl(var(--border) / 0.5);
+                    }
+                    .summary-box h4 {
+                        margin-bottom: 1rem;
+                        font-family: var(--font-serif);
+                        font-size: 1.1rem;
                     }
                     .summary-row {
                         display: flex;
                         justify-content: space-between;
-                        font-size: 0.9rem;
-                        margin-bottom: 0.5rem;
+                        font-size: 0.95rem;
+                        margin-bottom: 0.75rem;
+                        color: hsl(var(--muted-foreground));
                     }
                     .total-row {
                         display: flex;
                         justify-content: space-between;
-                        font-weight: 700;
-                        font-size: 1.1rem;
-                        border-top: 1px solid hsl(var(--border));
-                        padding-top: 0.5rem;
-                        margin-top: 0.5rem;
+                        font-weight: 800;
+                        font-size: 1.25rem;
+                        border-top: 1px dashed hsl(var(--border));
+                        padding-top: 1rem;
+                        margin-top: 1rem;
+                        color: hsl(var(--foreground));
                     }
                 `}</style>
       </div>
@@ -266,34 +279,36 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
 
   return (
     <form onSubmit={handleDetailsSubmit} className="booking-form">
-      <BookingProgress currentStep={1} />
+      <BookingProgress currentStep={1} locale={locale} />
       <div className="travel-inputs">
         <div className="smart-dates">
           <SmartDatePicker
-            label="Check-In"
+            label={dict?.booking?.checkIn || "Check-In"}
             value={checkIn}
             onChange={setCheckIn}
             type="checkIn"
+            locale={locale}
           />
           <SmartDatePicker
-            label="Check-Out"
+            label={dict?.booking?.checkOut || "Check-Out"}
             value={checkOut}
             onChange={setCheckOut}
             type="checkOut"
             minDate={checkIn}
             compareDate={checkIn}
+            locale={locale}
           />
         </div>
         <div className="guest-input border-t">
-          <label>Guests</label>
+          <label>{dict?.booking?.guests || "Guests"}</label>
           <div className="guest-trigger" onClick={() => setIsGuestOpen(!isGuestOpen)}>
-            {guests} Guests
+            {guests} {dict?.booking?.guests || "Guests"}
             {isGuestOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </div>
           {isGuestOpen && (
             <div className="guest-dropdown">
               <div className="guest-row">
-                <span>Adults</span>
+                <span>{dict?.booking?.adults || "Adults"}</span>
                 <div className="stepper">
                   <button type="button" onClick={() => setGuests(Math.max(1, guests - 1))}>
                     <Minus size={20} />
@@ -310,26 +325,26 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
       </div>
 
       <button type="submit" className="submit-btn" disabled={days === 0}>
-        Reserve
+        {dict?.booking?.reserve || "Reserve"}
       </button>
 
       {days > 0 && (
         <div className="price-breakdown">
-          <p className="not-charged">You won't be charged yet</p>
+          <p className="not-charged">{dict?.booking?.wontCharge || "You won't be charged yet"}</p>
           <div className="price-row">
-            <span><u>{price} JOD x {days} nights</u></span>
+            <span><u>{price} JOD x {days} {locale === 'ar' ? 'ليال' : 'nights'}</u></span>
             <span>{subtotal} JOD</span>
           </div>
           <div className="price-row">
-            <span><u>Cleaning fee</u></span>
+            <span><u>{dict?.fees?.cleaning || 'Cleaning fee'}</u></span>
             <span>{cleaningFee} JOD</span>
           </div>
           <div className="price-row">
-            <span><u>Service fee</u></span>
+            <span><u>{dict?.fees?.service || 'Service fee'}</u></span>
             <span>{serviceFee} JOD</span>
           </div>
           <div className="price-row total">
-            <span>Total before taxes</span>
+            <span>{dict?.booking?.totalBeforeTax || 'Total before taxes'}</span>
             <span>{total} JOD</span>
           </div>
         </div>
@@ -341,58 +356,46 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
         }
 
         .travel-inputs {
-            border: 1px solid #ccc;
-            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
             overflow: hidden;
             background: white;
             color: black;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
 
-        .date-inputs {
+        .smart-dates {
             display: flex;
         }
 
-        .date-field {
-            flex: 1;
-            padding: 0.75rem 1rem;
-        }
-        
-        .date-field input {
-            width: 100%;
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            color: #222;
-            cursor: pointer;
-            min-height: 44px;
-            background: transparent;
-        }
-
         .guest-input {
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.25rem;
             position: relative;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .guest-input:hover {
+            background: #f9fafb;
         }
 
-        .border-r { border-right: 1px solid #ccc; }
-        .border-t { border-top: 1px solid #ccc; }
+        .border-t { border-top: 1px solid #e5e7eb; }
 
         label {
             display: block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 4px;
-            color: #222;
+            margin-bottom: 6px;
+            color: #4b5563;
+            letter-spacing: 0.05em;
         }
         
         .guest-trigger {
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 1rem;
-            min-height: 44px;
-            padding: 0.5rem 0;
+            color: #1f2937;
         }
 
         .guest-dropdown {
@@ -401,12 +404,18 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
             left: 0;
             right: 0;
             background: white;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            padding: 1.25rem;
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            margin-top: 4px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 1.5rem;
+            z-index: 20;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: 8px;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .guest-row {
@@ -422,148 +431,98 @@ export default function BookingForm({ dict, price, chaletId }: { dict: any, pric
         }
         
         .stepper button {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            border: 1px solid #b0b0b0;
+            border: 1px solid #d1d5db;
             background: white;
-            color: #717171;
-            font-size: 1.5rem;
+            color: #6b7280;
+            font-size: 1.25rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            touch-action: manipulation;
+            transition: all 0.2s;
         }
         
         .stepper button:hover {
-            border-color: black;
-            color: black;
+            border-color: #1f2937;
+            color: #1f2937;
+            background: #f3f4f6;
         }
         
-        .stepper button:active {
-            background: #f0f0f0;
-            transform: scale(0.95);
-        }
-
-        .stepper span {
-            font-size: 1.1rem;
-            font-weight: 600;
-            min-width: 30px;
-            text-align: center;
-        }
-
         .submit-btn {
-            background: linear-gradient(135deg, #f5a623, #d4920a);
+            background: linear-gradient(135deg, #FFB703, #FB8500); 
             color: white;
             width: 100%;
-            padding: 16px;
-            border-radius: 3rem;
+            padding: 18px;
+            border-radius: 16px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.125rem;
             border: none;
-            margin-top: 1.25rem;
+            margin-top: 1.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);
-            touch-action: manipulation;
+            box-shadow: 0 4px 15px rgba(251, 133, 0, 0.3);
         }
         
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 166, 35, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
+            box-shadow: 0 8px 25px rgba(251, 133, 0, 0.4);
         }
         
         .submit-btn:disabled {
-            background: #ccc;
+            background: #e5e7eb;
+            color: #9ca3af;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
         .not-charged {
             text-align: center;
-            font-size: 0.9rem;
-            color: #555;
-            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 1.25rem 0;
         }
 
         .price-breakdown {
             margin-top: 0.5rem;
+            padding: 0 0.5rem;
         }
 
         .price-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
-            color: hsl(var(--foreground));
+            margin-bottom: 1rem;
+            color: #374151;
             font-size: 1rem;
         }
         
-        .price-row u {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        
         .price-row.total {
-            border-top: 1px solid hsl(var(--border));
-            padding-top: 1rem;
-            margin-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.25rem;
+            color: #111827;
         }
 
-        /* Mobile optimizations */
+        /* RTL Support */
+        ${locale === 'ar' ? `
+            .smart-dates { flex-direction: row-reverse; }
+            .price-row { direction: rtl; }
+            .guest-input { text-align: right; }
+            label { text-align: right; }
+            .guest-trigger { flex-direction: row-reverse; }
+            .summary-row { flex-direction: row-reverse; }
+            .total-row { flex-direction: row-reverse; }
+            .back-btn { direction: rtl; }
+        ` : ''}
+
         @media (max-width: 768px) {
-            .date-inputs {
-                flex-direction: column;
-            }
-            
-            .date-field {
-                padding: 1rem;
-            }
-            
-            .date-field input {
-                font-size: 1.1rem;
-            }
-            
-            .border-r {
-                border-right: none;
-                border-bottom: 1px solid #ccc;
-            }
-            
-            .guest-input {
-                padding: 1rem;
-            }
-            
-            .guest-trigger {
-                font-size: 1.1rem;
-            }
-            
-            .stepper button {
-                width: 52px;
-                height: 52px;
-                font-size: 1.75rem;
-            }
-            
-            .stepper span {
-                font-size: 1.25rem;
-            }
-            
-            .submit-btn {
-                padding: 18px;
-                font-size: 1.15rem;
-            }
-            
-            .price-row {
-                font-size: 0.95rem;
-            }
-            
-            label {
-                font-size: 0.75rem;
+            .smart-dates {
+                flex-direction: column !important;
             }
         }
       `}</style>

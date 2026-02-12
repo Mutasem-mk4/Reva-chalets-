@@ -107,9 +107,10 @@ export default function ReviewForm({ chaletId, chaletName, locale = 'ar' }: { ch
                 <p className="subtext">{locale === 'ar' ? 'هذا يضمن الشفافية والمصداقية لرحلتك القادمة.' : 'This ensures authentic, trustworthy reviews from real guests.'}</p>
 
                 {/* Demo button for testing */}
-                <button className="demo-btn" onClick={handleCreateMockBooking}>
+                {/* Demo button hidden for production feel */}
+                {/* <button className="demo-btn" onClick={handleCreateMockBooking}>
                     🧪 Demo: Simulate Completed Stay
-                </button>
+                </button> */}
 
                 <style jsx>{`
                     .review-locked {

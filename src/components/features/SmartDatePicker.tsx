@@ -18,10 +18,12 @@ export default function SmartDatePicker({
     onChange,
     minDate,
     compareDate,
-    type
-}: SmartDatePickerProps) {
+    type,
+    locale = 'en'
+}: SmartDatePickerProps & { locale?: string }) {
     const [feedback, setFeedback] = useState<{ message: React.ReactNode; type: 'success' | 'hint' | 'error' } | null>(null);
     const [isFocused, setIsFocused] = useState(false);
+    const isAr = locale === 'ar';
 
     useEffect(() => {
         if (!value) {
@@ -39,12 +41,12 @@ export default function SmartDatePicker({
             // Check-in date validation
             if (selectedDate < today) {
                 setFeedback({
-                    message: <><XCircle size={14} /> Please select a future date</>,
+                    message: <><XCircle size={14} /> {isAr ? 'يرجى اختيار تاريخ مستقبلي' : 'Please select a future date'}</>,
                     type: 'error'
                 });
             } else if (isWeekend) {
                 setFeedback({
-                    message: <><Sparkles size={14} /> Weekend getaway! Great choice for a relaxing stay</>,
+                    message: <><Sparkles size={14} /> {isAr ? 'عطلة نهاية أسبوع! اختيار رائع' : 'Weekend getaway! Great choice for a relaxing stay'}</>,
                     type: 'success'
                 });
             } else {
@@ -52,17 +54,17 @@ export default function SmartDatePicker({
                 const daysAhead = Math.ceil((selectedDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
                 if (daysAhead <= 3) {
                     setFeedback({
-                        message: <><Lightning size={14} /> Last-minute booking! Limited availability</>,
+                        message: <><Lightning size={14} /> {isAr ? 'حجز في اللحظة الأخيرة! الأماكن محدودة' : 'Last-minute booking! Limited availability'}</>,
                         type: 'hint'
                     });
                 } else if (daysAhead >= 14) {
                     setFeedback({
-                        message: <><CheckCircle size={14} /> Early booking! You get the best selection</>,
+                        message: <><CheckCircle size={14} /> {isAr ? 'حجز مبكر! ستحصل على أفضل الخيارات' : 'Early booking! You get the best selection'}</>,
                         type: 'success'
                     });
                 } else {
                     setFeedback({
-                        message: <><CheckCircle size={14} /> Good date! Availability looks great</>,
+                        message: <><CheckCircle size={14} /> {isAr ? 'تاريخ ممتاز! التوفر جيد' : 'Good date! Availability looks great'}</>,
                         type: 'success'
                     });
                 }
@@ -75,33 +77,33 @@ export default function SmartDatePicker({
 
                 if (selectedDate <= checkInDate) {
                     setFeedback({
-                        message: <><XCircle size={14} /> Check-out must be after check-in</>,
+                        message: <><XCircle size={14} /> {isAr ? 'تاريخ المغادرة يجب أن يكون بعد الوصول' : 'Check-out must be after check-in'}</>,
                         type: 'error'
                     });
                 } else if (nights >= 7) {
                     setFeedback({
-                        message: <><StarFilled size={14} /> Weekly stay! Enjoy extended discounts</>,
+                        message: <><StarFilled size={14} /> {isAr ? 'إقامة أسبوعية! استمتع بخصومات إضافية' : 'Weekly stay! Enjoy extended discounts'}</>,
                         type: 'success'
                     });
                 } else if (nights >= 3) {
                     setFeedback({
-                        message: <><CheckCircle size={14} /> Perfect weekend escape!</>,
+                        message: <><CheckCircle size={14} /> {isAr ? 'عطلة مثالية!' : 'Perfect weekend escape!'}</>,
                         type: 'success'
                     });
                 } else if (nights === 1) {
                     setFeedback({
-                        message: <><Lightbulb size={14} /> Just one night? Consider staying longer!</>,
+                        message: <><Lightbulb size={14} /> {isAr ? 'ليلة واحدة فقط؟ فكر في تمديد إقامتك' : 'Just one night? Consider staying longer!'}</>,
                         type: 'hint'
                     });
                 } else {
                     setFeedback({
-                        message: <><CheckCircle size={14} /> {nights} nights selected</>,
+                        message: <><CheckCircle size={14} /> {isAr ? `${nights} ليالٍ محددة` : `${nights} nights selected`}</>,
                         type: 'success'
                     });
                 }
             }
         }
-    }, [value, compareDate, type]);
+    }, [value, compareDate, type, isAr]);
 
     // Get today's date for min
     const getMinDate = () => {
