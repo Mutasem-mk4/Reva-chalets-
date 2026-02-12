@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "riva-mobile",
+    "slug": "riva-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mutasem.riva"
+    },
+    "android": {
+      "package": "com.mutasem.riva",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "15a19e60-f2fb-4f88-8a1d-b81c66aefafe"
+      }
+    },
+    "owner": "mutasem_mk4"
+  }
+}
