@@ -36,8 +36,8 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
       {/* Sticky Price Bar */}
       <StickyPriceBarWrapper chaletName={chalet.name} price={chalet.price} rating={chalet.rating} />
 
-      {/* Gallery Section */}
-      <div className={styles.gallerySection}>
+      {/* Hero Gallery Section - Immersive Top */}
+      <div className={styles.heroGallery}>
         <div className="container">
           <ScrollReveal>
             <ImageGallery images={chalet.images} alt={chalet.name} />
@@ -46,30 +46,36 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
       </div>
 
       <div className={`container ${styles.contentGrid}`}>
-        <div className={styles.mainInfo}>
+        <div className={styles.mainContent}>
           <ScrollReveal delay={0.1}>
             {/* Breadcrumb Navigation */}
-            <Breadcrumb
-              lang={lang}
-              items={[
-                { label: dict.nav.chalets, href: `/${lang}/chalets` },
-                { label: chalet.name }
-              ]}
-            />
-
-            <h1>{chalet.name}</h1>
-            <p className={styles.location}>
-              <MapPin size={18} style={{ display: 'inline' }} />
-              {chalet.location}
-            </p>
-
-            <div className={styles.rating}>
-              <StarFilled size={16} color="#E5A61D" />
-              {chalet.rating} (120 {lang === 'ar' ? 'تقييم' : 'reviews'})
+            <div className={styles.breadcrumbWrapper}>
+              <Breadcrumb
+                lang={lang}
+                items={[
+                  { label: dict.nav.chalets, href: `/${lang}/chalets` },
+                  { label: chalet.name }
+                ]}
+              />
             </div>
 
+            <header className={styles.chaletHeader}>
+              <h1>{chalet.name}</h1>
+              <div className={styles.metaRow}>
+                <p className={styles.location}>
+                  <MapPin size={18} />
+                  {chalet.location}
+                </p>
+                <div className={styles.ratingBadge}>
+                  <StarFilled size={16} color="#B45309" />
+                  <span>{chalet.rating}</span>
+                  <span className={styles.reviewCount}>(120 {lang === 'ar' ? 'تقييم' : 'reviews'})</span>
+                </div>
+              </div>
+            </header>
+
             {/* Live Viewers */}
-            <div style={{ marginTop: '0.75rem' }}>
+            <div className={styles.liveViewersWrapper}>
               <LiveViewers chaletId={chalet.id} />
             </div>
 
@@ -77,60 +83,77 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
 
             <div className={styles.divider}></div>
 
-            <h2>{dict.chalet.description}</h2>
-            <p className={styles.description}>{chalet.description}</p>
+            <section className={styles.section}>
+              <h2>{dict.chalet.description}</h2>
+              <p className={styles.description}>{chalet.description}</p>
+            </section>
 
             <div className={styles.divider}></div>
 
-            <h2>{dict.chalet.amenities}</h2>
-            <div className={styles.amenitiesList}>
-              {chalet.amenities.map((am) => (
-                <span key={am} className={styles.amenityItem}>
-                  <Check size={14} color="#1F423A" />
-                  {am}
-                </span>
-              ))}
-            </div>
+            <section className={styles.section}>
+              <h2>{dict.chalet.amenities}</h2>
+              <div className={styles.amenitiesList}>
+                {chalet.amenities.map((am) => (
+                  <span key={am} className={styles.amenityItem}>
+                    <div className={styles.checkIcon}><Check size={12} color="white" /></div>
+                    {am}
+                  </span>
+                ))}
+              </div>
+            </section>
 
             <div className={styles.divider}></div>
 
-            <h2>{(dict.chalet as any).guestReviews || 'Guest Reviews'}</h2>
-            <ReviewList reviews={chalet.reviews} />
-            <ReviewForm chaletId={chalet.id} chaletName={chalet.name} />
+            <section className={styles.section}>
+              <h2>{(dict.chalet as any).guestReviews || 'Guest Reviews'}</h2>
+              <ReviewList reviews={chalet.reviews} />
+              <ReviewForm chaletId={chalet.id} chaletName={chalet.name} />
+            </section>
 
             <div className={styles.divider}></div>
 
-            <h2>{(dict.chalet as any).thingsToKnow || 'Things to Know'}</h2>
-            <div className={styles.policies}>
-              <div className={styles.policyItem}>
-                <strong>{(dict.chalet as any).checkIn || 'Check-in'}</strong>: {(dict.chalet as any).checkInTime || '15:00 onwards'}
+            <section className={styles.section}>
+              <h2>{(dict.chalet as any).thingsToKnow || 'Things to Know'}</h2>
+              <div className={styles.policiesGrid}>
+                <div className={styles.policyCard}>
+                  <span className={styles.policyLabel}>{(dict.chalet as any).checkIn || 'Check-in'}</span>
+                  <span className={styles.policyValue}>{(dict.chalet as any).checkInTime || '15:00 onwards'}</span>
+                </div>
+                <div className={styles.policyCard}>
+                  <span className={styles.policyLabel}>{(dict.chalet as any).checkOut || 'Check-out'}</span>
+                  <span className={styles.policyValue}>{(dict.chalet as any).checkOutTime || 'Before 11:00'}</span>
+                </div>
+                <div className={`${styles.policyCard} ${styles.fullWidth}`}>
+                  <span className={styles.policyLabel}>{(dict.chalet as any).cancellation || 'Cancellation'}</span>
+                  <span className={styles.policyValue}>{(dict.chalet as any).cancellationPolicy || 'Free up to 48 hours before check-in.'}</span>
+                </div>
               </div>
-              <div className={styles.policyItem}>
-                <strong>{(dict.chalet as any).checkOut || 'Check-out'}</strong>: {(dict.chalet as any).checkOutTime || 'Before 11:00'}
-              </div>
-              <div className={styles.policyItem}>
-                <strong>{(dict.chalet as any).cancellation || 'Cancellation'}</strong>: {(dict.chalet as any).cancellationPolicy || 'Free up to 48 hours before check-in.'}
-              </div>
-            </div>
+            </section>
           </ScrollReveal>
         </div>
 
-        {/* Desktop Booking Sidebar - Hidden on mobile */}
+        {/* Desktop Booking Sidebar - Floating Glass Effect */}
         <div className={styles.bookingSidebar}>
           <ScrollReveal delay={0.2}>
-            <div className={styles.bookingCard}>
+            <div className={styles.floatingBookingCard}>
               <RecentlyBookedBadge />
 
-              <div className={styles.priceTag}>
-                <span className={styles.amount}>{chalet.price} JOD</span>
-                <span className={styles.period}>/ {dict.chalet.pricePerNight}</span>
+              <div className={styles.priceHeader}>
+                <div className={styles.priceWrapper}>
+                  <span className={styles.amount}>{chalet.price} JOD</span>
+                  <span className={styles.period}>/ {dict.chalet.pricePerNight}</span>
+                </div>
+                <div className={styles.miniRating}>
+                  <StarFilled size={14} color="#B45309" /> {chalet.rating}
+                </div>
               </div>
 
               <BookingForm dict={dict} price={chalet.price} chaletId={chalet.id} locale={lang} />
 
-              <GuaranteeBadge />
-
-              <p className={styles.hint}>{(dict.chalet as any).noPayment || 'No payment required today.'}</p>
+              <div className={styles.cardFooter}>
+                <GuaranteeBadge />
+                <p className={styles.hint}>{(dict.chalet as any).noPayment || 'No payment required today'}</p>
+              </div>
             </div>
           </ScrollReveal>
         </div>

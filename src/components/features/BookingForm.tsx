@@ -361,7 +361,7 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
             overflow: hidden;
             background: white;
             color: black;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            /* box-shadow removed for cleaner look in floating card */
         }
 
         .smart-dates {
