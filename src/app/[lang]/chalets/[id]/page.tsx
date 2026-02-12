@@ -19,6 +19,51 @@ import { GuaranteeBadge, RecentlyBookedBadge } from '@/components/features/Trust
 import { MapPin, StarFilled, Check } from '@/components/ui/Icons';
 import styles from '@/styles/chalets.module.css';
 
+import type { Metadata, ResolvingMetadata } from 'next';
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ lang: string, id: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { lang, id } = await params;
+  const chalet = await getChaletById(id);
+
+  if (!chalet) {
+    return {
+      title: 'Chalet Not Found | Riva Chalets',
+    };
+  }
+
+  const previousImages = (await parent).openGraph?.images || [];
+  const title = lang === 'ar' ? `${chalet.name} | ريفا شاليهات` : `${chalet.name} | Riva Chalets`;
+  const description = chalet.description.substring(0, 160) + '...';
+
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [chalet.images[0], ...previousImages],
+      locale: lang === 'ar' ? 'ar_JO' : 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      images: [chalet.images[0]],
+    },
+    alternates: {
+      canonical: `https://riva-jo.me/${lang}/chalets/${id}`,
+      languages: {
+        'en': `https://riva-jo.me/en/chalets/${id}`,
+        'ar': `https://riva-jo.me/ar/chalets/${id}`,
+      },
+    },
+  };
+}
+
 export default async function ChaletDetailPage({ params }: { params: Promise<{ lang: string, id: string }> }) {
   const { lang, id } = await params;
   const dict = getDictionary(lang);
