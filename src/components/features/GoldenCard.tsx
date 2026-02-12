@@ -27,6 +27,13 @@ interface GoldenCardProps {
 
 export default function GoldenCard({
     phase = 'WAITING',
+    farmName,
+    bookingDate,
+    tripStartTime,
+    farmLocation,
+    remainingTime,
+    groupMembers = 5,
+    ticketCount = 1,
     locale = 'ar',
     onRatePress,
     onChatClick
