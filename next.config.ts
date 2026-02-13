@@ -75,7 +75,7 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable server actions
     serverActions: {
-      allowedOrigins: ['localhost:3000'],
+      allowedOrigins: ['localhost:3000', 'starfish-app-5qsei.ondigitalocean.app'],
     },
   },
 };
