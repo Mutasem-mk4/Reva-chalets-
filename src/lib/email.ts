@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 
 // Initialize Resend client
+// Initialize Resend client lazily or ensure process.env is populated
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Default sender
@@ -247,7 +248,7 @@ function getBookingConfirmationTemplate(data: {
             We look forward to hosting you!
         </p>
         
-        <a href="https://revachalets.com/bookings/${data.bookingId}" 
+        <a href="https://riva-jo.me/bookings/${data.bookingId}" 
            style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #c9a55c 0%, #e8c87f 100%); color: #0a1628; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 14px;">
             View Booking Details
         </a>
@@ -258,14 +259,14 @@ function getWelcomeTemplate(data: { name: string; role: 'USER' | 'HOST' }): stri
     const isHost = data.role === 'HOST';
 
     return getBaseTemplate(`
-        <h2 style="margin: 0 0 20px; font-size: 24px; color: #c9a55c;">Welcome to Reva Chalets! 🏡</h2>
+        <h2 style="margin: 0 0 20px; font-size: 24px; color: #c9a55c;">Welcome to Riva Chalets! 🏡</h2>
         
         <p style="margin: 0 0 20px; font-size: 16px; color: #e2e8f0; line-height: 1.6;">
             Hi ${data.name},
         </p>
         
         <p style="margin: 0 0 20px; font-size: 16px; color: #e2e8f0; line-height: 1.6;">
-            Thank you for joining Reva Chalets! ${isHost
+            Thank you for joining Riva Chalets! ${isHost
             ? 'We\'re excited to have you as a property host.'
             : 'We\'re thrilled to have you as part of our community.'}
         </p>
@@ -276,7 +277,7 @@ function getWelcomeTemplate(data: { name: string; role: 'USER' | 'HOST' }): stri
             : 'Explore our luxury chalets across Jordan and find your perfect getaway.'}
         </p>
         
-        <a href="https://revachalets.com${isHost ? '/dashboard/chalets' : '/chalets'}" 
+        <a href="https://riva-jo.me${isHost ? '/dashboard/chalets' : '/chalets'}" 
            style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #c9a55c 0%, #e8c87f 100%); color: #0a1628; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 14px;">
             ${isHost ? 'Add Your First Chalet' : 'Browse Chalets'}
         </a>
@@ -331,9 +332,75 @@ function getDiscountTemplate(data: { code: string }): string {
             This code is valid for any chalet booking made within the next 30 days. Don't miss out on your perfect luxury getaway!
         </p>
         
-        <a href="https://revachalets.com/chalets" 
+        <a href="https://riva-jo.me/chalets" 
            style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #c9a55c 0%, #e8c87f 100%); color: #0a1628; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 14px;">
             Find Your Chalet
+        </a>
+    `);
+}
+
+export async function sendHostAlert(data: BookingConfirmationData) {
+    const { guestName, chaletName, totalPrice, bookingId } = data;
+    // In a real app, you might fetch the host's email from the DB. 
+    // For now, we'll send it to the system admin or a fixed address.
+    const HOST_EMAIL = process.env.ADMIN_EMAIL || 'admin@riva-jo.me';
+
+    try {
+        const result = await resend.emails.send({
+            from: FROM_EMAIL,
+            to: HOST_EMAIL,
+            subject: `🔔 New Booking: ${chaletName}`,
+            html: getHostAlertTemplate(data),
+        });
+
+        console.log('Host alert sent:', result);
+        return { success: true, data: result };
+    } catch (error) {
+        console.error('Failed to send host alert:', error);
+        return { success: false, error };
+    }
+}
+
+function getHostAlertTemplate(data: BookingConfirmationData): string {
+    return getBaseTemplate(`
+        <h2 style="margin: 0 0 20px; font-size: 24px; color: #c9a55c;">New Booking Received! 🔔</h2>
+        
+        <p style="margin: 0 0 20px; font-size: 16px; color: #e2e8f0; line-height: 1.6;">
+            A new booking has been confirmed for <strong>${data.chaletName}</strong>.
+        </p>
+        
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #1a3a5c; border-radius: 12px; margin-bottom: 30px;">
+            <tr>
+                <td style="padding: 25px;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td style="padding: 8px 0; color: #8b9bb3; font-size: 14px;">Guest Name</td>
+                            <td style="padding: 8px 0; color: #e2e8f0; font-size: 14px; text-align: right; font-weight: 600;">${data.guestName}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0; color: #8b9bb3; font-size: 14px;">Chalet</td>
+                            <td style="padding: 8px 0; color: #e2e8f0; font-size: 14px; text-align: right; font-weight: 600;">${data.chaletName}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0; color: #8b9bb3; font-size: 14px;">Check-in</td>
+                            <td style="padding: 8px 0; color: #e2e8f0; font-size: 14px; text-align: right; font-weight: 600;">${data.checkIn}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0; color: #8b9bb3; font-size: 14px;">Check-out</td>
+                            <td style="padding: 8px 0; color: #e2e8f0; font-size: 14px; text-align: right; font-weight: 600;">${data.checkOut}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px 0; color: #8b9bb3; font-size: 14px;">Total Price</td>
+                            <td style="padding: 8px 0; color: #c9a55c; font-size: 14px; text-align: right; font-weight: 700;">${data.totalPrice} JOD</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <a href="https://riva-jo.me/dashboard/bookings/${data.bookingId}" 
+           style="display: inline-block; padding: 14px 28px; background-color: #ffffff; color: #0a1628; text-decoration: none; font-weight: 600; border-radius: 8px; font-size: 14px;">
+            Manage Booking
         </a>
     `);
 }

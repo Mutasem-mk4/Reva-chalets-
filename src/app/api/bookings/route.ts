@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { createClient } from '@/lib/supabase/server';
+import { sendBookingConfirmation, sendHostAlert } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -45,9 +46,39 @@ export async function POST(request: NextRequest) {
         await prisma.bookingGroup.create({
             data: {
                 bookingId: booking.id,
-                hostId: userId || 'anonymous', // In a real app, you'd need a real user ID
+                hostId: userId || 'anonymous',
             }
         });
+
+        // Send Email Notifications (Fire and forget to not block response)
+        (async () => {
+            try {
+                // Fetch chalet name for email
+                const chalet = await prisma.chalet.findUnique({
+                    where: { id: chaletId },
+                    select: { name: true }
+                });
+
+                if (chalet) {
+                    const emailData = {
+                        to: guestEmail,
+                        guestName,
+                        chaletName: chalet.name,
+                        checkIn: new Date(startDate).toLocaleDateString(),
+                        checkOut: new Date(endDate).toLocaleDateString(),
+                        nights: nights || 1,
+                        guestCount: guestCount || 1,
+                        totalPrice: totalPrice || 0,
+                        bookingId: booking.id
+                    };
+
+                    await sendBookingConfirmation(emailData);
+                    await sendHostAlert(emailData);
+                }
+            } catch (error) {
+                console.error('Async email sending failed:', error);
+            }
+        })();
 
         return NextResponse.json(booking);
     } catch (error) {
