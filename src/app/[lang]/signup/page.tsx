@@ -116,7 +116,7 @@ export default function SignupPage({ params }: SignupPageProps) {
                     <h1>{labels.checkEmail}</h1>
                     <p>{labels.confirmationSent} <strong>{email}</strong></p>
                     <p>{labels.clickToActivate}</p>
-                    <Link href={`/${lang}/auth/login`} className={`${styles.authBtn} ${styles.authBtnPrimary}`} style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
+                    <Link href={`/${lang}/login`} className={`${styles.authBtn} ${styles.authBtnPrimary}`} style={{ marginTop: '1.5rem', display: 'inline-flex' }}>
                         {labels.goToLogin}
                     </Link>
                 </div>
@@ -248,7 +248,7 @@ export default function SignupPage({ params }: SignupPageProps) {
 
                 <p className={styles.authSwitch}>
                     {labels.haveAccount}{' '}
-                    <Link href={`/${lang}/auth/login`}>{labels.signIn}</Link>
+                    <Link href={`/${lang}/login`}>{labels.signIn}</Link>
                 </p>
             </div>
         </div>

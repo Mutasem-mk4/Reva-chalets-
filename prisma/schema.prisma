@@ -13,10 +13,13 @@ datasource db {
 // ═══════════════════════════════════════════════════════════════
 
 
+
 enum Role {
   USER
   ADMIN
   HOST
+
+
 }
 
 enum BookingStatus {
@@ -24,6 +27,8 @@ enum BookingStatus {
   CONFIRMED
   CANCELLED
   COMPLETED
+
+
 }
 
 enum BookingPhase {
@@ -31,6 +36,8 @@ enum BookingPhase {
   BOOKED_PENDING
   IN_PROGRESS
   COMPLETED
+
+
 }
 
 enum PaymentStatus {
@@ -38,17 +45,23 @@ enum PaymentStatus {
   PAID
   FAILED
   REFUNDED
+
+
 }
 
 enum DiscountType {
   ZAD
   KAIF
+
+
 }
 
 enum MessageType {
   TEXT
   IMAGE
   SYSTEM
+
+
 }
 
 
@@ -78,6 +91,8 @@ model User {
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+
 }
 
 
@@ -98,6 +113,9 @@ model Chalet {
   
   rating      Float     @default(5.0)
   
+  isApproved  Boolean   @default(false)
+  status      String    @default("DRAFT") // DRAFT, PENDING, PUBLISHED, ARCHIVED
+
   ownerId     String?
   owner       User?     @relation("ChaletOwner", fields: [ownerId], references: [id])
   
@@ -106,6 +124,8 @@ model Chalet {
   
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+
 }
 
 model Booking {
@@ -147,6 +167,8 @@ model Booking {
 
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
+
+
 }
 
 
@@ -162,6 +184,8 @@ model Review {
   chalet    Chalet   @relation(fields: [chaletId], references: [id])
   
   createdAt DateTime @default(now())
+
+
 }
 
 
@@ -180,6 +204,8 @@ model Partner {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -199,6 +225,8 @@ model Discount {
   partner     Partner?     @relation(fields: [partnerId], references: [id])
   usedBy      DiscountUsage[]
   createdAt   DateTime     @default(now())
+
+
 }
 
 model DiscountUsage {
@@ -210,6 +238,8 @@ model DiscountUsage {
   bookingId  String?
   booking    Booking? @relation(fields: [bookingId], references: [id])
   usedAt     DateTime @default(now())
+
+
 }
 
 model BookingGroup {
@@ -221,6 +251,8 @@ model BookingGroup {
   members     GroupMember[]
   messages    Message[]
   createdAt   DateTime @default(now())
+
+
 }
 
 model GroupMember {
@@ -234,6 +266,7 @@ model GroupMember {
   joinedAt     DateTime     @default(now())
   
   @@unique([groupId, userId])
+
 }
 
 model Message {
@@ -245,5 +278,7 @@ model Message {
   content   String
   type      MessageType  @default(TEXT)
   createdAt DateTime     @default(now())
+
+
 }
 

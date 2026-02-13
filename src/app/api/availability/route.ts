@@ -1,116 +1,91 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { prisma } from '@/lib/db';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
+    const supabase = await createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const chaletId = searchParams.get('chaletId');
+
     try {
-        const { searchParams } = new URL(request.url);
-        const chaletId = searchParams.get('chaletId');
-
-        if (!chaletId) {
-            return NextResponse.json({ error: 'Chalet ID is required' }, { status: 400 });
-        }
-
-        const supabase = await createClient();
-        const { data: { user }, error } = await supabase.auth.getUser();
-
-        if (error || !user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
-        // Verify ownership
-        const chalet = await prisma.chalet.findUnique({
-            where: { id: chaletId },
-            select: { ownerId: true }
-        });
-
-        if (!chalet) {
-            return NextResponse.json({ error: 'Chalet not found' }, { status: 404 });
-        }
-
-        // Allow owner or admin to view
-        if (chalet.ownerId !== user.id && user.user_metadata.role !== 'admin') {
-            // actually for availability, maybe guests need to see it too? 
-            // But this API is for the DASHBOARD (private details maybe?). 
-            // Public availability is usually public. 
-            // However, for the dashboard, we definitely want to allow the owner.
-            // Let's restrict it for now to owner/admin as this might expose guest details or specific block info.
-            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-        }
+        // GET bookings for specific chalet or all user's chalets
+        const whereClause = chaletId
+            ? { chaletId, chalet: { ownerId: user.id } }
+            : { chalet: { ownerId: user.id } };
 
         const bookings = await prisma.booking.findMany({
             where: {
-                chaletId,
-                status: { in: ['CONFIRMED', 'PENDING'] }, // Show pending too so host knows
-                endDate: { gte: new Date() } // Future bookings only? Or all? Let's get all for now.
+                ...whereClause,
+                status: { in: ['CONFIRMED', 'PENDING'] }
             },
             select: {
                 id: true,
                 startDate: true,
                 endDate: true,
                 status: true,
-                guestName: true // Host needs to know who booked
+                guestName: true,
+                chalet: {
+                    select: { name: true }
+                }
             }
         });
 
         return NextResponse.json(bookings);
     } catch (error) {
-        console.error('Failed to fetch availability:', error);
-        return NextResponse.json({ error: 'Failed to fetch availability' }, { status: 500 });
+        console.error('Calendar fetch error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
+    const supabase = await createClient();
+    const { data: { user }, error } = await supabase.auth.getUser();
+
+    if (error || !user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     try {
-        const supabase = await createClient();
-        const { data: { user }, error } = await supabase.auth.getUser();
-
-        if (error || !user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
         const body = await request.json();
-        const { chaletId, startDate, endDate } = body;
-
-        if (!chaletId || !startDate || !endDate) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-        }
+        const { chaletId, startDate, endDate, type } = body; // type: 'BLOCK' or 'Unblock'
 
         // Verify ownership
         const chalet = await prisma.chalet.findUnique({
-            where: { id: chaletId },
-            select: { ownerId: true }
+            where: { id: chaletId }
         });
 
         if (!chalet || chalet.ownerId !== user.id) {
-            return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
         }
 
-        // Create a "Blocked" booking
-        // We act as if the host booked it themselves, or use a specific flag/status if we had one.
-        // Since we don't have a 'BLOCKED' status in the BookingStatus enum (unless I allow 'CONFIRMED' with special name),
-        // I should check schema. 
-        // Schema has: PENDING, CONFIRMED, CANCELLED, COMPLETED.
-        // I will use 'CONFIRMED' and maybe set guestName to 'Hosted Blocked' or similar.
+        if (type === 'BLOCK') {
+            // Create a "fake" booking to block the dates
+            // In a real app we might have a separate 'Unavailability' model
+            await prisma.booking.create({
+                data: {
+                    chaletId,
+                    startDate: new Date(startDate),
+                    endDate: new Date(endDate),
+                    guestName: 'Blocked by Host',
+                    guestEmail: user.email || 'host@reva.com',
+                    guestPhone: 'N/A',
+                    totalPrice: 0,
+                    status: 'CONFIRMED',
+                    paymentStatus: 'PAID' // Blocked dates don't need payment
+                }
+            });
+        }
 
-        const booking = await prisma.booking.create({
-            data: {
-                chaletId,
-                userId: user.id, // Host blocked it
-                startDate: new Date(startDate),
-                endDate: new Date(endDate),
-                guestName: 'Manual Block',
-                guestEmail: user.email || '',
-                guestPhone: '',
-                totalPrice: 0,
-                status: 'CONFIRMED',
-                paymentStatus: 'PAID' // It's a block
-            }
-        });
+        return NextResponse.json({ success: true });
 
-        return NextResponse.json(booking);
     } catch (error) {
-        console.error('Failed to block dates:', error);
-        return NextResponse.json({ error: 'Failed to block dates' }, { status: 500 });
+        console.error('Calendar update error:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

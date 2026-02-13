@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "@stripe/stripe-js": "^8.6.1",
+    "@stripe/stripe-js": "^8.7.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.90.1",
     "@types/leaflet": "^1.9.21",
@@ -22,13 +22,14 @@
     "lucide-react": "^0.563.0",
     "next": "16.1.2",
     "react": "19.2.3",
+    "react-confetti": "^6.4.0",
     "react-dom": "19.2.3",
     "react-leaflet": "^5.0.0",
     "react-qr-code": "^2.0.18",
     "react-qr-reader": "^3.0.0-beta-1",
     "resend": "^6.7.0",
     "socket.io": "^4.8.3",
-    "stripe": "^20.2.0",
+    "stripe": "^20.3.1",
     "zod": "^4.3.5"
   },
   "devDependencies": {

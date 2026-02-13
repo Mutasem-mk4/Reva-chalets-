@@ -37,7 +37,10 @@ export async function updateSession(request: NextRequest) {
     // This logic runs for every request that middleware matches.
     // We can filter here or in main middleware. ts, but best to keep specific logic here or return user.
 
-    if (request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname.includes('/dashboard')) {
+    if (
+        request.nextUrl.pathname.includes('/dashboard') ||
+        request.nextUrl.pathname.includes('/guest')
+    ) {
         // Check if user exists
         if (!user) {
             const locale = request.nextUrl.pathname.split('/')[1] || 'en';

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Sun, Moon } from '@/components/ui/Icons';
+import { useAuth } from '@/lib/auth';
+import UserMenu from '@/components/auth/UserMenu';
 
 // Default dictionary values as fallback
 const defaultDict = {
@@ -13,9 +14,11 @@ const defaultDict = {
 
 export default function Header({ lang, dict: propDict }: { lang: string, dict: any }) {
   const dict = propDict || defaultDict;
+  const isAr = lang === 'ar';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { user, signOut } = useAuth();
 
   const isHomePage = pathname === `/${lang}` || pathname === `/${lang}/` || pathname === '/';
   const [scrolled, setScrolled] = useState(false);
@@ -86,11 +89,13 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
             </Link>
           </nav>
 
-          {/* Desktop Actions — only Language, Theme, Book Now */}
+          {/* Desktop Actions */}
           <div className="actions">
             <button onClick={switchLanguage} className="lang-btn desktop-only" aria-label={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}>
               {lang === 'en' ? 'عربي' : 'EN'}
             </button>
+
+            <UserMenu lang={lang} isAr={isAr} dict={dict} />
 
             <Link href={`/${lang}/chalets`} className="btn-primary desktop-only">
               {dict.nav.bookNow}
@@ -130,6 +135,24 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
           <div className="mobile-divider" />
 
+          {user ? (
+            <>
+              <Link href={`/${lang}/dashboard`} className={pathname?.includes('/dashboard') ? 'active' : ''}>
+                {isAr ? 'لوحة التحكم' : 'Dashboard'}
+              </Link>
+              <Link href={`/${lang}/guest/profile`} className={pathname?.includes('/profile') ? 'active' : ''}>
+                {isAr ? 'حسابي' : 'My Profile'}
+              </Link>
+              <button onClick={() => signOut()} className="mobile-logout-btn">
+                {isAr ? 'تسجيل الخروج' : 'Logout'}
+              </button>
+            </>
+          ) : (
+            <Link href={`/${lang}/login`} className={pathname?.includes('/login') ? 'active' : ''}>
+              {isAr ? 'تسجيل الدخول' : 'Login'}
+            </Link>
+          )}
+
           <Link href={`/${lang}/chalets`} className="mobile-cta">
             {dict.nav.bookNow}
           </Link>
@@ -162,7 +185,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
         .header.home .logo-link,
         .header.home .desktop-nav a,
-        .header.home .icon-btn,
         .header.home .lang-btn {
           color: white;
         }
@@ -182,8 +204,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .header.home.scrolled .logo-link,
         .header.inner .desktop-nav a,
         .header.home.scrolled .desktop-nav a,
-        .header.inner .icon-btn,
-        .header.home.scrolled .icon-btn,
         .header.inner .lang-btn,
         .header.home.scrolled .lang-btn {
           color: var(--color-forest);
@@ -194,7 +214,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           height: 64px;
           width: auto;
           object-fit: contain;
-          filter: brightness(0) invert(1); /* Force White on transparent bg */
+          filter: brightness(0) invert(1);
           transition: filter 0.3s ease;
         }
 
@@ -203,7 +223,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           height: 64px;
           width: auto;
           object-fit: contain;
-          /* Filter to match #1B3B36 (Forest Green) from White */
           filter: brightness(0) saturate(100%) invert(18%) sepia(10%) saturate(1966%) hue-rotate(124deg) brightness(97%) contrast(90%);
         }
 
@@ -221,7 +240,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           flex-shrink: 0;
         }
 
-        /* Desktop Nav */
         .desktop-nav {
           display: none;
           gap: 2rem;
@@ -256,28 +274,10 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           width: 100%;
         }
 
-        /* Actions */
         .actions {
           display: flex;
-          gap: 0.5rem;
+          gap: 1rem;
           align-items: center;
-        }
-
-        .icon-btn {
-          background: none;
-          border: none;
-          padding: 0.5rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 1rem;
-        }
-
-        .icon-btn:hover {
-          background: rgba(150, 150, 150, 0.1);
         }
 
         .lang-btn {
@@ -315,7 +315,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           display: none !important;
         }
 
-        /* Hamburger */
         .hamburger {
           display: flex;
           flex-direction: column;
@@ -347,7 +346,6 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* Mobile Menu */
         .mobile-menu {
           position: fixed;
           top: 0;
@@ -373,26 +371,22 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           gap: 0.5rem;
           padding-bottom: 1.25rem;
           margin-bottom: 0.75rem;
-          border-bottom: 1px solid hsl(var(--border));
+          border-bottom: 1px solid rgba(27, 59, 54, 0.08);
         }
 
         .mobile-action-btn {
-          background: hsl(var(--muted));
+          background: rgba(27, 59, 54, 0.05);
           border: none;
           padding: 0.6rem 0.85rem;
           border-radius: 0.5rem;
           font-size: 0.85rem;
           font-weight: 500;
-          color: hsl(var(--foreground));
+          color: var(--color-forest);
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           transition: background 0.2s;
-        }
-
-        .mobile-action-btn:hover {
-          background: hsl(var(--border));
         }
 
         .mobile-nav {
@@ -404,7 +398,7 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
         .mobile-nav :global(a) {
           font-size: 1.05rem;
           font-weight: 500;
-          color: hsl(var(--foreground));
+          color: var(--color-forest);
           padding: 0.75rem 0.5rem;
           border-radius: 0.5rem;
           transition: all 0.2s;
@@ -412,14 +406,32 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
 
         .mobile-nav :global(a:hover),
         .mobile-nav :global(a.active) {
-          color: hsl(var(--primary));
-          background: hsl(var(--muted) / 0.5);
+          color: var(--color-gold);
+          background: rgba(27, 59, 54, 0.05);
         }
 
         .mobile-divider {
           height: 1px;
-          background: hsl(var(--border));
+          background: rgba(27, 59, 54, 0.08);
           margin: 0.5rem 0;
+        }
+
+        .mobile-logout-btn {
+          font-size: 1.05rem;
+          font-weight: 500;
+          color: #ef4444;
+          padding: 0.75rem 0.5rem;
+          border-radius: 0.5rem;
+          transition: all 0.2s;
+          background: none;
+          border: none;
+          width: 100%;
+          text-align: inherit;
+          cursor: pointer;
+        }
+
+        .mobile-logout-btn:hover {
+          background: rgba(239, 68, 68, 0.05);
         }
 
         .mobile-nav :global(.mobile-cta) {
@@ -439,15 +451,8 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           background: rgba(0,0,0,0.4);
           backdrop-filter: blur(4px);
           z-index: 1050;
-          animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        /* Desktop breakpoint */
         @media (min-width: 768px) {
           .desktop-nav {
             display: flex;
@@ -460,44 +465,11 @@ export default function Header({ lang, dict: propDict }: { lang: string, dict: a
           .hamburger {
             display: none;
           }
-
-          .mobile-menu,
-          .mobile-overlay {
-            display: none;
-          }
         }
 
         @media (max-width: 1024px) {
           .desktop-nav {
             display: none !important;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .header.home,
-          .header.inner {
-            height: 56px;
-          }
-
-          .header-content {
-            padding: 0 0.75rem;
-          }
-
-          .desktop-only {
-            display: none !important;
-          }
-
-
-          .actions {
-            gap: 0;
-          }
-
-          .hamburger {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
           }
         }
       `}</style>

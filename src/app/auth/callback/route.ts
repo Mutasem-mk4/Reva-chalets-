@@ -16,5 +16,5 @@ export async function GET(request: Request) {
     }
 
     // Return the user to an error page with instructions
-    return NextResponse.redirect(`${origin}/ar/auth/login`);
+    return NextResponse.redirect(`${origin}/ar/login`);
 }

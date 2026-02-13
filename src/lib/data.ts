@@ -18,6 +18,8 @@ export type Chalet = {
     amenities: string[];
     capacity: number;
     rating: number;
+    isApproved?: boolean;
+    status?: string;
     coordinates?: {
         lat: number;
         lng: number;
@@ -36,6 +38,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['Private Pool', 'WiFi', 'BBQ Area', 'AC', 'Parking', 'Sea View', 'Jacuzzi'],
         capacity: 8,
         rating: 4.9,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 31.7196, lng: 35.5891 },
         reviews: [
             { id: 'r1', user: 'Sarah M.', date: 'Oct 2024', rating: 5, comment: 'Absolutely breathtaking views! The infinity pool is to die for.' },
@@ -52,6 +56,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['Garden', 'WiFi', 'BBQ Area', 'Fireplace', 'Parking', 'Mountain View', 'Playground'],
         capacity: 10,
         rating: 4.8,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 32.3296, lng: 35.7553 },
         reviews: [
             { id: 'r3', user: 'Ahmad R.', date: 'Nov 2024', rating: 5, comment: 'The most relaxing weekend we\'ve ever had. The forest setting is magical.' },
@@ -68,6 +74,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['WiFi', 'BBQ Area', 'AC', 'Parking', 'Garden', 'Traditional Decor'],
         capacity: 6,
         rating: 4.7,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 32.2747, lng: 35.8914 },
         reviews: [
             { id: 'r5', user: 'Lina S.', date: 'Dec 2024', rating: 5, comment: 'Walking distance to the ruins! The stone architecture is beautiful.' },
@@ -84,6 +92,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['WiFi', 'AC', 'Parking', 'City View', 'Terrace', 'Smart TV', 'Kitchen'],
         capacity: 4,
         rating: 4.8,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 31.9539, lng: 35.9106 },
         reviews: [
             { id: 'r7', user: 'Nour A.', date: 'Jan 2025', rating: 5, comment: 'The sunset from the terrace is unreal. Best place we\'ve stayed in Amman.' },
@@ -100,6 +110,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['Garden', 'BBQ Area', 'Parking', 'Playground', 'Farm Animals', 'Outdoor Seating'],
         capacity: 15,
         rating: 4.6,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 32.0392, lng: 35.7272 },
         reviews: [
             { id: 'r9', user: 'Rami M.', date: 'Oct 2024', rating: 5, comment: 'Kids loved the farm animals! Great family trip. Homemade breakfast was amazing.' },
@@ -116,6 +128,8 @@ export const MOCK_CHALETS: Chalet[] = [
         amenities: ['WiFi', 'AC', 'Parking', 'Rooftop', 'Traditional Decor', 'Kitchen', 'Courtyard'],
         capacity: 5,
         rating: 4.7,
+        isApproved: true,
+        status: 'PUBLISHED',
         coordinates: { lat: 31.7160, lng: 35.7932 },
         reviews: [
             { id: 'r11', user: 'Kareem W.', date: 'Nov 2024', rating: 5, comment: 'An absolute gem! The rooftop dinner under the stars was unforgettable.' },
@@ -146,6 +160,8 @@ export async function getChalets(): Promise<Chalet[]> {
             amenities: JSON.parse(c.amenities),
             capacity: c.capacity,
             rating: c.rating,
+            isApproved: c.isApproved,
+            status: c.status,
             reviews: c.reviews.map(r => ({
                 id: r.id,
                 user: r.user.name || 'Guest',
@@ -183,6 +199,8 @@ export async function getChaletById(id: string): Promise<Chalet | null> {
             amenities: JSON.parse(c.amenities),
             capacity: c.capacity,
             rating: c.rating,
+            isApproved: c.isApproved,
+            status: c.status,
             reviews: c.reviews.map(r => ({
                 id: r.id,
                 user: r.user.name || 'Guest',

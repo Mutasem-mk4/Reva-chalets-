@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { useToast } from '@/components/ui/Toast';
 import { ChevronLeft, ChevronUp, ChevronDown, CheckCircle, Sparkles, Gift, Plus, Minus } from '@/components/ui/Icons';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import PaymentForm from './PaymentForm';
+// import PaymentForm from './PaymentForm'; // Removed in favor of Stripe Checkout
 import TrustSeals from './TrustSeals';
 import SmartDatePicker from './SmartDatePicker';
 import BookingProgress from './BookingProgress';
+import { redirectToCheckout } from '@/lib/stripe-client';
 
 export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { dict: any, price: number, chaletId: string, locale?: string }) {
   const [step, setStep] = useState<'details' | 'payment'>('details');
@@ -47,9 +48,10 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
     setStep('payment');
   };
 
-  const handlePaymentSuccess = async () => {
+  const handleProceedToPayment = async () => {
     setIsSubmitting(true);
     try {
+      // 1. Create Booking in DB first
       const response = await fetch('/api/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,30 +59,29 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
           chaletId,
           startDate: checkIn,
           endDate: checkOut,
-          guestName: 'Web User', // Should ideally come from a form or auth
-          guestEmail: 'web@user.com',
+          guestName: 'Web User', // Should ideally come from auth context
+          guestEmail: 'user@example.com', // Should come from auth
           guestPhone: '000000000',
           guestCount: guests,
           totalPrice: total,
           pricePerNight: nightPrice,
-          nights: days
+          nights: days,
+          status: 'PENDING_PAYMENT' // Initial status
         })
       });
 
       if (response.ok) {
-        setSuccess(true);
-        showToast("Booking successful!", "success");
-        setTimeout(() => {
-          setShowGift(true);
-        }, 1500);
+        const booking = await response.json();
+        // 2. Redirect to Stripe
+        await redirectToCheckout(booking.id);
       } else {
         const err = await response.json();
-        showToast(err.error || 'Failed to create booking', 'error');
+        showToast(err.error || 'Failed to initialize booking', 'error');
+        setIsSubmitting(false);
       }
     } catch (e) {
-      console.error("Booking failed", e);
+      console.error("Booking initialization failed", e);
       showToast("Something went wrong. Please try again.", "error");
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -233,11 +234,76 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
             <span>{total} JOD</span>
           </div>
         </div>
-        <PaymentForm amount={total} onSuccess={handlePaymentSuccess} locale={locale} />
+        <div className="payment-action">
+          <p className="payment-hint">
+            {locale === 'ar'
+              ? 'سيتم تحويلك إلى صفحة دفع آمنة عبر Stripe لإتمام الحجز.'
+              : 'You will be redirected to a secure Stripe checkout page to complete your booking.'}
+          </p>
+          <button
+            onClick={handleProceedToPayment}
+            disabled={isSubmitting}
+            className="stripe-btn"
+          >
+            {isSubmitting ? <LoadingSpinner size={24} color="white" /> : (
+              <>
+                <span style={{ marginRight: '0.5rem' }}>🔒</span>
+                {locale === 'ar' ? `دفع ${total} دينار بأمان` : `Pay ${total} JOD Securely`}
+              </>
+            )}
+          </button>
+
+          <div className="payment-methods-icons">
+            <span title="Visa">💳</span>
+            <span title="Mastercard">💳</span>
+            <span title="Apple Pay">🍎</span>
+          </div>
+        </div>
         <TrustSeals />
 
         <style jsx>{`
-                    .back-btn {
+            .payment-action {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            .payment-hint {
+                color: #6b7280;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+            .stripe-btn {
+                background: #635bff;
+                color: white;
+                width: 100%;
+                padding: 1rem;
+                border-radius: 12px;
+                font-weight: 600;
+                font-size: 1.1rem;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
+            }
+            .stripe-btn:hover {
+                background: #4f46e5;
+                transform: translateY(-2px);
+            }
+            .stripe-btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+            }
+            .payment-methods-icons {
+                margin-top: 1rem;
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                font-size: 1.5rem;
+                opacity: 0.6;
+            }
+            .back-btn {
                         background: none;
                         border: none;
                         color: hsl(var(--foreground));

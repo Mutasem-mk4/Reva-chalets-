@@ -51,9 +51,29 @@ export default function NewChaletPage() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const isAr = document.documentElement.lang === 'ar'; // Simple check since we are in client component and layout sets lang
+
+    const labels = {
+        title: isAr ? 'إضافة شاليه جديد' : 'Add New Chalet',
+        name: isAr ? 'اسم الشاليه' : 'Chalet Name',
+        namePlaceholder: isAr ? 'مثال: فيلا الغروب' : 'e.g. Sunset Villa',
+        location: isAr ? 'الموقع' : 'Location',
+        locationPlaceholder: isAr ? 'مثال: البحر الميت' : 'e.g. Dead Sea',
+        price: isAr ? 'السعر لليلة (دينار)' : 'Price per night (JOD)',
+        pricePlaceholder: isAr ? '250' : 'e.g. 250',
+        description: isAr ? 'الوصف' : 'Description',
+        descPlaceholder: isAr ? 'وصف تفصيلي للشاليه...' : 'Describe your chalet...',
+        image: isAr ? 'رابط الصورة (مؤقت)' : 'Image URL (Temporary)',
+        amenities: isAr ? 'المرافق (مفصولة بفاصلة)' : 'Amenities (Comma separated)',
+        amenitiesPlaceholder: isAr ? 'مسبح، واي فاي، استجمام' : 'Pool, WiFi, BBQ, AC',
+        cancel: isAr ? 'إلغاء' : 'Cancel',
+        save: isAr ? 'حفظ الشاليه' : 'Create Chalet',
+        saving: isAr ? 'جاري الحفظ...' : 'Saving...'
+    };
+
     return (
-        <div className="add-chalet-page">
-            <h1 style={{ marginBottom: '2rem' }}>Add New Chalet</h1>
+        <div className="add-chalet-page" dir={isAr ? 'rtl' : 'ltr'}>
+            <h1 style={{ marginBottom: '2rem' }}>{labels.title}</h1>
 
             {error && (
                 <div style={{ background: '#fee2e2', color: '#ef4444', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
@@ -63,10 +83,10 @@ export default function NewChaletPage() {
 
             <form onSubmit={handleSubmit} className="form-container">
                 <div className="form-group">
-                    <label>Chalet Name</label>
+                    <label>{labels.name}</label>
                     <input
                         name="name"
-                        placeholder="e.g. Sunset Villa"
+                        placeholder={labels.namePlaceholder}
                         required
                         value={formData.name}
                         onChange={handleChange}
@@ -75,10 +95,10 @@ export default function NewChaletPage() {
 
                 <div className="form-row">
                     <div className="form-group">
-                        <label>Location</label>
+                        <label>{labels.location}</label>
                         <input
                             name="location"
-                            placeholder="e.g. Dead Sea"
+                            placeholder={labels.locationPlaceholder}
                             required
                             value={formData.location}
                             onChange={handleChange}
@@ -86,11 +106,11 @@ export default function NewChaletPage() {
                     </div>
 
                     <div className="form-group">
-                        <label>Price per night (JOD)</label>
+                        <label>{labels.price}</label>
                         <input
                             name="price"
                             type="number"
-                            placeholder="e.g. 250"
+                            placeholder={labels.pricePlaceholder}
                             required
                             value={formData.price}
                             onChange={handleChange}
@@ -99,11 +119,11 @@ export default function NewChaletPage() {
                 </div>
 
                 <div className="form-group">
-                    <label>Description</label>
+                    <label>{labels.description}</label>
                     <textarea
                         name="description"
                         rows={5}
-                        placeholder="Describe your chalet..."
+                        placeholder={labels.descPlaceholder}
                         required
                         value={formData.description}
                         onChange={handleChange}
@@ -111,7 +131,7 @@ export default function NewChaletPage() {
                 </div>
 
                 <div className="form-group">
-                    <label>Image URL (Temporary)</label>
+                    <label>{labels.image}</label>
                     <input
                         name="imageUrl"
                         placeholder="https://example.com/image.jpg"
@@ -124,10 +144,10 @@ export default function NewChaletPage() {
                 </div>
 
                 <div className="form-group">
-                    <label>Amenities (Comma separated)</label>
+                    <label>{labels.amenities}</label>
                     <input
                         name="amenities"
-                        placeholder="Pool, WiFi, BBQ, AC"
+                        placeholder={labels.amenitiesPlaceholder}
                         value={formData.amenities}
                         onChange={handleChange}
                     />
@@ -135,10 +155,10 @@ export default function NewChaletPage() {
 
                 <div className="actions">
                     <button type="button" onClick={() => router.back()} className="cancel-btn">
-                        Cancel
+                        {labels.cancel}
                     </button>
                     <button type="submit" className="save-btn" disabled={loading}>
-                        {loading ? 'Saving...' : 'Create Chalet'}
+                        {loading ? labels.saving : labels.save}
                     </button>
                 </div>
             </form>
@@ -150,10 +170,11 @@ export default function NewChaletPage() {
          }
 
          .form-container {
-            background: hsl(var(--card));
-            padding: 2rem;
-            border-radius: var(--radius);
-            border: 1px solid hsl(var(--border));
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
@@ -176,47 +197,73 @@ export default function NewChaletPage() {
 
          label {
             font-weight: 500;
-            font-size: 0.875rem;
+            font-size: 0.9rem;
+            color: #1c1917;
          }
 
          input, textarea {
-            padding: 0.75rem;
-            border: 1px solid hsl(var(--input));
-            border-radius: var(--radius);
-            background: hsl(var(--background));
+            padding: 0.875rem;
+            border: 1px solid #e5e5e5;
+            border-radius: 10px;
+            background: white;
             font-size: 1rem;
             width: 100%;
+            transition: all 0.2s;
+            font-family: inherit;
+         }
+
+         input:focus, textarea:focus {
+            outline: none;
+            border-color: #1c1917;
+            box-shadow: 0 0 0 2px rgba(28, 25, 23, 0.05);
          }
 
          .actions {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f5f5f4;
          }
 
          .save-btn {
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
-            padding: 0.75rem 2rem;
-            border-radius: var(--radius);
+            background: #1c1917;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 10px;
             border: none;
             font-weight: 600;
             flex: 2;
             cursor: pointer;
+            transition: all 0.2s;
+         }
+         
+         .save-btn:hover {
+            background: #292524;
+            transform: translateY(-1px);
          }
          
          .save-btn:disabled {
             opacity: 0.7;
             cursor: not-allowed;
+            transform: none;
          }
 
          .cancel-btn {
-            background: transparent;
-            border: 1px solid hsl(var(--border));
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius);
+            background: white;
+            border: 1px solid #e5e5e5;
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
             flex: 1;
             cursor: pointer;
+            font-weight: 500;
+            color: #57534e;
+            transition: all 0.2s;
+         }
+
+         .cancel-btn:hover {
+            background: #f5f5f4;
+            color: #1c1917;
          }
 
          @media (max-width: 600px) {
@@ -226,7 +273,7 @@ export default function NewChaletPage() {
             }
             
             .form-container {
-                padding: 1rem;
+                padding: 1.5rem;
             }
          }
        `}</style>

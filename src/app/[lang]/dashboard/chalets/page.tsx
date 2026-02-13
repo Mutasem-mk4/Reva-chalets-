@@ -79,7 +79,13 @@ export default function MyChaletsPage() {
                                 )}
                             </div>
                             <div className={styles.content}>
-                                <h3>{chalet.name}</h3>
+                                <div className={styles.cardHeader}>
+                                    <h3>{chalet.name}</h3>
+                                    <span className={`${styles.statusBadge} ${chalet.isApproved ? styles.approved : styles.pending
+                                        }`}>
+                                        {chalet.status || (chalet.isApproved ? 'Published' : 'Under Review')}
+                                    </span>
+                                </div>
                                 <p className={styles.location}>
                                     <MapPin size={14} style={{ display: 'inline', marginRight: '0.25rem' }} />
                                     {chalet.location}
