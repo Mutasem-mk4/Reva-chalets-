@@ -5,13 +5,14 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production tsx server.ts",
     "lint": "eslint",
     "test": "jest",
     "test:watch": "jest --watch",
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "tsx": "^4.21.0",
     "@prisma/client": "^5.22.0",
     "@stripe/stripe-js": "^8.7.0",
     "@supabase/ssr": "^0.8.0",
@@ -50,7 +51,6 @@
     "node-mocks-http": "^1.17.2",
     "prisma": "^5.22.0",
     "ts-jest": "^29.4.6",
-    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
