@@ -1,5 +1,5 @@
-import { FullPageSkeleton } from '@/components/ui/Skeleton';
+import { HomeSkeleton } from '@/components/ui/Skeleton';
 
 export default function Loading() {
-    return <FullPageSkeleton />;
+    return <HomeSkeleton />;
 }

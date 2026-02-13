@@ -1,10 +1,10 @@
 /* Mobile Booking Bar - Only shows on tablet/mobile */
-.mobileBookingBar {
+.mobileBar {
     display: none;
 }
 
 @media (max-width: 1024px) {
-    .mobileBookingBar {
+    .mobileBar {
         display: flex;
         position: fixed;
         bottom: 0;
@@ -54,7 +54,7 @@
 }
 
 /* Modal Styles */
-.modalOverlay {
+.formOverlay {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
@@ -74,7 +74,7 @@
     }
 }
 
-.modal {
+.formSheet {
     background: hsl(var(--card));
     width: 100%;
     max-height: 90vh;
@@ -93,7 +93,7 @@
     }
 }
 
-.modalHeader {
+.formHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,7 +104,7 @@
     background: hsl(var(--card));
 }
 
-.modalHeader h3 {
+.formHeader h3 {
     margin: 0;
     font-family: var(--font-serif);
     font-size: 1.25rem;
@@ -124,24 +124,8 @@
     color: hsl(var(--foreground));
 }
 
-.modalContent {
+.formBody {
     padding: 1.5rem;
     overflow-y: auto;
     max-height: calc(90vh - 70px);
-}
-
-.modalPrice {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid hsl(var(--border));
-}
-
-.modalPrice .price {
-    font-size: 2rem;
-    display: block;
-}
-
-.modalPrice .period {
-    font-size: 1rem;
 }

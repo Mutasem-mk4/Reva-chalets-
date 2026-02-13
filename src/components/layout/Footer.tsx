@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Visa, Mastercard, ShieldCheck, Lightning } from '@/components/ui/Icons';
 import Logo from '@/components/ui/Logo';
 
@@ -14,13 +15,24 @@ const defaultDict = {
 export default function Footer({ lang, dict: propDict }: { lang: string, dict: any }) {
   // Use prop dict or fallback to defaults
   const dict = propDict || defaultDict;
+  const logoSrc = lang === 'ar' ? '/images/logo-ar.png' : '/images/logo-en.png';
+
   return (
     <footer className="footer">
       <div className="container footer-content pt-16">
         {/* Brand */}
         <div className="brand">
           <div className="mb-4">
-            <Logo animated={false} />
+            <Link href={`/${lang}`}>
+              <Image
+                src={logoSrc}
+                alt="Riva"
+                width={140}
+                height={60}
+                className="footer-logo"
+                style={{ objectFit: 'contain' }}
+              />
+            </Link>
           </div>
           <p>{dict.home.heroSubtitle}</p>
         </div>
@@ -94,6 +106,11 @@ export default function Footer({ lang, dict: propDict }: { lang: string, dict: a
           opacity: 0.75;
           font-size: 0.9rem;
           color: #A7F3D0;
+        }
+
+        .footer-logo {
+          filter: brightness(0) invert(1);
+          opacity: 0.9;
         }
 
         .footer-section h4 {

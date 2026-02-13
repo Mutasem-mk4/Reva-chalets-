@@ -1,198 +1,184 @@
+/* Base Animation */
 .skeleton {
     background: linear-gradient(90deg,
-            hsl(var(--secondary) / 0.6) 0%,
-            hsl(var(--secondary) / 0.9) 50%,
-            hsl(var(--secondary) / 0.6) 100%);
+            hsl(var(--muted)/0.2) 0%,
+            hsl(var(--muted)/0.4) 50%,
+            hsl(var(--muted)/0.2) 100%);
     background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
+    animation: shimmer 1.5s infinite linear;
 }
 
 @keyframes shimmer {
     0% {
-        background-position: 200% 0;
+        background-position: -200% 0;
     }
 
     100% {
-        background-position: -200% 0;
+        background-position: 200% 0;
     }
 }
 
-/* Layout */
+/* Page Layouts */
 .fullPage {
+    background: hsl(var(--background));
     min-height: 100vh;
+    padding-bottom: 80px;
+    /* Space for bottom nav */
+}
+
+.homeContainer {
+    max-width: 480px;
+    /* Mobile-first width */
+    margin: 0 auto;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
-    background: hsl(var(--background));
-}
-
-.main {
-    flex: 1;
-}
-
-.page {
-    padding-bottom: 4rem;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
-
-.center {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Header */
-.header {
-    padding: 1rem 0;
-    background: hsl(var(--background));
-    border-bottom: 1px solid hsl(var(--border));
-}
-
-.header .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav {
-    display: flex;
     gap: 2rem;
 }
 
-.actions {
-    display: flex;
-    gap: 1rem;
-}
-
-/* Hero */
+/* Hero Skeleton */
 .hero {
-    height: 70vh;
-    min-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--background)) 100%);
-}
-
-.heroContent {
-    text-align: center;
+    height: 60vh;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-width: 600px;
-    padding: 2rem;
-}
-
-/* Chalets Grid */
-.chaletsSection {
-    padding: 4rem 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.sectionHeader {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--secondary)/0.3) 100%);
+    border-radius: 0 0 2rem 2rem;
     margin-bottom: 2rem;
 }
 
-.chaletsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+.heroTitle {
+    width: 70%;
+    max-width: 300px;
+    height: 2.5rem;
 }
 
-/* Chalet Card */
+.heroSubtitle {
+    width: 50%;
+    max-width: 200px;
+    height: 1.25rem;
+}
+
+.heroButton {
+    width: 140px;
+    height: 48px;
+    margin-top: 1rem;
+}
+
+/* GoldenCard Skeleton - Matches GoldenCard.tsx structure */
+.goldenCardWrapper {
+    padding: 0 1rem;
+}
+
+.goldenCard {
+    background: hsl(var(--card));
+    border-radius: 1.5rem;
+    border: 1px solid hsl(var(--border));
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 180px;
+}
+
+.goldenLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 2;
+}
+
+.goldenRight {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.goldenPass {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    min-width: 100px;
+}
+
+/* Categories Skeleton */
+.categoriesWrapper {
+    display: flex;
+    gap: 1rem;
+    overflow-x: hidden;
+    padding: 0.5rem 0.5rem 1.5rem;
+    mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+.categoryPill {
+    width: 100px;
+    height: 40px;
+    border-radius: 99px;
+    flex-shrink: 0;
+}
+
+/* Chalet Card Skeleton */
 .chaletCard {
     background: hsl(var(--card));
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: 1px solid hsl(var(--border));
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cardImage {
+    aspect-ratio: 4/3;
+    width: 100%;
 }
 
 .cardContent {
-    padding: 1.5rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-/* Chalet Detail */
-.chaletDetail {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-}
-
-.detailContent {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.detailMain {
+.cardHeader {
     display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.detailSidebar {
-    position: sticky;
-    top: 100px;
-    height: fit-content;
-}
-
-.bookingCard {
-    background: hsl(var(--card));
-    border-radius: 1rem;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Footer */
-.footer {
-    background: hsl(var(--secondary));
-    padding: 3rem 0 2rem;
+.cardFooter {
     margin-top: auto;
-}
-
-.footerGrid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
-}
-
-.footerGrid>div {
+    padding-top: 1rem;
+    border-top: 1px dashed hsl(var(--border));
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .nav {
-        display: none;
-    }
+/* Grid Layouts */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+}
 
-    .detailContent {
-        grid-template-columns: 1fr;
-    }
-
-    .footerGrid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+/* Desktop Polish */
+@media (min-width: 768px) {
+    .homeContainer {
+        max-width: 1200px;
+        padding: 0 2rem;
     }
 
     .hero {
-        height: 50vh;
-        min-height: 400px;
+        height: 500px;
+        border-radius: 2rem;
+        margin-top: 2rem;
     }
 }

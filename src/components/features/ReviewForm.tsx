@@ -14,9 +14,10 @@ export default function ReviewForm({ chaletId, chaletName, locale = 'ar' }: { ch
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        // Check verification status on mount
-        const verified = hasCompletedStayAt(chaletId);
-        setIsVerified(verified);
+        // Bypass verification as requested - "I don't want this page" (Restriction View)
+        // const verified = hasCompletedStayAt(chaletId);
+        // setIsVerified(verified);
+        setIsVerified(true);
         setIsLoading(false);
     }, [chaletId]);
 
