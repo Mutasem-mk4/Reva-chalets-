@@ -1,7 +1,8 @@
-import { createServer } from 'http'; // Use node's http server
+import { createServer } from 'http';
 import { parse } from 'url';
 import next from 'next';
-import { Server } from 'socket.io'; // Import socket.io
+import { Server } from 'socket.io';
+import { PrismaClient } from '@prisma/client';
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = 'localhost';
@@ -10,6 +11,8 @@ const port = 3000;
 // Initialize Next.js app
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
+
+const prisma = new PrismaClient();
 
 app.prepare().then(() => {
     // 1. Create native HTTP server
@@ -27,7 +30,7 @@ app.prepare().then(() => {
     // 2. Attach Socket.io to the HTTP server
     const io = new Server(httpServer, {
         cors: {
-            origin: "*", // Allow all origins for dev (e.g., mobile app)
+            origin: "*", // Allow all origins for dev
             methods: ["GET", "POST"]
         }
     });
@@ -46,21 +49,41 @@ app.prepare().then(() => {
         });
 
         // Handle sending messages
-        socket.on('send_message', (data) => {
-            const { bookingId, content, senderId, senderName } = data;
+        socket.on('send_message', async (data) => {
+            const { bookingId, content, senderId } = data;
             console.log(`Message in ${bookingId}: ${content}`);
 
-            // Broadcast to everyone in the room (including sender, for simple optimistic UI)
-            io.to(bookingId).emit('receive_message', {
-                id: Math.random().toString(), // Temp ID
-                content,
-                senderId,
-                sender: { name: senderName },
-                createdAt: new Date().toISOString(),
-                type: 'TEXT'
-            });
+            try {
+                // Save to Database
+                const savedMessage = await prisma.message.create({
+                    data: {
+                        groupId: bookingId, // We use bookingId as groupId
+                        content,
+                        senderId,
+                        type: 'TEXT'
+                    },
+                    include: {
+                        sender: {
+                            select: { id: true, name: true, image: true }
+                        }
+                    }
+                });
 
-            // TODO: Ideally, save to DB here asynchronously
+                // Broadcast to everyone in the room (including sender)
+                io.to(bookingId).emit('receive_message', {
+                    id: savedMessage.id,
+                    content: savedMessage.content,
+                    senderId: savedMessage.senderId,
+                    sender: savedMessage.sender,
+                    createdAt: savedMessage.createdAt.toISOString(),
+                    type: savedMessage.type
+                });
+
+            } catch (error) {
+                console.error('Failed to save message:', error);
+                // Optionally emit error back to sender
+                socket.emit('message_error', { error: 'Failed to send message' });
+            }
         });
 
         socket.on('disconnect', () => {

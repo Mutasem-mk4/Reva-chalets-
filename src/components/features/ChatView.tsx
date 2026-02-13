@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { io, Socket } from 'socket.io-client';
 import styles from './ChatView.module.css';
 
 interface ChatViewProps {
@@ -27,8 +28,10 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
     const [inputText, setInputText] = useState('');
     const [loading, setLoading] = useState(true);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const socketRef = useRef<Socket | null>(null);
 
-    const fetchMessages = async () => {
+    // Initial load of messages
+    const fetchHistory = async () => {
         try {
             const res = await fetch(`/api/groups/messages?groupId=${groupId}`);
             const data = await res.json();
@@ -36,17 +39,35 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
                 setMessages(data);
             }
         } catch (e) {
-            console.error("Failed to fetch messages", e);
+            console.error("Failed to fetch history", e);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchMessages();
-        // Poll for new messages every 3 seconds
-        const interval = setInterval(fetchMessages, 3000);
-        return () => clearInterval(interval);
+        // 1. Initialize Socket
+        socketRef.current = io();
+
+        // 2. Join Room
+        socketRef.current.emit('join_room', groupId);
+
+        // 3. Listen for Messages
+        socketRef.current.on('receive_message', (message: Message) => {
+            setMessages((prev) => {
+                // Deduplicate based on ID if necessary, though server ID is canonical
+                if (prev.some(m => m.id === message.id)) return prev;
+                return [...prev, message];
+            });
+            scrollToBottom();
+        });
+
+        // 4. Fetch initial history
+        fetchHistory();
+
+        return () => {
+            socketRef.current?.disconnect();
+        };
     }, [groupId]);
 
     useEffect(() => {
@@ -62,23 +83,14 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
         if (!inputText.trim()) return;
 
         const content = inputText;
-        setInputText(''); // optimistic clear
+        setInputText(''); // Clear input immediately
 
-        try {
-            const res = await fetch('/api/groups/messages', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    groupId,
-                    content,
-                    senderId: currentUserId
-                })
+        if (socketRef.current) {
+            socketRef.current.emit('send_message', {
+                bookingId: groupId,
+                content,
+                senderId: currentUserId
             });
-
-            const newMessage = await res.json();
-            setMessages(prev => [...prev, newMessage]);
-        } catch (e) {
-            console.error("Failed to send message", e);
         }
     };
 
@@ -93,7 +105,7 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
                     </button>
                     <div className={styles.groupInfo}>
                         <h2 className={styles.groupName}>{locale === 'ar' ? 'رحلة الشاليه' : 'Chalet Trip'}</h2>
-                        <span className={styles.memberCount}>6 {locale === 'ar' ? 'أعضاء' : 'members'}</span>
+                        <span className={styles.memberCount}>Live Chat 🟢</span>
                     </div>
                     <button className={styles.settingsButton}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -113,7 +125,7 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
                 ) : (
                     messages.map((msg) => {
                         const isMe = msg.senderId === currentUserId;
-                        const isHost = msg.senderId === 'host-1';
+                        const isHost = msg.senderId === 'host-1'; // Logic to detect host needs to be robust
 
                         return (
                             <div key={msg.id} className={`${styles.messageRow} ${isMe ? styles.myMessageRow : ''}`}>
@@ -123,7 +135,7 @@ export default function ChatView({ groupId, currentUserId = 'mock-user-1', local
                                             <img src={msg.sender.image} alt={msg.sender.name} />
                                         ) : (
                                             <div className={styles.avatarPlaceholder}>
-                                                {msg.sender.name.charAt(0)}
+                                                {msg.sender.name ? msg.sender.name.charAt(0) : '?'}
                                             </div>
                                         )}
                                     </div>
