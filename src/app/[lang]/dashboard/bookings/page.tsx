@@ -138,22 +138,43 @@ export default function BookingsPage() {
                                         </span>
                                     </td>
                                     <td>
-                                        {booking.status === 'PENDING' && (
-                                            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                                                <button
-                                                    onClick={() => handleStatusUpdate(booking.id, 'CONFIRMED')}
-                                                    style={{ background: '#16a34a', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}
-                                                >
-                                                    Approve
-                                                </button>
-                                                <button
-                                                    onClick={() => handleStatusUpdate(booking.id, 'REJECTED')}
-                                                    style={{ background: '#dc2626', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}
-                                                >
-                                                    Reject
-                                                </button>
-                                            </div>
-                                        )}
+                                        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                            {/* Chat Action */}
+                                            <a
+                                                href={`/dashboard/bookings/${booking.id}/chat`}
+                                                style={{
+                                                    background: '#E5E7EB',
+                                                    color: '#374151',
+                                                    border: 'none',
+                                                    padding: '4px 8px',
+                                                    borderRadius: '4px',
+                                                    textDecoration: 'none',
+                                                    fontSize: '0.8rem',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '4px'
+                                                }}
+                                            >
+                                                💬 Chat
+                                            </a>
+
+                                            {booking.status === 'PENDING' && (
+                                                <>
+                                                    <button
+                                                        onClick={() => handleStatusUpdate(booking.id, 'CONFIRMED')}
+                                                        style={{ background: '#16a34a', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}
+                                                    >
+                                                        Approve
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleStatusUpdate(booking.id, 'REJECTED')}
+                                                        style={{ background: '#dc2626', color: 'white', border: 'none', padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}
+                                                    >
+                                                        Reject
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
