@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 // Initialize Resend client
 // Initialize Resend client lazily or ensure process.env is populated
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_123456789');
 
 // Default sender
 const FROM_EMAIL = process.env.FROM_EMAIL || 'Reva Chalets <onboarding@resend.dev>';
