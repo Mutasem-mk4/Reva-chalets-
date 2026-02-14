@@ -42,13 +42,15 @@ export async function POST(request: NextRequest) {
             },
         });
 
-        // Also create a BookingGroup automatically
-        await prisma.bookingGroup.create({
-            data: {
-                bookingId: booking.id,
-                hostId: userId || 'anonymous',
-            }
-        });
+        // Only create a BookingGroup if the user is authenticated (has a userId)
+        if (userId) {
+            await prisma.bookingGroup.create({
+                data: {
+                    bookingId: booking.id,
+                    hostId: userId,
+                }
+            });
+        }
 
         // Send Email Notifications (Fire and forget to not block response)
         (async () => {
