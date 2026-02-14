@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Home, Calendar, LogOut, Settings } from 'lucide-react';
+import { usePathname, useParams } from 'next/navigation';
+import { LayoutDashboard, Users, Home, Calendar, LogOut, Settings, Tag } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -12,17 +12,18 @@ const menuItems = [
     { name: 'Bookings', href: '/admin/bookings', icon: Calendar },
     { name: 'Chalets', href: '/admin/chalets', icon: Home },
     { name: 'Users', href: '/admin/users', icon: Users },
-    { name: 'Settings', href: '/admin/settings', icon: Settings },
+    { name: 'Coupons', href: '/admin/coupons', icon: Tag },
+    // { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
 export default function AdminLayout({
     children,
-    params: { lang },
 }: {
     children: React.ReactNode;
-    params: { lang: string };
 }) {
     const pathname = usePathname();
+    const params = useParams();
+    const lang = params.lang as string; // Access lang from hook
     const router = useRouter();
     const supabase = createClient();
 
@@ -52,8 +53,8 @@ export default function AdminLayout({
                                 key={item.name}
                                 href={hrefWithLang}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-emerald-50 text-emerald-700 font-semibold'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                    ? 'bg-emerald-50 text-emerald-700 font-semibold'
+                                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                     }`}
                             >
                                 <item.icon size={20} />

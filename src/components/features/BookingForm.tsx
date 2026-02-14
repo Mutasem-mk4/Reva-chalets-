@@ -10,6 +10,9 @@ import SmartDatePicker from './SmartDatePicker';
 import BookingProgress from './BookingProgress';
 import { redirectToCheckout } from '@/lib/stripe-client';
 
+import { validateCoupon } from '@/app/actions/coupons';
+import { Tag, X } from 'lucide-react'; // Ensure Lucide icons are imported
+
 export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { dict: any, price: number, chaletId: string, locale?: string }) {
   const [step, setStep] = useState<'details' | 'payment'>('details');
   const [checkIn, setCheckIn] = useState('');
@@ -19,6 +22,12 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
   const [success, setSuccess] = useState(false);
   const [showGift, setShowGift] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Coupon State
+  const [promoCode, setPromoCode] = useState('');
+  const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
+  const [couponMessage, setCouponMessage] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; amount: number } | null>(null);
 
   // Calculate generic nights logic
   const getDays = () => {
@@ -35,9 +44,35 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
   const subtotal = days > 0 ? days * nightPrice : 0;
   const cleaningFee = 40;
   const serviceFee = Math.round(subtotal * 0.10);
-  const total = subtotal + cleaningFee + serviceFee;
+
+  const calculateTotal = () => {
+    let t = subtotal + cleaningFee + serviceFee;
+    if (appliedCoupon) {
+      t -= appliedCoupon.amount;
+    }
+    return Math.max(0, t); // Ensure non-negative
+  };
+
+  const total = calculateTotal();
 
   const { showToast } = useToast();
+
+  const handleApplyCoupon = async () => {
+    if (!promoCode || days === 0) return;
+    setIsValidatingCoupon(true);
+    setCouponMessage('');
+
+    const result = await validateCoupon(promoCode, subtotal);
+
+    if (result.valid && result.discountAmount !== undefined) {
+      setAppliedCoupon({ code: result.couponCode || promoCode, amount: result.discountAmount });
+      setCouponMessage(dict?.booking?.couponSuccess || 'Coupon applied!');
+    } else {
+      setAppliedCoupon(null);
+      setCouponMessage(result.message || 'Invalid coupon');
+    }
+    setIsValidatingCoupon(false);
+  };
 
   const handleDetailsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +98,8 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
           guestEmail: 'user@example.com', // Should come from auth
           guestPhone: '000000000',
           guestCount: guests,
-          totalPrice: total,
+          totalPrice: calculateTotal(), // Send the discounted total
+          couponCode: appliedCoupon?.code, // Send the code for backend verification/tracking
           pricePerNight: nightPrice,
           nights: days,
           status: 'PENDING_PAYMENT' // Initial status
@@ -418,9 +454,43 @@ export default function BookingForm({ dict, price, chaletId, locale = 'en' }: { 
             <span><u>{dict?.fees?.service || 'Service fee'}</u></span>
             <span>{serviceFee} JOD</span>
           </div>
+
+          {/* Promo Code Section */}
+          <div className="promo-section py-3 border-t border-b border-dashed border-gray-200 my-2">
+            {!appliedCoupon ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder={dict?.booking?.promoCode || "Promo Code"}
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  className="flex-1 border rounded px-2 py-1 text-sm uppercase"
+                />
+                <button
+                  type="button"
+                  onClick={handleApplyCoupon}
+                  disabled={isValidatingCoupon || !promoCode}
+                  className="bg-gray-800 text-white text-xs px-3 py-1 rounded hover:bg-black disabled:opacity-50"
+                >
+                  {isValidatingCoupon ? '...' : (dict?.booking?.apply || "Apply")}
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center text-green-600 bg-green-50 px-2 py-1 rounded text-sm">
+                <span className="flex items-center gap-1">
+                  <Tag size={14} /> {appliedCoupon.code} (-{appliedCoupon.amount} JOD)
+                </span>
+                <button type="button" onClick={() => setAppliedCoupon(null)} className="text-gray-400 hover:text-red-500">
+                  <X size={14} />
+                </button>
+              </div>
+            )}
+            {couponMessage && <p className={`text-xs mt-1 ${couponMessage.includes('success') ? 'text-green-600' : 'text-red-500'}`}>{couponMessage}</p>}
+          </div>
+
           <div className="price-row total">
             <span>{dict?.booking?.totalBeforeTax || 'Total before taxes'}</span>
-            <span>{total} JOD</span>
+            <span>{calculateTotal()} JOD</span>
           </div>
         </div>
       )}
