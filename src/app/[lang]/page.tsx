@@ -21,6 +21,29 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   return (
     <div className={styles.homePage}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Riva Chalets',
+            url: 'https://riva-jo.me',
+            logo: 'https://riva-jo.me/images/logo-en.png',
+            sameAs: [
+              'https://instagram.com/rivachalets',
+              'https://facebook.com/rivachalets',
+            ],
+            contactPoint: {
+              '@type': 'ContactPoint',
+              telephone: '+962-79-000-0000',
+              contactType: 'customer service',
+              areaServed: 'JO',
+              availableLanguage: ['en', 'ar'],
+            },
+          }),
+        }}
+      />
       {/* ═══ HERO ═══ */}
       <MobileStyleHero
         title={dict.home.heroTitle}

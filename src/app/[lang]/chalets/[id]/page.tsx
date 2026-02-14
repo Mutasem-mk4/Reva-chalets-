@@ -76,6 +76,34 @@ export default async function ChaletDetailPage({ params }: { params: Promise<{ l
 
   return (
     <div className="chalet-detail" style={{ background: 'var(--color-cream)' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'LodgingBusiness',
+            name: chalet.name,
+            image: chalet.images.map(img => `https://riva-jo.me${img}`),
+            description: chalet.description,
+            '@id': `https://riva-jo.me/${lang}/chalets/${chalet.id}`,
+            url: `https://riva-jo.me/${lang}/chalets/${chalet.id}`,
+            telephone: '+962-79-000-0000',
+            priceRange: `${chalet.price} JOD`,
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: chalet.location,
+              addressCountry: 'JO',
+            },
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: chalet.rating,
+              reviewCount: chalet.reviews.length || 1,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          }),
+        }}
+      />
       {/* Track this view */}
       <ViewedTracker chaletId={chalet.id} chaletName={chalet.name} chaletImage={chalet.images[0]} chaletPrice={chalet.price} />
       {/* Sticky Price Bar */}

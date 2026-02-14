@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './MobileStyleHero.module.css';
 
 interface MobileStyleHeroProps {
@@ -14,6 +15,14 @@ interface MobileStyleHeroProps {
 export default function MobileStyleHero({ title, subtitle, ctaText = 'Book Now', ctaLink = '/en/chalets' }: MobileStyleHeroProps) {
     return (
         <section className={styles.heroWrapper}>
+            {/* Optimized Background Image */}
+            <Image
+                src="/images/hero.png"
+                alt="Luxury Chalet View"
+                fill
+                priority
+                className={styles.heroBg}
+            />
             {/* Background Image Overlay */}
             <div className={styles.bgOverlay} />
 
