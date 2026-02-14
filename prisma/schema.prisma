@@ -52,8 +52,7 @@ enum PaymentStatus {
 enum DiscountType {
   ZAD
   KAIF
-
-
+  PROMO
 }
 
 enum MessageType {
@@ -217,9 +216,17 @@ model Discount {
   name        String
   nameAr      String
   description String
-  type        DiscountType // ZAD or KAIF
-  category    String       // gas, meat, transport, bowling, karting
+  type        DiscountType // ZAD, KAIF, PROMO
+  category    String       // gas, meat, transport, bowling, karting, general
   value       Float        // percentage or fixed amount
+  
+  // Promo Code Specifics
+  code        String?      @unique // Nullable for non-promo discounts
+  isActive    Boolean      @default(true)
+  maxUses     Int?         // Null = unlimited
+  usageCount  Int          @default(0)
+  minBookingAmount Float?  // Minimum spend required
+
   validUntil  DateTime?
   partnerId   String?
   partner     Partner?     @relation(fields: [partnerId], references: [id])
