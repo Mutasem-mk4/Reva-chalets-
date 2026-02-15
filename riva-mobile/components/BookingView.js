@@ -11,25 +11,54 @@ export default function BookingView({ chalet, onClose, onBookingSuccess, lang = 
     const isAr = lang === 'ar';
 
     // Form State
+    const [couponCode, setCouponCode] = useState('');
+    const [discount, setDiscount] = useState(null); // { code, amount }
+    const [verifyingCoupon, setVerifyingCoupon] = useState(false);
+
     const [formData, setFormData] = useState({
-        guestName: isAr ? 'أحمد محمد' : 'John Doe', // Pre-filled for demo
+        guestName: isAr ? 'أحمد محمد' : 'John Doe',
         guestEmail: 'john@example.com',
         guestPhone: '0790000000',
         guestCount: '2',
         startDate: new Date().toISOString().split('T')[0],
-        endDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Next day
+        endDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
     });
+
+    const calculateTotal = () => {
+        let total = chalet.price;
+        // Logic for nights * price would go here if we had date diff logic
+        if (discount) {
+            total -= discount.amount;
+        }
+        return Math.max(0, total);
+    };
+
+    const handleApplyCoupon = async () => {
+        if (!couponCode) return;
+        setVerifyingCoupon(true);
+        const res = await api.verifyCoupon(couponCode, chalet.price);
+        setVerifyingCoupon(false);
+
+        if (res.valid) {
+            setDiscount({ code: res.code, amount: res.discountAmount });
+            Alert.alert(isAr ? 'نجاح' : 'Success', isAr ? `تم خصم ${res.discountAmount} دينار` : `Discount of ${res.discountAmount} Applied`);
+        } else {
+            setDiscount(null);
+            Alert.alert(isAr ? 'خطأ' : 'Error', res.message || (isAr ? 'كود غير صالح' : 'Invalid Code'));
+        }
+    };
 
     const handleBooking = async () => {
         setLoading(true);
         const bookingData = {
             chaletId: chalet.id,
-            userId: 'user_123', // Mock user
+            userId: 'user_123',
             ...formData,
             guestCount: parseInt(formData.guestCount),
-            totalPrice: chalet.price, // For simplicity
+            totalPrice: calculateTotal(),
             pricePerNight: chalet.price,
             nights: 1,
+            couponCode: discount ? discount.code : null
         };
 
         const result = await api.createBooking(bookingData);
@@ -65,7 +94,15 @@ export default function BookingView({ chalet, onClose, onBookingSuccess, lang = 
             <ScrollView contentContainerStyle={styles.scrollContent}>
                 <View style={[styles.chaletSummary, isAr && { alignItems: 'flex-end' }]}>
                     <Text style={styles.summaryTitle}>{chalet.name}</Text>
-                    <Text style={styles.summaryPrice}>{chalet.price} {isAr ? 'دينار / ليلة' : 'JOD / Night'}</Text>
+                    <Text style={styles.summaryPrice}>
+                        {discount ? (
+                            <Text style={{ textDecorationLine: 'line-through', color: '#9CA3AF', fontSize: 14 }}>
+                                {chalet.price} {isAr ? 'دينار' : 'JOD'}
+                            </Text>
+                        ) : null}
+                        {' '}
+                        {calculateTotal()} {isAr ? 'دينار / ليلة' : 'JOD / Night'}
+                    </Text>
                 </View>
 
                 <View style={styles.form}>
@@ -140,6 +177,30 @@ export default function BookingView({ chalet, onClose, onBookingSuccess, lang = 
                             </View>
                         </View>
                     </View>
+
+                    {/* Coupon Section */}
+                    <View style={{ marginTop: 10 }}>
+                        <Text style={[styles.label, isAr && { textAlign: 'right' }]}>{isAr ? 'كود الخصم' : 'Promo Code'}</Text>
+                        <View style={[styles.inputRow, isAr && { flexDirection: 'row-reverse' }, { paddingRight: 6 }]}>
+                            <TextInput
+                                style={[styles.input, isAr && { textAlign: 'right' }]}
+                                placeholder={isAr ? 'أدخل الكود' : 'Enter Code'}
+                                value={couponCode}
+                                onChangeText={setCouponCode}
+                                editable={!discount} // Disable if applied
+                            />
+                            <TouchableOpacity
+                                style={{ backgroundColor: discount ? '#10B981' : '#1B3B36', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 8 }}
+                                onPress={handleApplyCoupon}
+                                disabled={verifyingCoupon || !!discount}
+                            >
+                                {verifyingCoupon ? <ActivityIndicator color="white" size="small" /> : (
+                                    <Text style={{ color: 'white', fontWeight: 'bold' }}>{discount ? (isAr ? 'مطبق' : 'Applied') : (isAr ? 'تطبيق' : 'Apply')}</Text>
+                                )}
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                 </View>
 
                 <TouchableOpacity
@@ -150,7 +211,9 @@ export default function BookingView({ chalet, onClose, onBookingSuccess, lang = 
                     {loading ? (
                         <ActivityIndicator color="white" />
                     ) : (
-                        <Text style={styles.confirmBtnText}>{isAr ? 'تأكيد والحجز' : 'Confirm and Pay'}</Text>
+                        <Text style={styles.confirmBtnText}>
+                            {isAr ? `تأكيد والحجز (${calculateTotal()} د.أ)` : `Confirm & Pay (${calculateTotal()} JOD)`}
+                        </Text>
                     )}
                 </TouchableOpacity>
             </ScrollView>

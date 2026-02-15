@@ -39,9 +39,19 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [ratingChalet, setRatingChalet] = useState(null); // If set, shows Rating Form
 
-  // Splash Screen State & Animation
-  const [showSplash, setShowSplash] = useState(true);
-  const revealAnim = React.useRef(new Animated.Value(0)).current; // 0 -> 1 width ratio
+  // Golden Card State
+  const [goldenCardData, setGoldenCardData] = useState(null);
+
+  useEffect(() => {
+    loadGoldenCard();
+  }, [isLoggedIn]); // Reload if login status changes
+
+  const loadGoldenCard = async () => {
+    // If not logged in, show default or empty state
+    // For now, we fetch generic status or rely on API to handle guest/user
+    const data = await api.getGoldenCardStatus();
+    setGoldenCardData(data);
+  };
 
   // Splash Screen Logic
   React.useEffect(() => {
@@ -154,7 +164,7 @@ export default function App() {
             </View>
             <View style={isAr && { alignItems: 'flex-end' }}>
               <Text style={styles.helloText}>{isAr ? 'أهلاً بك' : 'Hello'}</Text>
-              <Text style={styles.userName}>{isAr ? 'اسم المستخدم' : 'User Name'}</Text>
+              <Text style={styles.userName}>{currentUser ? currentUser.name : (isAr ? 'ضيف' : 'Guest')}</Text>
             </View>
           </View>
         </View>
@@ -164,13 +174,15 @@ export default function App() {
             {/* Overlapping Content (Golden Card) */}
             <View style={styles.overlapContainer}>
               <GoldenCard
-                phase="PASSED"
+                phase={goldenCardData?.phase || 'WAITING'}
                 lang={lang}
-                farmName={isAr ? 'مزرعة الريف الفاخرة' : 'Al-Reef Luxury Farm'}
-                bookingDate="2025-06-15"
-                tripStartTime="02:00 PM"
-                farmLocation={isAr ? 'البحر الميت' : 'Dead Sea'}
-                remainingTime={isAr ? '48 ساعة' : '48 Hours'}
+                farmName={goldenCardData?.details?.farmName || (isAr ? 'مزرعة الريف الفاخرة' : 'Al-Reef Luxury Farm')}
+                bookingDate={goldenCardData?.details?.date || '2025-06-15'}
+                tripStartTime={goldenCardData?.details?.time || '02:00 PM'}
+                farmLocation={goldenCardData?.details?.location || (isAr ? 'البحر الميت' : 'Dead Sea')}
+                remainingTime={goldenCardData?.details?.remaining || (isAr ? '48 ساعة' : '48 Hours')}
+                groupMembers={goldenCardData?.details?.members || 5}
+                ticketCount={goldenCardData?.details?.tickets || 1}
                 onRatePress={() => setRatingChalet({ id: 'chalet_123', name: isAr ? 'مزرعة الريف الفاخرة' : 'Al-Reef Luxury Farm' })}
               />
             </View>
@@ -203,7 +215,7 @@ export default function App() {
         {activeTab !== 'home' && (
           <View style={{ marginTop: 20 }}>
             {activeTab === 'rewards' && <RewardsView lang={lang} />}
-            {activeTab === 'trips' && <TripsView lang={lang} onOpenChat={(id) => setChatBookingId(id)} />}
+            {activeTab === 'trips' && <TripsView lang={lang} userId={currentUser?.id} onOpenChat={(id) => setChatBookingId(id)} />}
             {activeTab === 'saved' && <SavedView lang={lang} />}
             {activeTab === 'account' && (
               <AccountView

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator }
 import { MapPin, Calendar, Clock, ArrowRight, ArrowLeft, CheckCircle, XCircle } from 'lucide-react-native';
 import { api } from '../lib/api';
 
-export default function TripsView({ onOpenChat, lang = 'ar' }) {
+export default function TripsView({ onOpenChat, lang = 'ar', userId }) {
     const [activeTab, setActiveTab] = useState('UPCOMING');
     const [trips, setTrips] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -11,12 +11,12 @@ export default function TripsView({ onOpenChat, lang = 'ar' }) {
     const isAr = lang === 'ar';
 
     useEffect(() => {
-        loadTrips();
-    }, []);
+        if (userId) loadTrips();
+    }, [userId]);
 
     const loadTrips = async () => {
         setLoading(true);
-        const data = await api.getTrips();
+        const data = await api.getTrips(userId);
         setTrips(data);
         setLoading(false);
     };

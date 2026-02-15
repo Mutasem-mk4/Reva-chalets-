@@ -28,35 +28,41 @@ export const api = {
         }
     },
 
-    async getTrips() {
-        // Mocking trips endpoint for now as it's not fully in backend yet
-        // TODO: Replace with fetch(`${API_URL}/trips`);
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve([
-                    {
-                        id: '1',
-                        name: 'Al-Reef Luxury Farm',
-                        date: '15 June 2025',
-                        time: '02:00 PM',
-                        status: 'Confirmed',
-                        location: 'Dead Sea',
-                        type: 'UPCOMING',
-                        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&q=80',
-                    },
-                    {
-                        id: '2',
-                        name: 'Mountain View Chalet',
-                        date: '20 Aug 2025',
-                        time: '10:00 AM',
-                        status: 'Pending',
-                        location: 'Ajloun',
-                        type: 'UPCOMING',
-                        image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=500&q=80',
-                    }
-                ]);
-            }, 500);
-        });
+    async getTrips(userId) {
+        try {
+            const res = await fetch(`${API_URL}/bookings?userId=${userId}`);
+            if (!res.ok) throw new Error('Failed to fetch trips');
+            const bookings = await res.json();
+
+            // Map backend booking to frontend Trip object
+            return bookings.map(b => ({
+                id: b.id,
+                name: b.chalet?.name || 'Unknown Chalet',
+                date: new Date(b.startDate).toLocaleDateString(),
+                time: 'Check-in 2:00 PM', // Fixed time for now or fetch from chalet rules
+                status: b.status,
+                location: 'Jordan', // Or fetch from chalet.location
+                image: b.chalet?.images ? JSON.parse(b.chalet.images)[0] : 'https://via.placeholder.com/150',
+                type: new Date(b.startDate) > new Date() ? 'UPCOMING' : 'PAST'
+            }));
+        } catch (error) {
+            console.error('API Error (getTrips):', error);
+            return [];
+        }
+    },
+
+    async verifyCoupon(code, price) {
+        try {
+            const res = await fetch(`${API_URL}/verify-coupon`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code, price })
+            });
+            return await res.json();
+        } catch (error) {
+            console.error('API Error (verifyCoupon):', error);
+            return { valid: false, message: 'Network error' };
+        }
     },
 
     async getChalets(filters = {}) {
