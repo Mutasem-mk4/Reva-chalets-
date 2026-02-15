@@ -24,7 +24,7 @@ export const api = {
         } catch (error) {
             console.error('API Error (getGoldenCardStatus):', error);
             // Default fallback
-            return { phase: 'NOT_BOOKED', details: {} };
+            return { phase: 'WAITING', details: {} };
         }
     },
 

@@ -24,7 +24,7 @@ export async function GET(request: Request) {
         // 2. Determine phase
 
         // Mocking the phase determination for now
-        const currentPhase = 'BOOKED_PENDING';
+        const currentPhase = 'WAITING';
 
         return NextResponse.json({
             phase: currentPhase,
