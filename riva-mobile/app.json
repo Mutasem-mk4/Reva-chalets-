@@ -3,8 +3,8 @@
     "name": "riva-mobile",
     "slug": "riva-mobile",
     "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "platforms": ["ios", "android", "web"],
+    "orientation": "portrait",    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {

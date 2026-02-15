@@ -20,7 +20,7 @@ const RECOMMENDATIONS = [
     }
 ];
 
-export default function RecommendedList({ lang = 'ar' }) {
+export default function RecommendedList({ lang = 'ar', onSelect }) {
     const isAr = lang === 'ar';
 
     const getLocalizedName = (name) => {
@@ -44,7 +44,11 @@ export default function RecommendedList({ lang = 'ar' }) {
     return (
         <View style={styles.container}>
             {RECOMMENDATIONS.map((item) => (
-                <TouchableOpacity key={item.id} style={styles.card}>
+                <TouchableOpacity
+                    key={item.id}
+                    style={styles.card}
+                    onPress={() => onSelect && onSelect(item)}
+                >
                     <Image source={{ uri: item.image }} style={styles.image} />
 
                     <View style={styles.content}>
@@ -62,7 +66,7 @@ export default function RecommendedList({ lang = 'ar' }) {
                                 {isAr ? `${item.price.replace('JOD', 'دينار')}` : item.price}
                                 <Text style={styles.period}> {isAr ? '/ ليلة' : '/ night'}</Text>
                             </Text>
-                            <TouchableOpacity style={styles.bookBtn}>
+                            <TouchableOpacity style={styles.bookBtn} onPress={() => onSelect && onSelect(item)}>
                                 <Text style={styles.bookBtnText}>{isAr ? 'احجز الآن' : 'Book'}</Text>
                             </TouchableOpacity>
                         </View>

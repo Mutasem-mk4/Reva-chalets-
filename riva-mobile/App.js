@@ -190,7 +190,10 @@ export default function App() {
                 <Text style={[styles.sectionTitle, isAr && { textAlign: 'right' }]}>
                   {isAr ? 'مقترح لك' : 'Recommended'}
                 </Text>
-                <RecommendedList lang={lang} />
+                <RecommendedList
+                  lang={lang}
+                  onSelect={(item) => setSelectedChaletId(item.id || 'chalet_123')}
+                />
               </View>
             </View>
           </>
